@@ -1,27 +1,41 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <title>Home</title>
-    <meta name="description" content="Nicholas P Norman Home Site">
-    <meta name="author" content="Nicholas Norman">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC&display=swap" rel="stylesheet">
-    <link href="npn.css" rel="stylesheet"/>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nicholas P Norman</title>
     <style>
-      .center-div{
-        width: 100%;
-      }
+        a {
+            font-size: 1.25rem;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        li {
+            list-style: none;
+            line-height: 1.4rem;
+        }
+        li::before {
+            content: "++ ";
+            /*font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;*/
+            font-size: 1.25rem;
+        }
     </style>
-  </head>
-  <body>
-    <div>
-      <form action="./resume.html">
-        <button type="submit" class="center-div">
-          My Resume
-        </button>
-      </form>
-    </div>
-  </body>
+</head>
+<body>
+    <h1>Nicholas P Norman</h1>
+    <p>Hello my name is Nick and I am a computer science student.</p>
+    <h2>Social Links</h2>
+    <ul>
+        <li><a target="_blank" href="https://www.youtube.com/@npnorman">YouTube</a> <-- Most important</li>
+        <li><a target="_blank" href="">Twitter (X)</a> - coming soon</li>
+        <li><a target="_blank" href="">Instagram</a> - coming soon</li>
+        <li><a target="_blank" href="">Reddit</a> - coming soon</li>
+    </ul>
+    <h2>Resources for my videos!</h2>
+    <ul>
+        <li><a target="_blank" href="https://github.com/npnorman">Github</a> <-- all resources located here</li>
+        <li><a target="_blank" href="./resources">Don't know something? External Resources (web & video)</a></li>
+    </ul>
+</body>
 </html>
