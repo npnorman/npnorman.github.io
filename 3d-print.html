@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Printing</title>
+</head>
+<body>
+    <p>3D Print calculation: P = 2C + 1.5T + 0.5</p>
+    <p>P = Price, C = Cost of build, T = Time to print</p>
+    <br>
+    <form>
+        <label for="cost">
+            Cost
+        </label>
+        <input type="number" id="cost">
+        <br>
+        <label for="time">
+            Time (in Hours)
+        </label>
+        <input type="number" id="time">
+        <br>
+        <input type="checkbox" id="discount" value="0.75">
+        <label for="discount">
+            Check for freinds/family discount
+        </label>
+        <p id="output"></p>
+    </form>
+    <script>
+        function Calculate() {
+
+            var c = document.getElementById("cost");
+            var t = document.getElementById("time");
+            var d = document.getElementById("discount");
+            cVal = c.value;
+            tVal = t.value;
+            dVal = d.value;
+
+            var output = (2 * parseFloat(cVal)) + (Math.ceil(parseFloat(tVal)) * 1.5) + (0.5);
+            if (d.checked) {
+                output = output * 0.25;
+            }
+            output = output.toFixed(2);
+            document.getElementById("output").textContent = output;
+        }
+
+        var c = document.getElementById("cost");
+        var t = document.getElementById("time");
+        var d = document.getElementById("discount");
+
+        c.addEventListener("input", Calculate);
+        t.addEventListener("input", Calculate);
+        d.addEventListener("input", Calculate);
+
+    </script>
+</body>
+</html>
