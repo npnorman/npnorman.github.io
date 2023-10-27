@@ -1,0 +1,47 @@
+:root {
+    --box-size: 100px;
+}
+
+.board {
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    row-gap: 3px;
+    column-gap: 3px;
+    width: 309px;
+}
+
+.board div {
+    border: 1px solid black;
+    width: var(--box-size);
+    height: var(--box-size);
+    margin: auto;
+    text-align: center;
+}
+
+.board p {
+    font-size: 2rem;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+h2 {
+    text-align: center;
+}
+
+.X {
+    background-color: #FF7659;
+}
+
+.O {
+    background-color: #80D7FF;
+}
+
+.default-box {
+    background-color: white;
+}
+
+.button-cont {
+    display: flex;
+    justify-content: center;
+}
