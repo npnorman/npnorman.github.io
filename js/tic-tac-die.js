@@ -270,7 +270,7 @@ elBoard.addEventListener('click', function(e) {
         if (clickBox(player, e)) {
             if (checkWin(player)) {
                 allowGame = false;
-            } else if (turnCounter >= 25) {
+            } else if (turnCounter >= 24) {
                 allowGame = false;
                 elWinner.innerHTML = "Game ended in Draw!";
             }
@@ -285,8 +285,4 @@ elBoard.addEventListener('click', function(e) {
 document.getElementById("reset").addEventListener('click', function(e) {
     reset();
     console.log("reset");
-});
-
-document.getElementById("roll").addEventListener('click', function(e) {
-    
 });
