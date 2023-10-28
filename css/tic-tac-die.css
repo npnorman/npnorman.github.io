@@ -68,6 +68,17 @@ h2 {
     text-align: center;
 }
 
+.rules {
+    margin: auto;
+    width: 500px;
+}
+
+.rules table, td {
+    border: 1px solid;
+    border-collapse: collapse;
+    padding: 7px;
+}
+
 @media screen and (max-width: 540px) {
     :root {
         --box-size: 50px;
@@ -76,5 +87,9 @@ h2 {
 
     .board p {
         font-size: 1.1rem;
+    }
+
+    .rules {
+        width: 300px;
     }
 }

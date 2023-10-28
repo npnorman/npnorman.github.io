@@ -267,6 +267,9 @@ function roll() {
 
 elBoard.addEventListener('click', function(e) {
     if(allowGame) {
+        if (turnCounter > 0) {
+            roll();
+        }
         if (clickBox(player, e)) {
             if (checkWin(player)) {
                 allowGame = false;
@@ -275,9 +278,6 @@ elBoard.addEventListener('click', function(e) {
                 elWinner.innerHTML = "Game ended in Draw!";
             }
             endTurn();
-            if (turnCounter > 1) {
-                roll();
-            }
         }
     }
 });
