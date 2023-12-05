@@ -1,0 +1,115 @@
+body {
+    margin-right: 100px;
+    margin-left: 100px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.5rem;
+}
+
+.member {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: solid 5px #00000028;
+    background-color: #00000028;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.about {
+    display: grid;
+    grid-template-columns: 1fr 1fr 5fr;
+    grid-template-rows: 1fr 2fr;
+}
+
+.about img {
+    grid-column: 1/2;
+    width: 100px;
+}
+
+.about h1 {
+    grid-column: 2/3;
+}
+
+.about p {
+    grid-row: 2/3;
+    grid-column: 1/6;
+}
+
+.live {
+    grid-column: 1/3;
+    display: flex;
+    justify-content: center;
+}
+
+.links {
+    text-align: center;
+}
+
+.links ul{
+    list-style-type: none;
+    display: inline-block;
+    text-align: left;
+}
+
+.links li {
+    padding-top: 5px;
+}
+
+.links a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 1.7rem;
+}
+
+.links .logo {
+    width: 35px;
+}
+
+.nav {
+    display: block;
+    height: 50px;
+    line-height: 20px;
+    background-color: #b8b8b8;
+}
+/* Remove bullets, margin and padding */
+.nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.nav li {
+    display: inline;
+}
+/* Define the block styling for the links */
+.nav li a {
+    display: inline-block;
+    text-align: center;
+    padding: 14px 16px;
+}
+
+.hidden {
+    display: none;
+}
+
+footer {
+    font-size: 1rem;
+}
+
+.live-button {
+    grid-column: 1/3;
+    display: flex;
+    justify-content: center;
+}
+
+.live-button button {
+    font-size: 1.5rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding: 10px 30px 10px 30px;
+    margin-bottom: 20px;
+    border: solid gray 2px;
+    background-color: rgb(231, 231, 231);
+}
+
+.live-button button:active {
+    background-color: rgb(75, 75, 75);
+}
