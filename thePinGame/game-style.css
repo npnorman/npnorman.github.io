@@ -1,0 +1,65 @@
+/*Nicholas Norman Aug 30 2024*/
+
+body {
+    background-color: papayawhip;
+}
+
+.pad {
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    row-gap: 3px;
+    column-gap: 3px;
+    width: 309px;
+}
+
+.pad button {
+    font-size: 2rem;
+    height: 4rem;
+}
+
+.counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    width: 300px;
+    font-size: 2rem;
+    height: 4rem;
+    background-color: whitesmoke;
+    border: 3px solid black;
+
+    overflow: hidden;
+}
+
+.hint {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.codes {
+    margin: auto;
+    background-color: whitesmoke;
+    width: 500px;
+    padding-bottom: 50px;
+    padding-left: 50px;
+    border: double 5px black;
+}
+
+.codes h1{
+    text-align: center;
+}
+
+.codeNumber {
+    font-size: 1.25rem;
+}
+
+.green {
+    background-color: green;
+}
