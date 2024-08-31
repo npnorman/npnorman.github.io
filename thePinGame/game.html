@@ -1,0 +1,44 @@
+<!--Nicholas Norman Aug 30 2024-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./game-style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The PIN Game</title>
+</head>
+<body>
+
+    <h1>The PIN Game</h1>
+    <h3>By Nicholas Norman 2024</h3>
+
+    <div id="counter" class="counter">
+        <p id="counter-display"></p>
+    </div>
+
+    <div id="pin-pad" class="pad">
+        <button id="btn1" value=1>1</button>
+        <button id="btn2" value=2>2</button>
+        <button id="btn3" value=3>3</button>
+        <button id="btn4" value=4>4</button>
+        <button id="btn5" value=5>5</button>
+        <button id="btn6" value=6>6</button>
+        <button id="btn7" value=7>7</button>
+        <button id="btn8" value=8>8</button>
+        <button id="btn9" value=9>9</button>
+        <button id="btn*" value=*>*</button>
+        <button id="btn0" value=0>0</button>
+        <button id="btn#" value=#>#</button>
+    </div>
+
+    <p class="hint">Enter code and press # (Pound) to enter code</p>
+    <p class="hint">Tip: Hover over a code to see it's hint</p>
+
+    <div id="codes" class="codes">
+        <h1 id="codesHeader">Codes: Unlock them all!</h1>
+    </div>
+
+    <!-- JS game file-->
+    <script src="./gameplay.js"></script>
+</body>
+</html>
