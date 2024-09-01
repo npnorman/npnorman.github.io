@@ -25,7 +25,10 @@ var codeDict = [
     ["69", "nice ;)", false],
     ["02*06*04", "my bday, mm*dd*yy", false],
     ["666", "evil", false],
-    ["****", "password", false]
+    ["****", "password", false],
+    ["5318008","hold the calc upsode down",false],
+    ["24","a funny number according to Patrick",false],
+    ["25","whats funnier than the last...",false]
 ];
 
 //lists
