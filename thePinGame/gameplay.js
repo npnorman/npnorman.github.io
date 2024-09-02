@@ -57,7 +57,7 @@ function pinPress(val) {
             codeEnter++;
 
             //if entered 4 times without a code, get secret code
-            if (codeEnter > 3) {
+            if (codeEnter > 4) {
                 pinProcess("####");
             }
         }
