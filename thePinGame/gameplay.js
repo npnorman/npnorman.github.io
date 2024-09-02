@@ -8,6 +8,7 @@ var codes = document.getElementById("codes"); //div with codes
 var codesHeader = document.getElementById("codesHeader");
 var correctCodeFound = false;
 var currentDisplay = "";
+var codeEnter = 0; //stores amount of times enter is pressed with no code
 
 var codeDict = [
     ["0000", "", false],
@@ -28,7 +29,8 @@ var codeDict = [
     ["****", "password", false],
     ["5318008","hold the calc upsode down",false],
     ["24","a funny number according to Patrick",false],
-    ["25","whats funnier than the last...",false]
+    ["25","whats funnier than the last...",false],
+    ["####","did the number even go through?",false]
 ];
 
 //lists
@@ -48,6 +50,17 @@ function pinPress(val) {
 
         //call function for processing pin
         pinProcess(currentDisplay);
+
+        //#### code
+        if (currentDisplay == "") {
+            console.log("hint");
+            codeEnter++;
+
+            //if entered 4 times without a code, get secret code
+            if (codeEnter > 3) {
+                pinProcess("####");
+            }
+        }
 
         //clear data
         currentDisplay = "";
