@@ -1,0 +1,16 @@
+body {
+    background-color:papayawhip;
+}
+
+button {
+    font-size: 2rem;
+    padding: 10px;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.display {
+    font-size: 2rem;
+}

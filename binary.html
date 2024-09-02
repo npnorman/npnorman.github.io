@@ -1,0 +1,36 @@
+<!-- Binary Calcualtor 2024, Nicholas Norman-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/binary.css">
+    <title>Binary Counter</title>
+    <link>
+</head>
+<body>
+    <h1>Binary Counter</h1>
+    <h2>Nicholas Norman 2024</h2>
+
+    <div id="byteButtons">
+        <button id="128" value="128">0</button>
+        <button value="64">0</button>
+        <button value="32">0</button>
+        <button value="16">0</button>
+        <button value="8">0</button>
+        <button value="4">0</button>
+        <button value="2">0</button>
+        <button value="1">0</button>
+    </div>
+
+    <p class="display">= <span id="total">0</span></p>
+
+    <input type="radio" id="bin" name="options" value="regular" checked="checked">
+    <label for="bin">Binary</label>
+    <input type="radio" id="twoscomp" name="options" value="regular">
+    <label for="twoscomp">Two's Compliment</label>
+
+    <script src="./js/binary.js"></script>
+</body>
+</html>
