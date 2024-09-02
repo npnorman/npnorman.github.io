@@ -27,10 +27,12 @@ var codeDict = [
     ["02*06*04", "my bday, mm*dd*yy", false],
     ["666", "evil", false],
     ["****", "password", false],
-    ["5318008","hold the calc upsode down",false],
+    ["5318008","hold the calc upside down",false],
+    ["01134", "hold the calc upside down again, hi!", false],
     ["24","a funny number according to Patrick",false],
     ["25","whats funnier than the last...",false],
-    ["####","did the number even go through?",false]
+    ["####","did the number even go through?",false],
+    ["09*27*23", "when be they pin remastered released, mm*dd*yy", false]
 ];
 
 //lists
@@ -183,6 +185,7 @@ function onLoad() {
     
     //do this when loaded, add these to screen
     
+
     //for length of code dictionary, add "00: " to new p in codes
     for(var i=0; i < codeDict.length; i++) {
         var tmpP = document.createElement("p");
