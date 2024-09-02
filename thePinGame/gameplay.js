@@ -43,7 +43,7 @@ function pinPress(val) {
 
     resetDisplay();
 
-    if(val == "#") {
+    if(val == "#" || val == "Enter") {
         //enter function
         //clear screen
         display.innerHTML = "";
@@ -169,6 +169,15 @@ function onLoad() {
         //validate button press, not div
         if (e.target.tagName === "BUTTON") {
             pinPress(target.value);
+        }
+    });
+
+    //also take in keyboard input
+    document.addEventListener("keydown", function(e) {
+        acceptedKeys = ["0","1","2","3","4","5","6","7","8","9","*","#","Enter"];
+        //if an accepted key, send to pinPress
+        if(acceptedKeys.includes(e.key)) {
+            pinPress(e.key);
         }
     });
     
