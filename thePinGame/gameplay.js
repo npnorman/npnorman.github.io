@@ -152,7 +152,11 @@ function onLoad() {
     pinPad.addEventListener("click", function(e) {
         //pass event target value (number)
         var target = e.target;
-        pinPress(target.value);
+
+        //validate button press, not div
+        if (e.target.tagName === "BUTTON") {
+            pinPress(target.value);
+        }
     });
     
     //do this when loaded, add these to screen
