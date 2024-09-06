@@ -1,0 +1,52 @@
+body {
+    font-family: monospace;
+    width: 500px;
+}
+
+.pfp {
+    width: 150px;
+    border-radius: 0%;
+    float: right;
+}
+
+h1 {
+    font-family: monospace;
+}
+
+h2 {
+    font-family: monospace;
+}
+
+h3 {
+    font-family: monospace;
+}
+
+.code {
+    font-family: monospace;
+}
+
+.name-block {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1.5rem;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.bold-link {
+    font-size: 1.25rem;
+    font-weight: bold;
+    font-family: monospace;
+}
+
+.skill-level {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.justify {
+    text-align: justify;
+    text-justify: inter-word;
+}
