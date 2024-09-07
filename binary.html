@@ -42,7 +42,7 @@
         <p>Binary is base 2 system of counting, typically done by computers. This means that instead of using numbers from 0-9, binary uses 0-1. The computer uses this system to read any piece of information. No matter how big or small, the computer stores it as a set of 1s and 0s.</p>
         
         <h3>How to Count in Base 2</h3>
-        <p>going from right to left each bit is 2<sup>x</sup>, where x is its place. In base 10, our normal counting system, we can calculate a number as such:</p>
+        <p>Going from right to left each bit is 2<sup>x</sup>, where x is its place. In base 10, our normal counting system, we can calculate a number as such:</p>
         <p class="code">193 = 1 * 10<sup>2</sup> + 9 * 10<sup>1</sup> + 3 * 10<sup>0</sup> = 100 + 90 + 3</p>
         <p>Similarly in base 2:</p>
         <p class="code">101 = 1 * 2<sup>2</sup> + 0 * 2<sup>1</sup> + 1 * 2<sup>0</sup> = 4 + 0 + 1 = 5</p>
@@ -50,14 +50,14 @@
         <p class="code">64, 32, 16, 8, 4, 2, 1, 0 = 2<sup>7</sup>, 2<sup>6</sup>, 2<sup>5</sup>, 2<sup>4</sup>, 2<sup>3</sup>, 2<sup>2</sup>, 2<sup>1</sup>, 2<sup>0</sup>,</p>
 
         <h3>What is Two's Compliment?</h3>
-        <p>In early computing, there rose a problem. How do you store a negative number in binary? To accomplish this, the most effiecent way currently is using a system called Two's Compliment. When a computer reads binary in this way, it treats the first bit as a negative (1). For the case of before 101 now becomes:</p>
-        <p class="code">101 = -1 * 2<sup>2</sup> + 0 * 2<sup>1</sup> + 1 * 2<sup>0</sup> = -4 + 0 + 1 = -3</p>
+        <p>In early computing, there rose a problem. How do you store a negative number in binary? To accomplish this, the most effiecent way currently is using a system called Two's Compliment. When a computer reads binary in this way, it treats the first bit as a negative (-). For the case of before 101 now becomes:</p>
+        <p class="code">101<sub>2</sub> = -1 * 2<sup>2</sup> + 0 * 2<sup>1</sup> + 1 * 2<sup>0</sup> = -4 + 0 + 1 = -3</p>
         <p>keep in mind, if the first bit is a 0, that cancels out the negative:</p>
-        <p class="code">0101 = -0 * 2<sup>3</sup> + 1 * 2<sup>2</sup> + 0 * 2<sup>1</sup> + 1 * 2<sup>0</sup> = -0 + 4 + 0 + 1 = 5</p>
+        <p class="code">0101<sub>2</sub> = -0 * 2<sup>3</sup> + 1 * 2<sup>2</sup> + 0 * 2<sup>1</sup> + 1 * 2<sup>0</sup> = -0 + 4 + 0 + 1 = 5</p>
         <p>When we think of out base 10 system, we intuit that a number can have infinte 0s infront of it. 12 = 012 = 0012 = 00012 = 0...12. The same thing happens in binary. 5<sub>10</sub> = 101 = 0101 = 00101 = 000101 = 0...101. But in Two's Compliment, when the first bit is negative (i.e. 1) such as: 101, there are infinite 1s infront, such as -4<sub>10</sub> = 101 = 1101 = 11101 = 1...101</p>
 
         <h3>-1 is the Opposite of 0, not 1</h3>
-        <p>When we think about the opposite of 0, what do you imagine? I would intuitively say 1 is the opposite, right? Well in computing 0 is represented by the binary code 0...0000000, all zeros. Theoretically (but not practically as we diont have infinite storage) there are an infite amount of zeros. Well the opposite to this is all 1s, makes sense! 1...1111111, with infinite 1s at the beggining. Well, it turn out that in Two's Compliment, inifinte 1s happens to equal -1. 1...111111 = -1. So the opposite of 0, is -1!</p>
+        <p>When we think about the opposite of 0, what do you imagine? I would intuitively say 1 is the opposite, right? Well in computing 0 is represented by the binary code 0...0000000, all zeros. Theoretically (but not practically as we don't have infinite storage) there are an infite amount of zeros. Well the opposite to this is all 1s, makes sense! 1...1111111, with infinite 1s at the beginning. Well, it turn out that in Two's Compliment, inifinte 1s happens to equal -1. 1...111111<sub>2</sub> = -1<sub>10</sub>. So the opposite of 0, is -1!</p>
 
         <h3>Bits & Bytes to Gigabytes</h3>
         <p>Binary is stored bytes. 1 byte is 8 bits. 1 bit is just a 0 or 1, so in this example there are 8 bits, and 1 byte. 1000 bytes makes 1 kilobyte. 1000 kilobytes makes 1 megabyte. 1000 megabytes makes 1 gigabyte. Your home computer may have 500 GB (gigabytes) of storage or your phone or tablet may have up to 32 GB. 32 Gigabytes is 256,000,000,000 bits. 256 Billion 0s and 1s!</p>
