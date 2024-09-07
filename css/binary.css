@@ -4,6 +4,7 @@ body {
 
 button {
     font-size: 2rem;
+    font-family: monospace;
     padding: 10px;
 }
 
@@ -12,5 +13,41 @@ button {
 }
 
 .display {
-    font-size: 2rem;
+    font-size: 2.5rem;
+    font-family: monospace;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+#info {
+    width: 40%;
+}
+
+#info p {
+    font-size: 1.25rem;
+}
+
+#info li {
+    font-size: 1.25rem;
+}
+
+
+.sources {
+    padding-top: 100px;
+}
+
+h3 {
+    padding-top: 30px;
+}
+
+.code {
+    font-family: monospace;
+}
+
+#word-bank{
+    background-color: rgb(255, 255, 116);
+    width: 40%
 }

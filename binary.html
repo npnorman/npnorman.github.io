@@ -13,23 +13,94 @@
     <h1>Binary Counter</h1>
     <h2>Nicholas Norman 2024</h2>
 
-    <div id="byteButtons">
-        <button id="128" value="128">0</button>
-        <button value="64">0</button>
-        <button value="32">0</button>
-        <button value="16">0</button>
-        <button value="8">0</button>
-        <button value="4">0</button>
-        <button value="2">0</button>
-        <button value="1">0</button>
+    <div class="flex">
+        <div id="byteButtons">
+            <button id="128" value="128">0</button>
+            <button value="64">0</button>
+            <button value="32">0</button>
+            <button value="16">0</button>
+            <button value="8">0</button>
+            <button value="4">0</button>
+            <button value="2">0</button>
+            <button value="1">0</button>
+        </div>
+    
+        <p class="display">&nbsp= <span id="total">0</span></p>
     </div>
-
-    <p class="display">= <span id="total">0</span></p>
 
     <input type="radio" id="bin" name="options" value="regular" checked="checked">
     <label for="bin">Binary</label>
     <input type="radio" id="twoscomp" name="options" value="regular">
     <label for="twoscomp">Two's Compliment</label>
+
+    <div id="info">
+        
+        <br><br><br><br><br>
+        <h2>Some Groovy Info About Binary</h2>
+
+        <h3>What is binary?</h3>
+        <p>Binary is base 2 system of counting, typically done by computers. This means that instead of using numbers from 0-9, binary uses 0-1. The computer uses this system to read any piece of information. No matter how big or small, the computer stores it as a set of 1s and 0s.</p>
+        
+        <h3>How to Count in Base 2</h3>
+        <p>going from right to left each bit is 2<sup>x</sup>, where x is its place. In base 10, our normal counting system, we can calculate a number as such:</p>
+        <p class="code">193 = 1 * 10<sup>2</sup> + 9 * 10<sup>1</sup> + 3 * 10<sup>0</sup> = 100 + 90 + 3</p>
+        <p>Similarly in base 2:</p>
+        <p class="code">101 = 1 * 2<sup>2</sup> + 0 * 2<sup>1</sup> + 1 * 2<sup>0</sup> = 4 + 0 + 1 = 5</p>
+        <p>This means the 8 binary bits in the counter really are adding the following numbers:</p>
+        <p class="code">64, 32, 16, 8, 4, 2, 1, 0 = 2<sup>7</sup>, 2<sup>6</sup>, 2<sup>5</sup>, 2<sup>4</sup>, 2<sup>3</sup>, 2<sup>2</sup>, 2<sup>1</sup>, 2<sup>0</sup>,</p>
+
+        <h3>What is Two's Compliment?</h3>
+        <p>In early computing, there rose a problem. How do you store a negative number in binary? To accomplish this, the most effiecent way currently is using a system called Two's Compliment. When a computer reads binary in this way, it treats the first bit as a negative (1). For the case of before 101 now becomes:</p>
+        <p class="code">101 = -1 * 2<sup>2</sup> + 0 * 2<sup>1</sup> + 1 * 2<sup>0</sup> = -4 + 0 + 1 = -3</p>
+        <p>keep in mind, if the first bit is a 0, that cancels out the negative:</p>
+        <p class="code">0101 = -0 * 2<sup>3</sup> + 1 * 2<sup>2</sup> + 0 * 2<sup>1</sup> + 1 * 2<sup>0</sup> = -0 + 4 + 0 + 1 = 5</p>
+        <p>When we think of out base 10 system, we intuit that a number can have infinte 0s infront of it. 12 = 012 = 0012 = 00012 = 0...12. The same thing happens in binary. 5<sub>10</sub> = 101 = 0101 = 00101 = 000101 = 0...101. But in Two's Compliment, when the first bit is negative (i.e. 1) such as: 101, there are infinite 1s infront, such as -4<sub>10</sub> = 101 = 1101 = 11101 = 1...101</p>
+
+        <h3>-1 is the Opposite of 0, not 1</h3>
+        <p>When we think about the opposite of 0, what do you imagine? I would intuitively say 1 is the opposite, right? Well in computing 0 is represented by the binary code 0...0000000, all zeros. Theoretically (but not practically as we diont have infinite storage) there are an infite amount of zeros. Well the opposite to this is all 1s, makes sense! 1...1111111, with infinite 1s at the beggining. Well, it turn out that in Two's Compliment, inifinte 1s happens to equal -1. 1...111111 = -1. So the opposite of 0, is -1!</p>
+
+        <h3>Bits & Bytes to Gigabytes</h3>
+        <p>Binary is stored bytes. 1 byte is 8 bits. 1 bit is just a 0 or 1, so in this example there are 8 bits, and 1 byte. 1000 bytes makes 1 kilobyte. 1000 kilobytes makes 1 megabyte. 1000 megabytes makes 1 gigabyte. Your home computer may have 500 GB (gigabytes) of storage or your phone or tablet may have up to 32 GB. 32 Gigabytes is 256,000,000,000 bits. 256 Billion 0s and 1s!</p>
+        <ul>
+            <li>1 bit</li>
+            <li>8 bits = 1 byte</li>
+            <li>1000 bytes = 1 kilobyte</li>
+            <li>1000 kilobytes = 1 megabyte</li>
+            <li>1000 megabytes = 1 gigabyte</li>
+            <li>1000 gigabytes = 1 terabyte</li>
+        </ul>
+
+        <figure>
+            <img src="https://proftomcrick.com/wp-content/uploads/2011/12/5mbharddrive1956.jpg?w=390&h=518">
+            <figcaption>This is what 5 MB of storage looked like in 1956, now your phone holds 6400 times as much storage! source: proftomcrick.com</figcaption>
+        </figure>
+
+        <h3>Storage Sizes</h3>
+        <p>Common storage sized for different types of data are:</p>
+        <ul>
+            <li>Integer (whole numbers): 4 bytes</li>
+            <li>Char (character): 1 byte</li>
+            <li>float (decimal point): 4 bytes</li>
+        </ul>
+    </div>
+
+    <div id="word-bank">
+        <h2>Word Bank</h2>
+        <ul>
+            <li>Bit: a unit of information one digit long. A 1 or 0.</li>
+            <li>Btye: this is 8 bits stored together. 8 bits = 1 byte.</li>
+            <li>Base: a base is the number of digits used in a counting system, denoted as base 10 = x<sub>10</sub>, base 2 = x<sub>2</sub>.</li>
+        </ul>
+    </div>
+
+    <div class="sources">
+        <h4>Sources</h4>
+        <ul>
+            <li><a target="_blank" href="https://en.wikipedia.org/wiki/Binary_number">wikipedia</a></li>
+            <li><a target="_blank" href="https://www.tutorialspoint.com/cprogramming/c_data_types.htm">tutorialspoint</a></li>
+            <li><a target="_blank" href="https://proftomcrick.com/2011/12/26/in-1956-5mb-was-big-enough-for-anyone/">proftomcrick (image)</a></li>
+        </ul>
+    </div>
 
     <script src="./js/binary.js"></script>
 </body>
