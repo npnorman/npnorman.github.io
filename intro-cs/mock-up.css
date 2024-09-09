@@ -1,0 +1,15 @@
+.code-block {
+    padding: 20px;
+    font-family: monospace;
+    background-color: lightgray;
+    width: 500px;
+}
+
+.code-comment {
+    color: green;
+}
+
+button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
