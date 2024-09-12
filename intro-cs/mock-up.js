@@ -7,7 +7,6 @@ output1 = document.getElementById("output1-0");
 function block1(varX) {
 
     var output = "";
-    var valid = false;
 
     if(isNaN(varX)) {
         if (varX == "true" || varX == "false") {
