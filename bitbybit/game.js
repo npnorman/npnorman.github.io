@@ -102,6 +102,10 @@ function cheat() {
     //do programmed code
     if (code == "cookies+1000") {
         bits += 1000;
+    } else if (code == "don cheatle") {
+        for (var n = 0; n < bitMakers.length; n++) {
+            bitMakers[n].buy();
+        }
     }
 }
 
