@@ -1,0 +1,21 @@
+.bitclicker {
+    font-family: monospace;
+    font-size: 10rem;
+    width: 200px;
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.bit-1 {
+    background-color: green;
+}
+
+.bit-2 {
+    background-color: darkgreen;
+}
+
+.bitclicker p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
