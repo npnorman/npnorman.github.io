@@ -3,10 +3,14 @@
 //data
 var bits = 0;
 
-//display
+//elements
 var elOutput = document.getElementById("bits");
 var elBitClicker = document.getElementById("bitclicker");
 var elBitClickerP = document.getElementById("bitclickerp");
+var elCheatCodeInput = document.getElementById("cheatcode-txt");
+var elCheatCodeBtn = document.getElementById("cheatcode-btn");
+
+//objects
 
 //process input
 elBitClicker.addEventListener("mousedown", function(e) {
@@ -16,6 +20,10 @@ elBitClicker.addEventListener("mousedown", function(e) {
 elBitClicker.addEventListener("mouseup", function(e) {
     bitClickedUp();
 });
+
+elCheatCodeBtn.addEventListener("click", function() {
+    cheat();
+})
 
 //process input - functions
 function bitClickedDown() {
@@ -39,6 +47,18 @@ function bitClickedUp() {
     //toggle color
     elBitClicker.classList.toggle("bit-1");
     elBitClicker.classList.toggle("bit-2");
+}
+
+function cheat() {
+    code = elCheatCodeInput.value;
+
+    //clear cheat bar
+    elCheatCodeInput.value = "";
+
+    //do programmed code
+    if (code == "cookies+1000") {
+        bits += 1000;
+    }
 }
 
 //gameloop
