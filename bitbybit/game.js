@@ -111,7 +111,7 @@ function update() {
 
     //update bits from bitMakers
     for (var j = 0; j < bitMakers.length; j++) {
-        bits += bitMakers[j].update();
+        bits += bitMakers[j].update() * (1/fps);
     }
 }
 
@@ -146,7 +146,7 @@ function gameloop () {
     update();
 
     //display <-- have all bitMaker and upgrade displays updated (not linked to items)
-    elOutput.innerHTML = bits;
+    elOutput.innerHTML = Math.round(bits);
 }
 
 window.setInterval(gameloop, interval);
