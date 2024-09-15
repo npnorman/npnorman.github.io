@@ -19,3 +19,9 @@
     margin-top: 0;
     margin-bottom: 0;
 }
+
+.bitMakers {
+    font-size: 1.2rem;
+    font-family: monospace;
+    font-weight: bold;
+}
