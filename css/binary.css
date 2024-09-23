@@ -1,5 +1,7 @@
 body {
     background-color:papayawhip;
+    
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 button {
@@ -20,10 +22,13 @@ button {
 .flex {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 #info {
-    width: 40%;
+    width: 70%;
+    margin: auto;
+    line-height: 2rem;
 }
 
 #info p {
@@ -49,5 +54,30 @@ h3 {
 
 #word-bank{
     background-color: rgb(255, 255, 116);
-    width: 40%
+    width: 50%
+}
+
+.info-block {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 20px;
+
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.info-block h3 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 10px;
+}
+
+.info-block p {
+    margin-top: 0px;
+}
+
+.binary-block {
+    display: flex;
+    justify-content: center;
 }
