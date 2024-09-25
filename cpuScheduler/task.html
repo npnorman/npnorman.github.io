@@ -3,10 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./task.css">
     <title>CPU Scheduler</title>
 </head>
 <body>
     <h1>(JS) CPU Scheduler Sim</h1>
     <h2>Nicholas Norman, September 2024</h2>
+
+    <div>
+
+        <table class="tasks" id="taskTable">
+            <caption>Tasks</caption>
+            <tr>
+                <th>Name</th>
+                <th>Burst Time (ms)</th>
+                <th>Arrival Time (ms)</th>
+                <th>Priority (0-7)</th>
+            </tr>
+        </table>
+    </div>
+
+    <script src="./task.js"></script>
 </body>
 </html>

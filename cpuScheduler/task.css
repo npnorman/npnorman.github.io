@@ -4,3 +4,20 @@ CSS for CPU Scheduler Sim
 Nicholas Normn
 Sept 2024
 */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.tasks {
+    border-collapse: separate;
+}
+
+.tasks td, th {
+    border: 1px solid rgb(149, 149, 149);
+    padding: 10px;
+}
+
+.tasks tr:nth-child(even) {
+    background-color: #dddddd;
+  }
