@@ -10,18 +10,21 @@
     <h1>(JS) CPU Scheduler Sim</h1>
     <h2>Nicholas Norman, September 2024</h2>
 
-    <div>
+    <table class="tasks" id="taskTable">
+        <caption>Tasks</caption>
+        <tr>
+            <th>Name</th>
+            <th>Burst Time (ms)</th>
+            <th>Arrival Time (ms)</th>
+            <th>Priority (0-7)</th>
+        </tr>
+    </table>
 
-        <table class="tasks" id="taskTable">
-            <caption>Tasks</caption>
-            <tr>
-                <th>Name</th>
-                <th>Burst Time (ms)</th>
-                <th>Arrival Time (ms)</th>
-                <th>Priority (0-7)</th>
-            </tr>
-        </table>
-    </div>
+    <p>Ready Queue [<span id="readyQueue"></span>]</p>
+    <p>CPU (<span id="cpu"></span>)</p>
+    <p>Completed [<span id="finished"></span>]</p>
+
+    <p><button id="startSim">Start Simulation</button> <span id="buttonConfirmation"></span></p>
 
     <script src="./task.js"></script>
 </body>

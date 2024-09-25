@@ -22,6 +22,11 @@ var finished = [] //holds finsihed tasks
 //elements
 
 var elTaskTable = document.getElementById("taskTable");
+var btnStartSim = document.getElementById("startSim");
+var elBtnConfirmation = document.getElementById("buttonConfirmation");
+var elReadyQueue = document.getElementById("readyQueue");
+var elCPU = document.getElementById("cpu");
+var elFinished = document.getElementById("finished");
 
 //Task obj
 class Task {
@@ -102,7 +107,7 @@ function compareArrival(a, b) {
 arrivalSum = 0;
 for (var i=0; i < 6; i++) {
     var num = i;
-    var burst = Math.floor(Math.random() * 20);
+    var burst = Math.floor(Math.random() * 23 + 1);
     var arrival = arrivalSum + Math.floor(Math.random() * 4);
     arrivalSum = arrival;
     var priority = Math.floor(Math.random() * 8);
@@ -126,15 +131,82 @@ function displayTasks() {
         var priority = newRow.insertCell(3);
 
         //populate data
-        name.innerHTML = "P<sub>" + tasks[i].num + "<sub>";
+        name.innerHTML = "P<sub>" + tasks[i].num + "</sub>";
         burst.innerHTML = tasks[i].burst;
         arrival.innerHTML = tasks[i].arrival;
         priority.innerHTML = tasks[i].priority;
     }
 }
 
-//simloop
-//update data
-//display data
+function displayTaskList(element, list) {
+    
+    tmp = "";
+    
+    for (var i=0; i < list.length; i++) {
+        tmp += "P<sub>" + list[i].num + "</sub>, ";
+    }
 
+    element.innerHTML = tmp;
+}
+
+/*********************LOOP*************************/
+
+//display tasks before running
 displayTasks();
+
+//input and output
+btnStartSim.addEventListener("click", function() {
+    //start the sim
+    start();
+
+    //confirm starting
+    elBtnConfirmation.innerHTML = "Started Simulation"
+
+    //revoke button access
+    btnStartSim.disabled = true;
+});
+
+//start loop
+function start() {
+    //this is called before the simloop starts
+
+    console.log("starting");
+
+    //load tasks into ready queue
+    for (var i=0; i < tasks.length; i++) {
+        readyQueue.push(tasks[i]);
+    }
+
+    setInterval(simLoop, 1000);
+}
+
+//simloop
+function simLoop() {
+    //process input (done in event listeners)
+    //update data
+    update();
+
+    //display data
+    display();
+}
+
+function update() {
+    //this is called every frame
+    //here is where you update data
+}
+
+function display() {
+    //this is called every frame
+    //this is where you display data
+
+    //display ready queue
+    displayTaskList(elReadyQueue, readyQueue);
+
+    //display cpu
+
+    //display finished
+}
+
+function end() {
+    //this is called when the simloop ends
+}
