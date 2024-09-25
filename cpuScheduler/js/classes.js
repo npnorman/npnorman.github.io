@@ -25,7 +25,7 @@ class Task {
         //tracking data
         this.start = null; //start time
         this.finish = null; //finish time
-        this.waiting = null; //time spent waiting
+        this.waiting = 0; //time spent waiting
     }
 
     //update criteria
@@ -47,7 +47,7 @@ class Task {
 
     wait() {
         //add one ms to wait time while in ready queue
-        this.waitingTime++;
+        this.waiting++;
     }
 
     //Criteria
@@ -118,4 +118,58 @@ function displayTaskList(element, list) {
     }
 
     element.innerHTML = tmp;
+}
+
+class ReadyQueue {
+
+    //ReadyQueue class
+    /*
+    Goal: Be the ready queue
+    Input: element
+    Output: New Task
+    */
+
+    constructor(element) {
+        this.element = element;
+        this.queue = [];
+    }
+
+    nextTask() {
+        //some algorithm to figure out which task to return
+        return this.queue.pop()
+    }
+
+    insertTask(task) {
+        this.queue.push(task);
+    }
+
+    hasTask() {
+        output = false;
+
+        //does the readyqueue have any tasks
+        if (this.queue.length > 0) {
+            output = true;
+        }
+
+        return output;
+    }
+
+    update() {
+        //call wait on each task
+        for (var i=0; i < this.queue.length; i++) {
+            this.queue[i].wait();
+        }
+    }
+
+    display() {
+        //display tasks with specified element
+        tmp = "";
+    
+        for (var i=0; i < this.queue.length; i++) {
+            tmp += "P<sub>" + this.queue[i].num + "</sub>, ";
+        }
+
+        this.element.innerHTML = tmp;
+    }
+
 }

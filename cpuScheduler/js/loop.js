@@ -8,15 +8,16 @@ Sept 2024
 //Data to store
 
 var tasks = []; //hold all tasks (should stay constant when running)
-var readyQueue = []; //holds tasks that are waiting
-var cpu = null; //holds 1 task that is currently running
-var finished = [] //holds finsihed tasks
+var speed = 0.5 * 1000;
+var time = 0; //stores current time step
 
 //elements
 
 var elTaskTable = document.getElementById("taskTable");
 var btnStartSim = document.getElementById("startSim");
 var elBtnConfirmation = document.getElementById("buttonConfirmation");
+var inInterval = document.getElementById("interval");
+var btnChangeSpeed = document.getElementById("changeSpeed");
 var elReadyQueue = document.getElementById("readyQueue");
 var elCPU = document.getElementById("cpu");
 var elFinished = document.getElementById("finished");
@@ -30,24 +31,12 @@ for (var i=0; i < 6; i++) {
     arrivalSum = arrival;
     var priority = Math.floor(Math.random() * 8);
 
-    tasks.push( new Task(num,burst,arrival, priority));
+    tasks.push(new Task(num,burst,arrival, priority));
 }
 tasks.sort(compareArrival);
 
 //display tasks before running
 displayTasks(tasks);
-
-//input and output
-btnStartSim.addEventListener("click", function() {
-    //start the sim
-    start();
-
-    //confirm starting
-    elBtnConfirmation.innerHTML = "Started Simulation"
-
-    //revoke button access
-    btnStartSim.disabled = true;
-});
 
 //start loop
 function start() {
@@ -55,12 +44,10 @@ function start() {
 
     console.log("starting");
 
-    //load tasks into ready queue
-    for (var i=0; i < tasks.length; i++) {
-        readyQueue.push(tasks[i]);
-    }
+    btnChangeSpeed.disabled = true;
+    inInterval.disabled = true;
 
-    setInterval(simLoop, 1000);
+    setInterval(simLoop, speed);
 }
 
 //simloop
@@ -76,6 +63,8 @@ function simLoop() {
 function update() {
     //this is called every frame
     //here is where you update data
+
+    console.log("hello world");
 }
 
 function display() {
@@ -83,7 +72,6 @@ function display() {
     //this is where you display data
 
     //display ready queue
-    displayTaskList(elReadyQueue, readyQueue);
 
     //display cpu
 
@@ -93,3 +81,23 @@ function display() {
 function end() {
     //this is called when the simloop ends
 }
+
+/*****************Input*********************/
+
+//input and output
+btnStartSim.addEventListener("click", function() {
+    //start the sim
+    start();
+
+    //confirm starting
+    elBtnConfirmation.innerHTML = "Started Simulation"
+
+    //revoke button access
+    btnStartSim.disabled = true;
+});
+
+btnChangeSpeed.addEventListener("click", function() {
+    speed = inInterval.value * 1000;
+})
+
+/*******************TESTING****************/
