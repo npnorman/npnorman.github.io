@@ -71,7 +71,7 @@ class Task {
 
 //sorting algorithm for tasks based on arrival time
 function compareArrival(a, b) {
-    output = 0;
+     var output = 0;
 
     if (a.arrival < b.arrival) {
         //a came before b
@@ -144,7 +144,7 @@ class ReadyQueue {
     }
 
     hasProcess() {
-        output = false;
+         var output = false;
 
         //does the readyqueue have any tasks
         if (this.queue.length > 0) {
@@ -199,7 +199,7 @@ class CPU {
 
     hasProcess() {
 
-        output = false;
+        var output = false;
 
         if (this.currentTask != null) {
             output = true;
@@ -227,5 +227,74 @@ class CPU {
         if (this.currentTask != null) {
             this.element.innerHTML = "P<sub>" + this.currentTask.num + "</sub>";
         }
+    }
+}
+
+class Scheduler {
+
+    //Scheduler class
+    /*
+    Goal: Implement the ready queue and cpu as 
+    Input: tasks
+    Output: processing
+    */
+
+    constructor(rqElement, cpuElement, finishedElement) {
+        this.dormant = []; //tasks that have not arrived
+        this.rq = new ReadyQueue(rqElement);
+        this.cpu = new CPU(cpuElement);
+        this.finsihed = []; //finsihed tasks
+        this.elFinished = finishedElement;
+    }
+
+    loadProcesses(tasks) {
+        for (var i = 0; i < tasks.length(); i++) {
+            this.dormant.push(structuredClone(tasks[i]));
+        }
+    }
+
+    isFinished() {
+        //if no tasks in dormant, rq, or cpu
+
+        var output = false;
+
+        if (this.dormant.length == 0) {
+            if (this.rq.hasProcess() == false) {
+                if (this.cpu.hasProcess() == false) {
+                    output = true;
+                }
+            }
+        }
+
+        return output;
+    }
+
+    getStats() {
+        //calculate stats and return them here!
+        //averages of all the tasks (Should be run when all tasks are in finished)
+    }
+
+    displayFinished() {
+
+        var tmp = "";
+
+        for (var i=0; i < this.finished.length; i++) {
+            tmp += "P<sub>" + this.finished[i].num + "</sub>";
+        }
+    }
+
+    update() {
+        //do operations to move process along
+
+        this.rq.update();
+        this.cpu.update();
+    }
+
+    display() {
+        //display all subclasses
+
+        this.rq.display();
+        this.cpu.display();
+        this.displayFinished();
     }
 }
