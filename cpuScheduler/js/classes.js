@@ -134,16 +134,16 @@ class ReadyQueue {
         this.queue = [];
     }
 
-    nextTask() {
+    nextProcess() {
         //some algorithm to figure out which task to return
         return this.queue.pop()
     }
 
-    insertTask(task) {
+    insertProcess(task) {
         this.queue.push(task);
     }
 
-    hasTask() {
+    hasProcess() {
         output = false;
 
         //does the readyqueue have any tasks
@@ -163,7 +163,7 @@ class ReadyQueue {
 
     display() {
         //display tasks with specified element
-        tmp = "";
+        var tmp = "";
     
         for (var i=0; i < this.queue.length; i++) {
             tmp += "P<sub>" + this.queue[i].num + "</sub>, ";
@@ -172,4 +172,60 @@ class ReadyQueue {
         this.element.innerHTML = tmp;
     }
 
+}
+
+class CPU {
+
+    //CPU class
+    /*
+    Goal: Hold a task and process it
+    Input: tasks
+    Output: processing
+    */
+
+    constructor(element) {
+        this.currentTask = null;
+        this.idle = 0;
+        this.element = element;
+    }
+
+    update() {
+        //process the current task
+        if (this.currentTask != null) {
+            //make sure there is a task
+            this.currentTask.process;
+        }
+    }
+
+    hasProcess() {
+
+        output = false;
+
+        if (this.currentTask != null) {
+            output = true;
+        }
+
+        return output;
+    }
+
+    insertProcess(task) {
+        //insert into the current task
+        this.currentTask = task;
+    }
+
+    getCurrentProcess() {
+        return this.currentTask;
+    }
+
+    idling() {
+        this.idle++;
+
+        return this.idle;
+    }
+
+    display() {
+        if (this.currentTask != null) {
+            this.element.innerHTML = "P<sub>" + this.currentTask.num + "</sub>";
+        }
+    }
 }

@@ -101,3 +101,24 @@ btnChangeSpeed.addEventListener("click", function() {
 })
 
 /*******************TESTING****************/
+
+rq = new ReadyQueue(elReadyQueue);
+cpu = new CPU(elCPU);
+
+rq.insertProcess(tasks[0]); //shallow copy for now
+rq.insertProcess(tasks[1]);
+
+rq.display();
+
+cpu.display();
+
+console.log(cpu.hasProcess());
+
+cpu.insertProcess(rq.nextProcess());
+
+rq.display();
+cpu.display();
+
+rq.update();
+cpu.update();
+cpu.idling();
