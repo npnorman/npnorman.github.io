@@ -24,9 +24,12 @@
     <p>CPU (<span id="cpu"></span>)</p>
     <p>Completed [<span id="finished"></span>]</p>
 
-    <p><button id="startSim">Start Simulation</button> <span id="buttonConfirmation"></span></p>
-    <p><input id="interval" type="number" max="1" min="0.1" step="0.1" value="0.5"> seconds <br>(Cannot be changed suring simulation)</p>
-    <button id="changeSpeed">Change Speed</button>
+    <hr>
+
+    <p><button id="startSim">Start Simulation</button> <button id="endSim">End Simulation</button> <span id="buttonConfirmation"></span></p>
+    <p><input id="interval" type="number" max="5" min="0.1" step="0.1" value="1"> seconds <button id="changeSpeed">Change Speed</button></p>
+    <br>
+    <p>For now, to reload: <button id="reload">Reload Sim</button></p>
 
     <script src="./js/classes.js"></script>
     <script src="./js/loop.js"></script>

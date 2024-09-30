@@ -9,77 +9,86 @@ Sept 2024
 
 var tasks = []; //hold all tasks (should stay constant when running)
 var speed = 0.5 * 1000;
-var time = 0; //stores current time step
+var endLoop = false; //this signals to end the loop
 
 //elements
-
 var elTaskTable = document.getElementById("taskTable");
-var btnStartSim = document.getElementById("startSim");
 var elBtnConfirmation = document.getElementById("buttonConfirmation");
 var inInterval = document.getElementById("interval");
-var btnChangeSpeed = document.getElementById("changeSpeed");
+
+//scheduling parts
 var elReadyQueue = document.getElementById("readyQueue");
 var elCPU = document.getElementById("cpu");
 var elFinished = document.getElementById("finished");
 
-//create some test data to populate tasks
-arrivalSum = 0;
-for (var i=0; i < 6; i++) {
-    var num = i;
-    var burst = Math.floor(Math.random() * 23 + 1);
-    var arrival = arrivalSum + Math.floor(Math.random() * 4);
-    arrivalSum = arrival;
-    var priority = Math.floor(Math.random() * 8);
+//buttons
+var btnStartSim = document.getElementById("startSim");
+var btnEndSim = document.getElementById("endSim");
+var btnChangeSpeed = document.getElementById("changeSpeed");
 
-    tasks.push(new Task(num,burst,arrival, priority));
-}
-tasks.sort(compareArrival);
+//Schedulers
+fcfs = new Scheduler(elReadyQueue, elCPU, elFinished);
 
-//display tasks before running
-displayTasks(tasks);
 
 //start loop
 function start() {
     //this is called before the simloop starts
 
+    //clear all data and displays (in case of restart)
+
+    //create tasks
+    tasks = randTasks(5, 23);
+
+    //display task table
+    displayTasks(tasks);
+
+    //load tasks into schedulers
+    fcfs.loadProcesses(tasks);
+
     console.log("starting");
 
-    btnChangeSpeed.disabled = true;
-    inInterval.disabled = true;
-
-    setInterval(simLoop, speed);
+    setTimeout(simLoop, speed);
 }
 
 //simloop
 function simLoop() {
     //process input (done in event listeners)
+
     //update data
     update();
 
     //display data
     display();
+
+    //check to keep going
+    if (endLoop == false) {
+        //continue the loop
+        setTimeout(simLoop, speed);
+    } else {
+        end();
+    }
 }
 
 function update() {
     //this is called every frame
     //here is where you update data
-
-    console.log("hello world");
+    console.log("update");
+    fcfs.update();
 }
 
 function display() {
     //this is called every frame
     //this is where you display data
 
-    //display ready queue
-
-    //display cpu
-
-    //display finished
+    fcfs.display();
 }
 
 function end() {
     //this is called when the simloop ends
+
+    console.log("ending");
+
+    //show stats
 }
 
 /*****************Input*********************/
@@ -90,35 +99,23 @@ btnStartSim.addEventListener("click", function() {
     start();
 
     //confirm starting
-    elBtnConfirmation.innerHTML = "Started Simulation"
+    elBtnConfirmation.innerHTML = "Started Simulation";
+});
 
-    //revoke button access
-    btnStartSim.disabled = true;
+btnEndSim.addEventListener("click", function() {
+    //end the sim
+    endLoop = true;
+
+    //confirm ending
+    elBtnConfirmation.innerHTML = "Ended Simulation";
 });
 
 btnChangeSpeed.addEventListener("click", function() {
     speed = inInterval.value * 1000;
-})
+});
+
+document.getElementById("reload").addEventListener("click", function() {
+    location.reload();
+});
 
 /*******************TESTING****************/
-
-rq = new ReadyQueue(elReadyQueue);
-cpu = new CPU(elCPU);
-
-rq.insertProcess(tasks[0]); //shallow copy for now
-rq.insertProcess(tasks[1]);
-
-rq.display();
-
-cpu.display();
-
-console.log(cpu.hasProcess());
-
-cpu.insertProcess(rq.nextProcess());
-
-rq.display();
-cpu.display();
-
-rq.update();
-cpu.update();
-cpu.idling();

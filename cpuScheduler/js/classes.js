@@ -69,6 +69,26 @@ class Task {
 
 }
 
+//create some test data to populate tasks
+function randTasks(stop, maxBurst) {
+
+    var t = [];
+
+    arrivalSum = 0;
+    for (var i=0; i < stop; i++) {
+        var num = i;
+        var burst = Math.floor(Math.random() * maxBurst + 1);
+        var arrival = arrivalSum + Math.floor(Math.random() * 4);
+        arrivalSum = arrival;
+        var priority = Math.floor(Math.random() * 8);
+
+        t.push(new Task(num,burst,arrival, priority));
+    }
+    t.sort(compareArrival);
+
+    return t;
+}
+
 //sorting algorithm for tasks based on arrival time
 function compareArrival(a, b) {
      var output = 0;
@@ -243,14 +263,25 @@ class Scheduler {
         this.dormant = []; //tasks that have not arrived
         this.rq = new ReadyQueue(rqElement);
         this.cpu = new CPU(cpuElement);
-        this.finsihed = []; //finsihed tasks
+        this.finished = []; //finsihed tasks
         this.elFinished = finishedElement;
+        this.time = 0; //this is the time (in whatever unit)
     }
 
     loadProcesses(tasks) {
-        for (var i = 0; i < tasks.length(); i++) {
+        for (var i = 0; i < tasks.length; i++) {
             this.dormant.push(structuredClone(tasks[i]));
         }
+    }
+
+    nextFrame() {
+        //increment time by 1
+        this.time++;
+    }
+
+    getTime() {
+        //get time
+        return this.time;
     }
 
     isFinished() {
@@ -286,8 +317,41 @@ class Scheduler {
     update() {
         //do operations to move process along
 
-        this.rq.update();
-        this.cpu.update();
+        //if the current task is finished
+            //set finished time
+            //move to finished
+
+        //for each task that is dormant,
+        for (var i=0; i < this.dormant.length; i++) {
+            //check to see if it should be added to the ready queue
+            if (this.dormant[i].arrival <= this.time) {
+                //add to ready queue
+
+                //remove from dormant
+                var currentTask = this.dormant.splice(i, 1)[i];
+
+                this.rq.insertProcess(currentTask);
+
+                //set back one because one was removed
+                i--;
+            }
+        }
+
+        //CPU
+            //If cpu is not currently processing
+                //the scheduler gives the CPU a new process from the ready queue
+                //if the process is null,
+                    //set the start time
+                //else
+            //Else,
+                //idle cpu
+        
+        //the scheduler notifies the CPU, RQ to update (wait and process)
+        //this.rq.update();
+        //this.cpu.update();
+
+        //next frame
+        this.nextFrame();
     }
 
     display() {
