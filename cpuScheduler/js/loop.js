@@ -8,6 +8,8 @@ Sept 2024
 //Data to store
 
 var tasks = []; //hold all tasks (should stay constant when running)
+var taskCount = 5;
+var taskMaxBurst = 10;
 var speed = 0.5 * 1000;
 var endLoop = false; //this signals to end the loop
 
@@ -15,6 +17,8 @@ var endLoop = false; //this signals to end the loop
 var elTaskTable = document.getElementById("taskTable");
 var elBtnConfirmation = document.getElementById("buttonConfirmation");
 var inInterval = document.getElementById("interval");
+var inTaskCount = document.getElementById("taskNum");
+var inMaxBurst = document.getElementById("maxBurst");
 
 //scheduling parts
 var elReadyQueue = document.getElementById("readyQueue");
@@ -25,6 +29,7 @@ var elFinished = document.getElementById("fin");
 var btnStartSim = document.getElementById("startSim");
 var btnEndSim = document.getElementById("endSim");
 var btnChangeSpeed = document.getElementById("changeSpeed");
+var btnUpdateTasks = document.getElementById("updateTaskParam");
 
 //Schedulers
 fcfs = new Scheduler(elReadyQueue, elCPU, elFinished);
@@ -36,12 +41,11 @@ function start() {
 
     //clear all data and displays (in case of restart)
 
-    //create tasks
-    tasks = randTasks(5, 20);
+    //close out task editor
+    btnUpdateTasks.disabled = true;
 
-    for (var i=0; i < tasks.length; i++) {
-        tasks[i].arrival = 0;
-    }
+    //create tasks
+    tasks = randTasks(taskCount, taskMaxBurst);
 
     //display task table
     displayTasks(tasks);
@@ -120,6 +124,13 @@ btnChangeSpeed.addEventListener("click", function() {
 
 document.getElementById("reload").addEventListener("click", function() {
     location.reload();
+});
+
+//task parameters
+btnUpdateTasks.addEventListener("click", function() {
+    taskMaxBurst = inMaxBurst.value;
+    taskCount = inTaskCount.value;
+    elBtnConfirmation.innerHTML = "Updated Tasks";
 });
 
 /*******************TESTING****************/
