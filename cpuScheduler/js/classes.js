@@ -248,6 +248,14 @@ class CPU {
         return this.currentTask;
     }
 
+    popProcess() {
+        var tmpProcess = this.currentTask.clone();
+
+        this.currentTask = null;
+
+        return tmpProcess;
+    }
+
     idling() {
         this.idle++;
 
@@ -256,7 +264,9 @@ class CPU {
 
     display() {
         if (this.currentTask != null) {
-            this.element.innerHTML = "P<sub>" + this.currentTask.num + "</sub>[start:" + this.currentTask.start + " rem:" + this.currentTask.remaining + "]";
+            this.element.innerHTML = "P<sub>" + this.currentTask.num + "</sub> [start:" + this.currentTask.start + " rem:" + this.currentTask.remaining + "], ";
+        } else {
+            this.element.innerHTML = "";
         }
     }
 }
@@ -321,16 +331,24 @@ class Scheduler {
         var tmp = "";
 
         for (var i=0; i < this.finished.length; i++) {
-            tmp += "P<sub>" + this.finished[i].num + "</sub>";
+            tmp += "P<sub>" + this.finished[i].num + "</sub>" + " [fin:" + this.finished[i].finish + "], ";
         }
+
+        this.elFinished.innerHTML = tmp;
     }
 
     update() {
         //do operations to move process along
 
         //if the current task is finished
-            //set finished time
-            //move to finished
+        if (this.cpu.hasProcess()) {
+            if (this.cpu.currentTask.remaining <= 0) {
+                //set finished time
+                this.cpu.currentTask.finishTask(this.time);
+                //move to finished
+                this.finished.push(this.cpu.popProcess());
+            }
+        }
 
         //for each task that is dormant,
         for (var i=0; i < this.dormant.length; i++) {

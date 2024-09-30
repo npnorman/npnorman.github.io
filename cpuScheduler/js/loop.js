@@ -19,7 +19,7 @@ var inInterval = document.getElementById("interval");
 //scheduling parts
 var elReadyQueue = document.getElementById("readyQueue");
 var elCPU = document.getElementById("cpu");
-var elFinished = document.getElementById("finished");
+var elFinished = document.getElementById("fin");
 
 //buttons
 var btnStartSim = document.getElementById("startSim");
@@ -37,7 +37,7 @@ function start() {
     //clear all data and displays (in case of restart)
 
     //create tasks
-    tasks = randTasks(5, 23);
+    tasks = randTasks(5, 5);
 
     //display task table
     displayTasks(tasks);
