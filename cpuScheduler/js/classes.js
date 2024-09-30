@@ -67,6 +67,17 @@ class Task {
         return this.start - this.arrival;
     }
 
+    clone() {
+        var clonedTask = new Task(this.num, this.burst, this.arrival, this.priority);
+
+        clonedTask.finish = this.finish;
+        clonedTask.remaining = this.remaining;
+        clonedTask.start = this.start;
+        clonedTask.waiting = this.waiting;
+
+        return clonedTask;
+    }
+
 }
 
 //create some test data to populate tasks
@@ -156,7 +167,7 @@ class ReadyQueue {
 
     nextProcess() {
         //some algorithm to figure out which task to return
-        return this.queue.pop()
+        return this.queue.pop();
     }
 
     insertProcess(task) {
@@ -213,7 +224,7 @@ class CPU {
         //process the current task
         if (this.currentTask != null) {
             //make sure there is a task
-            this.currentTask.process;
+            this.currentTask.process();
         }
     }
 
@@ -245,7 +256,7 @@ class CPU {
 
     display() {
         if (this.currentTask != null) {
-            this.element.innerHTML = "P<sub>" + this.currentTask.num + "</sub>";
+            this.element.innerHTML = "P<sub>" + this.currentTask.num + "</sub>[start:" + this.currentTask.start + " rem:" + this.currentTask.remaining + "]";
         }
     }
 }
@@ -270,7 +281,7 @@ class Scheduler {
 
     loadProcesses(tasks) {
         for (var i = 0; i < tasks.length; i++) {
-            this.dormant.push(structuredClone(tasks[i]));
+            this.dormant.push(tasks[i].clone());
         }
     }
 
@@ -339,16 +350,32 @@ class Scheduler {
 
         //CPU
             //If cpu is not currently processing
-                //the scheduler gives the CPU a new process from the ready queue
-                //if the process is null,
-                    //set the start time
-                //else
-            //Else,
+            if (this.cpu.hasProcess() == false) {
+
+                //if there is a process in the ready queue
+                if(this.rq.hasProcess()) {
+
+                    //get next process
+                    var next = this.rq.nextProcess();
+
+                    //if the process start time is null,
+                    if (next.start == null) {
+                        //set the start time
+                        next.startTask(this.time);
+                    }
+
+                    //the scheduler gives the CPU a new process from the ready queue
+                    this.cpu.insertProcess(next);
+                }
+            } else {
+                //Else,
                 //idle cpu
+                this.cpu.idling();
+            }
         
         //the scheduler notifies the CPU, RQ to update (wait and process)
         //this.rq.update();
-        //this.cpu.update();
+        this.cpu.update();
 
         //next frame
         this.nextFrame();
