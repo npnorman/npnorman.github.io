@@ -37,7 +37,11 @@ function start() {
     //clear all data and displays (in case of restart)
 
     //create tasks
-    tasks = randTasks(5, 5);
+    tasks = randTasks(5, 20);
+
+    for (var i=0; i < tasks.length; i++) {
+        tasks[i].arrival = 0;
+    }
 
     //display task table
     displayTasks(tasks);

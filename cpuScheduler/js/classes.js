@@ -167,7 +167,11 @@ class ReadyQueue {
 
     nextProcess() {
         //some algorithm to figure out which task to return
-        return this.queue.pop();
+        //auto fcfs
+
+        var tmpTask = this.queue.splice(0,1)[0];
+
+        return tmpTask.clone();
     }
 
     insertProcess(task) {
