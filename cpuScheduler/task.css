@@ -80,3 +80,7 @@ body {
     padding: 10px;
     width: fit-content;
 }
+
+.dev-test {
+    display: none;
+}
