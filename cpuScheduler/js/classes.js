@@ -5,6 +5,76 @@ Nicholas Normn
 Sept 2024
 */
 
+//create some test data to populate tasks
+function randTasks(stop, maxBurst) {
+
+    var t = [];
+
+    arrivalSum = 0;
+    for (var i=0; i < stop; i++) {
+        var num = i;
+        var burst = Math.floor(Math.random() * maxBurst + 1);
+        var arrival = arrivalSum + Math.floor(Math.random() * 4);
+        arrivalSum = arrival;
+        var priority = Math.floor(Math.random() * 8);
+
+        t.push(new Task(num,burst,arrival, priority));
+    }
+    t.sort(compareArrival);
+
+    return t;
+}
+
+//sorting algorithm for tasks based on arrival time
+function compareArrival(a, b) {
+     var output = 0;
+
+    if (a.arrival < b.arrival) {
+        //a came before b
+        output = -1;
+    } else if (a.arrival > b.arrival) {
+        //a came after b
+        output = 1;
+    } else {
+        //a and b are the same
+        output = 0;
+    }
+
+    return output;
+}
+
+//function to display tasks
+function displayTasks(tasks) {
+    //display the tasks in the task table
+
+    for (var i=0; i < tasks.length; i++) {
+        //create a new row
+        var newRow = elTaskTable.insertRow(-1);
+
+        //insert data into the rows
+        var name = newRow.insertCell(0);
+        var burst = newRow.insertCell(1);
+        var arrival = newRow.insertCell(2);
+        var priority = newRow.insertCell(3);
+
+        //populate data
+        name.innerHTML = "P<sub>" + tasks[i].num + "</sub>";
+        burst.innerHTML = tasks[i].burst;
+        arrival.innerHTML = tasks[i].arrival;
+        priority.innerHTML = tasks[i].priority;
+    }
+}
+
+function displayTaskList(element, list) {
+    
+    tmp = "";
+    
+    for (var i=0; i < list.length; i++) {
+        tmp += "P<sub>" + list[i].num + "</sub>, ";
+    }
+
+    element.innerHTML = tmp;
+}
 //Task obj
 class Task {
 
@@ -80,77 +150,6 @@ class Task {
 
 }
 
-//create some test data to populate tasks
-function randTasks(stop, maxBurst) {
-
-    var t = [];
-
-    arrivalSum = 0;
-    for (var i=0; i < stop; i++) {
-        var num = i;
-        var burst = Math.floor(Math.random() * maxBurst + 1);
-        var arrival = arrivalSum + Math.floor(Math.random() * 4);
-        arrivalSum = arrival;
-        var priority = Math.floor(Math.random() * 8);
-
-        t.push(new Task(num,burst,arrival, priority));
-    }
-    t.sort(compareArrival);
-
-    return t;
-}
-
-//sorting algorithm for tasks based on arrival time
-function compareArrival(a, b) {
-     var output = 0;
-
-    if (a.arrival < b.arrival) {
-        //a came before b
-        output = -1;
-    } else if (a.arrival > b.arrival) {
-        //a came after b
-        output = 1;
-    } else {
-        //a and b are the same
-        output = 0;
-    }
-
-    return output;
-}
-
-//function to display tasks
-function displayTasks(tasks) {
-    //display the tasks in the task table
-
-    for (var i=0; i < tasks.length; i++) {
-        //create a new row
-        var newRow = elTaskTable.insertRow(-1);
-
-        //insert data into the rows
-        var name = newRow.insertCell(0);
-        var burst = newRow.insertCell(1);
-        var arrival = newRow.insertCell(2);
-        var priority = newRow.insertCell(3);
-
-        //populate data
-        name.innerHTML = "P<sub>" + tasks[i].num + "</sub>";
-        burst.innerHTML = tasks[i].burst;
-        arrival.innerHTML = tasks[i].arrival;
-        priority.innerHTML = tasks[i].priority;
-    }
-}
-
-function displayTaskList(element, list) {
-    
-    tmp = "";
-    
-    for (var i=0; i < list.length; i++) {
-        tmp += "P<sub>" + list[i].num + "</sub>, ";
-    }
-
-    element.innerHTML = tmp;
-}
-
 class ReadyQueue {
 
     //ReadyQueue class
@@ -160,8 +159,9 @@ class ReadyQueue {
     Output: New Task
     */
 
-    constructor(element) {
+    constructor(element, box) {
         this.element = element;
+        this.box = box;
         this.queue = [];
     }
 
@@ -218,10 +218,11 @@ class CPU {
     Output: processing
     */
 
-    constructor(element) {
+    constructor(element, box) {
         this.currentTask = null;
         this.idle = 0;
         this.element = element;
+        this.box = box;
     }
 
     update() {
@@ -268,7 +269,7 @@ class CPU {
 
     display() {
         if (this.currentTask != null) {
-            this.element.innerHTML = "P<sub>" + this.currentTask.num + "</sub> [start:" + this.currentTask.start + " rem:" + this.currentTask.remaining + "], ";
+            this.element.innerHTML = "P<sub>" + this.currentTask.num + "</sub>, ";
         } else {
             this.element.innerHTML = "";
         }
@@ -284,12 +285,13 @@ class Scheduler {
     Output: processing
     */
 
-    constructor(rqElement, cpuElement, finishedElement) {
+    constructor(rqElement, rqBox, cpuElement, cpuBox, finishedElement, finBox) {
         this.dormant = []; //tasks that have not arrived
-        this.rq = new ReadyQueue(rqElement);
-        this.cpu = new CPU(cpuElement);
+        this.rq = new ReadyQueue(rqElement,rqBox);
+        this.cpu = new CPU(cpuElement,cpuBox);
         this.finished = []; //finsihed tasks
         this.elFinished = finishedElement;
+        this.elFinBox = finBox;
         this.time = 0; //this is the time (in whatever unit)
     }
 
@@ -335,7 +337,7 @@ class Scheduler {
         var tmp = "";
 
         for (var i=0; i < this.finished.length; i++) {
-            tmp += "P<sub>" + this.finished[i].num + "</sub>" + " [fin:" + this.finished[i].finish + "], ";
+            tmp += "P<sub>" + this.finished[i].num + "</sub>, ";
         }
 
         this.elFinished.innerHTML = tmp;
@@ -344,6 +346,11 @@ class Scheduler {
     update() {
         //do operations to move process along
 
+        //remove any effects
+        this.rq.box.classList.remove("rq-added");
+        this.cpu.box.classList.remove("cpu-added");
+        this.elFinBox.classList.remove("fin-added");
+
         //if the current task is finished
         if (this.cpu.hasProcess()) {
             if (this.cpu.currentTask.remaining <= 0) {
@@ -351,6 +358,9 @@ class Scheduler {
                 this.cpu.currentTask.finishTask(this.time);
                 //move to finished
                 this.finished.push(this.cpu.popProcess());
+
+                //display
+                this.elFinBox.classList.add("fin-added");
             }
         }
 
@@ -367,6 +377,9 @@ class Scheduler {
 
                 //set back one because one was removed
                 i--;
+
+                //display green
+                this.rq.box.classList.add("rq-added");
             }
         }
 
@@ -388,6 +401,9 @@ class Scheduler {
 
                     //the scheduler gives the CPU a new process from the ready queue
                     this.cpu.insertProcess(next);
+
+                    //display insertion
+                    this.cpu.box.classList.add("cpu-added");
                 }
             } else {
                 //Else,
@@ -396,7 +412,7 @@ class Scheduler {
             }
         
         //the scheduler notifies the CPU, RQ to update (wait and process)
-        //this.rq.update();
+        this.rq.update();
         this.cpu.update();
 
         //next frame

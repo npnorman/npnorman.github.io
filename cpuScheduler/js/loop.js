@@ -22,8 +22,11 @@ var inMaxBurst = document.getElementById("maxBurst");
 
 //scheduling parts
 var elReadyQueue = document.getElementById("readyQueue");
+var elRQBox = document.getElementById("rq-box");
 var elCPU = document.getElementById("cpu");
+var elCPUBox = document.getElementById("cpu-box");
 var elFinished = document.getElementById("fin");
+var elFinBox = document.getElementById("fin-box");
 
 //buttons
 var btnStartSim = document.getElementById("startSim");
@@ -32,7 +35,7 @@ var btnChangeSpeed = document.getElementById("changeSpeed");
 var btnUpdateTasks = document.getElementById("updateTaskParam");
 
 //Schedulers
-fcfs = new Scheduler(elReadyQueue, elCPU, elFinished);
+fcfs = new Scheduler(elReadyQueue, elRQBox, elCPU, elCPUBox, elFinished, elFinBox);
 
 
 //start loop
@@ -120,6 +123,7 @@ btnEndSim.addEventListener("click", function() {
 
 btnChangeSpeed.addEventListener("click", function() {
     speed = inInterval.value * 1000;
+    elBtnConfirmation.innerHTML = "Updated Speed";
 });
 
 document.getElementById("reload").addEventListener("click", function() {

@@ -20,4 +20,56 @@ body {
 
 .tasks tr:nth-child(even) {
     background-color: #dddddd;
-  }
+}
+
+.ready-queue {
+    border: 2px solid black;
+    width: 500px;
+    height: 5em;
+    overflow: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.cpu {
+    border: 2px solid black;
+    border-radius: 100%;
+    text-align: center;
+    padding-top: 1rem;
+    width: 5em;
+    height: 4em;
+}
+
+.completed {
+    border: 2px solid black;
+    width: 500px;
+    height: 5em;
+    overflow: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.arrow {
+    padding-top: 50px;
+    font-size: 2rem;
+}
+
+.sched-set {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.rq-added {
+    border: 2px solid green;
+}
+
+.cpu-added {
+    border: 2px solid orange;
+}
+
+.fin-added {
+    border: 2px solid red;
+}

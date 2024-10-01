@@ -20,14 +20,38 @@
         </tr>
     </table>
 
-    <p>Ready Queue [<span id="readyQueue"></span>]</p>
-    <p>CPU (<span id="cpu"></span>)</p>
-    <p>Completed [<span id="fin"></span>]</p>
+    <div class="sched-set">
 
-    <br><br><br><br><br><br>
+        <div>
+            <h3>Ready Queue</h3>
+            <div class="ready-queue" id="rq-box">
+                <p id="readyQueue" ></p>
+            </div>
+        </div>
+
+        <p class="arrow">=></p>
+
+        <div>
+            <h3>CPU</h3>
+            <div class="cpu" id="cpu-box">
+                <p id="cpu"></p>
+            </div>
+        </div>
+
+        <p class="arrow">=></p>
+
+        <div>
+            <h3>Completed</h3>
+            <div class="completed" id="fin-box">
+                <p id="fin"></p>
+            </div>
+        </div>
+    </div>
+
+    <br>
     <hr>
     <p><button id="startSim">Start Simulation</button> <button id="endSim">End Simulation</button> <span id="buttonConfirmation"></span></p>
-    <p><input id="interval" type="number" max="5" min="0.1" step="0.1" value="1"> seconds <button id="changeSpeed">Change Speed</button></p>
+    <p><input id="interval" type="number" min="0.01" step="0.1" value="1"> seconds <button id="changeSpeed">Change Speed</button></p>
     <hr>
     <p>Task Editor</p>
     <p>Number of tasks: <input id="taskNum" type="number" step="1" min="1" value="5"></p>
