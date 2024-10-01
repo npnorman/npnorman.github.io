@@ -138,3 +138,15 @@ btnUpdateTasks.addEventListener("click", function() {
 });
 
 /*******************TESTING****************/
+var sets = document.getElementById("sets")
+var names = ["FCFS", "SJF", "SRJF", "RR", "Pritority"];
+
+for (var i=0; i < names.length; i++) {
+    var header = document.createElement("h2")
+    header.appendChild(document.createTextNode(names[i]));
+    header.classList.add("algorithm");
+    
+    sets.appendChild(header);
+    sets.appendChild(createSchedulingSet());
+    sets.appendChild(document.createElement("hr"));
+}

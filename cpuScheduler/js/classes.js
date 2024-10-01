@@ -5,6 +5,49 @@ Nicholas Normn
 Sept 2024
 */
 
+//get scheduling set div
+function createSchedulingSet() {
+
+    var schedSet = document.createElement("div");
+
+    //give it the proper classname
+    schedSet.classList.add("sched-set");
+
+    var names = [
+        ["Ready Queue","ready-queue"],
+        ["CPU","cpu"],
+        ["Completed","completed"]
+    ];
+
+    for (var i=0; i < 3; i++) {
+        //template
+        var cont = document.createElement("div");
+        schedSet.appendChild(cont);
+
+        //add arrows
+        if (i < 2) {
+            var arrow = document.createElement("p");
+            arrow.classList.add("arrow");
+            arrow.appendChild(document.createTextNode("=>"));
+            schedSet.appendChild(arrow);
+        }
+
+        var h3 = document.createElement("h3");
+        h3.appendChild(document.createTextNode(names[i][0]));
+        cont.appendChild(h3);
+
+        var box = document.createElement("div");
+        box.classList.add(names[i][1]);
+        cont.appendChild(box);
+
+        var p = document.createElement("p");
+        p.appendChild(document.createTextNode(""));
+        box.appendChild(p);
+    }
+
+    return schedSet; //need p/div(box) elements to pass on
+}
+
 //create some test data to populate tasks
 function randTasks(stop, maxBurst) {
 
