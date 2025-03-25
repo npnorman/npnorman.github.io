@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./bingo.css">
+    <title>BINGO</title>
+</head>
+<body>
+    <h1>BINGO Drawer</h1>
+    <br>
+    <h2>Last Called</h2>
+    <span id="current-num" class="current-number"></span>
+    <br>
+    <br>
+    <div>
+        <button id="call">Call Number</button>
+        <br>
+        <input id="start" type="number" value="0"> to <input id="end" type="number" value="29">
+        <button id="set">Set Values</button>
+    </div>
+    <br>
+    <div class="called">
+        <p>Called</p>
+        <p id="called-nums"></p>
+    </div>
+
+    <script src="./bingo.js"></script>
+</body>
+</html>
