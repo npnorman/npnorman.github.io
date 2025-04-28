@@ -50,3 +50,12 @@ h3 {
     text-align: justify;
     text-justify: inter-word;
 }
+
+.inline-header {
+    display: flex;
+    align-items: center;
+}
+
+.profile-image {
+    width: 300px;
+}
