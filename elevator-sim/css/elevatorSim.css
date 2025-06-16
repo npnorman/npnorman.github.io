@@ -1,0 +1,43 @@
+.floor, th, td {
+  border: 1px solid;
+  font-size: 1.5rem;
+}
+
+.floor-table th {
+  text-align: center;
+  padding: 0px 20px 0px 20px;
+}
+
+.number {
+  text-align: center;
+}
+
+.requesting {
+  text-align: right;
+}
+
+.floor-table {
+  margin: 20px;
+  border-collapse: collapse;
+}
+
+.elevator-bold {
+  text-align: center;
+  border: 3px solid red;
+}
+
+.control-panel {
+  padding: 10px;
+  border: 3px solid gray;
+  border-style: inset;
+  width: 500px;
+}
+
+.control-panel td {
+  border: 0px;
+  font-size: 1rem;
+}
+
+.control-panel h3 {
+  margin: 0;
+}

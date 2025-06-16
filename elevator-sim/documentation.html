@@ -1,0 +1,105 @@
+<!-- June 2025 Nicholas Norman -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation</title>
+</head>
+<body>
+    <a href="/sim.html">Simulation</a>
+    <h1 id="elevator-scheduling-system">Elevator Scheduling System</h1>
+    <h2 id="simulation-loop">Simulation Loop</h2>
+    <p>The simulation has some global elements that all things can access</p>
+    <ul>
+    <li><code>string log []</code> this holds everything that the elevator is doing, it is also what the visualizer uses to per frame</li>
+    <li><code>Request outsideRequests []</code></li>
+    <li><code>Request finsihedRequests []</code></li>
+    </ul>
+    <p>The simulation holds a request maker, elevator, and operator. It foes in the following order.</p>
+    <ul>
+    <li><code>Startup()</code> //sets everything up</li>
+    <li><code>outsideRequests.add(Request.new())</code> <em>*</em> May change to accomadate wait times between</li>
+    <li>for each elevator:<ul>
+    <li>if <code>Elevator.canTakeNewRequests()</code> returns true,<ul>
+    <li><code>Elevator.stopAtFloor(Elevator.pickFloorToStopAt())</code></li>
+    </ul>
+    </li>
+    <li>else move towards goal<ul>
+    <li><code>Elevator.moveTowardsGoal()</code></li>
+    </ul>
+    </li>
+    <li><code>Elevator.checkFloorStatus()</code></li>
+    </ul>
+    </li>
+    <li><code>stop()</code>  //tears everything down</li>
+    </ul>
+    <h3 id="startup">Startup</h3>
+    <p>This sets up the elevators, requests, log, etc</p>
+    <h3 id="log">Log</h3>
+    <p>A log request happens on</p>
+    <ul>
+    <li><code>Elevator.stopAtFloor()</code></li>
+    <li><code>Elevator.pickUp()</code></li>
+    <li><code>Elevator.dropOff()</code></li>
+    <li><code>Elevator.moveTowardsGoal()</code></li>
+    </ul>
+    <p>A log request tracks</p>
+    <ul>
+    <li><code>insideRequests</code></li>
+    <li><code>outsideRequests</code></li>
+    <li><code>currentFloor</code></li>
+    <li><code>goal</code></li>
+    </ul>
+    <h3 id="requests">Requests</h3>
+    <p>There are two types of requests. Outside requests and inside requests. The elevator can choose how to handle them. An outside request is a request that a user makes when they ask the elevator to pick them up. An inside request is the request that the user makes once they are picked up and inside of the elevator.</p>
+    <ul>
+    <li>Outside request</li>
+    <li>Inside request</li>
+    </ul>
+    <p>When an outside request is handled, a corresponding inside request is made.</p>
+    <ul>
+    <li>Request</li>
+    <li><code>int outsideWait</code></li>
+    <li><p><code>int insideWait</code></p>
+    </li>
+    <li><p><code>int getOutsideRequest()</code></p>
+    </li>
+    <li><p><code>int getInsideRequest()</code></p>
+    </li>
+    <li><p><code>startOutsideWait()</code> starts the timer for the outisde of the elevator. This gets called on construction.</p>
+    </li>
+    <li><code>startInsideWait()</code> starts the timer for inside of the elevator. This is called on <code>pickUp()</code>.</li>
+    <li><code>endWait()</code> ends the inside wait. This is called on <code>dropOff()</code>.</li>
+    </ul>
+    <h3 id="elevator">Elevator</h3>
+    <p>This elevator has one job: Stopping at a floor. This means it stops at a floor and whoever is on that floor gets dropped off or picked up.</p>
+    <ul>
+    <li><code>int currentFloor</code> tracks the current floor the elevator is on</li>
+    <li><code>int goal</code> tracks the last <code>stopAtFloor(int floor)</code> request</li>
+    <li><code>bool isFree</code> tracks if the elevator can take new requests</li>
+    <li><code>Request insideRequests []</code> tracks the accepted insideRequests</li>
+    </ul>
+    <p>It has the following functions which can be used by the operator</p>
+    <ul>
+    <li><code>Abstract: pickFloorToStopAt()</code> gets rewritten in the child (which anyone can make). It returns a floor number.</li>
+    <li><code>getOutsideRequests()</code> returns a copy of the outside requests as an <code>int[]</code> using <code>getOutsideRequest()</code></li>
+    <li><code>getInsideRequests()</code> returns a copy of the inside requests as an <code>int[]</code> using <code>getInsideRequest()</code></li>
+    <li><code>getCapacity()</code> returns the maximum an elevator can hold. This is a constant.</li>
+    <li><code>getOccupancy()</code> returns how many users are in an elevator. This is calculated by the length of inside requests.</li>
+    </ul>
+    <p>The elevator also has functions that the operator cannot use</p>
+    <ul>
+    <li><code>stopAtFloor(int floor)</code> sets the <code>goal</code> for the elevator to stop at. Sets <code>isFree</code> to false.</li>
+    <li><code>dropOff(int floor)</code> &quot;drops off&quot; any inside requests by marking them as handled and moving them to a finished list. This is called in <code>stopAtFloor(int floor)</code></li>
+    <li><code>pickUp(int floor)</code> &quot;picks up&quot; (capacity - occupancy) users at the specified floor (outside request) by moving that many outside requests to inside requests. This is called in <code>stopAtFloor(int floor)</code> after <code>dropOff(int floor)</code> and floor is passed through.</li>
+    <li><code>canTakeNewRequests()</code> returns <code>isFree</code>.</li>
+    <li><code>moveTowardsGoal()</code> increments or decrements towards <code>goal</code> from <code>currentFloor</code>.</li>
+    <li><code>Elevator.checkFloorStatus()</code> sets isFree to true if <code>currentFloor == goal</code>.</li>
+    </ul>
+    <p>To know which floor to stop at, it gets requests from the users. When user sends a request, it is put in the queue of the elevator. A request tells the elevator someone wants to be picked up or dropped off. An elevator may only have as many inside requests as its capacity.</p>
+    <h3 id="stop">Stop</h3>
+    <p>This saves the log to a file and downloads it to the computer</p>
+</body>
+</html>

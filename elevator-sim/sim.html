@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/elevatorSim.css">
+    <title>Elevator Sim</title>
+</head>
+<body>
+    <a href="/documentation.html">Documentation</a>
+
+    <h2>Example Elevator:</h2>
+    <table class="floor-table">
+        <tr>
+            <th>Floor #</th>
+            <th>Requesting Elevator</th>
+            <th>Elevator</th>
+            <th>Request completed</th>
+        </tr>
+        <tr>
+            <td class="number">1</td>
+            <td class="requesting">☺☺☺</td>
+            <td></td>
+            <td>☺☺☺☺☺☺☺☺☺☺</td>
+        </tr>
+        <tr>
+            <td class="number">2</td>
+            <td class="requesting">☺☺☺☺☺☺</td>
+            <td class="elevator-bold">☺☺</td>
+            <td>☺☺☺</td>
+        </tr>
+        <tr>
+            <td class="number">3</td>
+            <td class="requesting">☺</td>
+            <td></td>
+            <td>☺☺☺☺☺☺☺☺☺☺☺☺</td>
+        </tr>
+    </table>
+
+<h2>Simulation:</h2>
+
+<table class="control-panel">
+    <caption>Control Panel</caption>
+    <tr>
+        <td><label>Frame Rate (in seconds)</label></td>
+        <td><input id="frameRate" type="number" value="0.25" min="0.0001"></td>
+    </tr>
+    <tr>
+        <td><label>Request Rate (request every x frames)</label></td>
+        <td><input id="requestRate" type="number" value="2" step="1" min="0"></td>
+    </tr>
+    <tr>
+        <td><label>Number of Floors</label></td>
+        <td><input id="numberOfFloors" type="number" value="10" step="1" min="1"></td>
+    </tr>
+    <tr>
+        <td><label>Number of Elevators</label></td>
+        <td><input id="numberOfElevators" type="number" value="2" step="1" min="1"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><button id="startSim">Start Simulation</button></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><button id="resumeSim">Resume Simulation</button></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><button id="stopSim">Stop Simulation</button></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><button id="reloadSim">Reload Simulation</button></td>
+    </tr>
+</table>
+
+<table id="create-table" class="floor-table">
+        <tr>
+            <th>Floor #</th>
+            <th>Requesting Elevator</th>
+            <th>Request completed</th>
+        </tr>
+    </table>
+
+    <p id="output"></p>
+
+    <script src="js/classes.js"></script>
+    <script src="js/elevator.js"></script>
+    <script src="js/simloop.js"></script>
+</body>
+</html>
