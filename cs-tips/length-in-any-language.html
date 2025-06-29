@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Length In Any Language</title>
+    <link rel="stylesheet" href="cs-tips.css">
+</head>
+<body>
+    <a href="../index.html">Back to home</a>
+
+    <h1>Length in any Language</h1>
+    <p>If I had a genie in a bottle, my first with would be that all programming languages would have the same way of getting length.</p>
+
+<span class="comment"></span><br>
+
+    <table>
+        <tr>
+            <th>Programming Language</th>
+            <th>String</th>
+            <th>Array</th>
+            <th>Other Common</th>
+        </tr>
+        <tr>
+            <td>C</td>
+            <td class="code">
+                <span class="comment">//using #include &lt;string.h&gt;</span><br>
+                strlen(char[])
+            </td>
+            <td class="code">
+                <span class="comment">//note: sizeof returns size in bytes</span><br>
+                sizeof(array) / sizeof(datatype or value)
+            </td>
+        </tr>
+        <tr>
+            <td>C++</td>
+            <td class="code">
+                .size()<br>
+                .length()</td>
+            <td class="code">
+                <span class="comment">//note: sizeof returns size in bytes</span><br>
+                sizeof(array) / sizeof(datatype or value)
+            </td>
+            <td class="code">
+                <span class="comment">//Vector</span><br>
+                .size()
+            </td>
+        </tr>
+        <tr>
+            <td>C#</td>
+            <td class="code">
+                .Length
+            </td>
+            <td class="code">
+                <span class="comment">//returns number of elements in all dimensions</span><br>
+                .Length<br>
+                <br>
+                <span class="comment">//returns number of elements in a specified dimension</span><br>
+                .GetLength(int dimension)
+            </td>
+            <td class="code">
+                <span class="comment">//ICollections</span><br>
+                .Count()
+            </td>
+        </tr>
+        <tr>
+            <td>Java</td>
+            <td class="code">
+                .length()
+            </td>
+            <td class="code">
+                .length
+            </td>
+            <td class="code">
+                <span class="comment">//ArrayList</span><br>
+                .size()
+            </td>
+        </tr>
+        <tr>
+            <td>Python</td>
+            <td class="code">
+                len(s)
+            </td>
+            <td class="code">
+                len(s) <span class="comment">#note: this is for a python list</span>
+            </td>
+        </tr>
+        <tr>
+            <td>JavaScript</td>
+            <td class="code">
+                .length
+            </td>
+            <td class="code">
+                .length
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
