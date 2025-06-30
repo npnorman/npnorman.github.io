@@ -1,0 +1,12 @@
+body {
+    font-size: 1rem;
+    font-family: monospace;
+}
+
+ul {
+    list-style-type: none; /* Remove bullets */
+}
+
+a {
+    text-decoration: none;
+}
