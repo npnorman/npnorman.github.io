@@ -54,10 +54,10 @@ def getFileLinks(path, originalPath, recurseCount):
             #directory
             # print(path + "/" + dir)
             # linkList.append(f"{f"{recurseCount+1}_{path.replace(originalPath, "")}"}{recurseCount * " ║ "}{linkPath + "/"}")
-            directoryList.append(linkPath + "/")
+            directoryList.append(linkPath)
 
     for dir in directoryList:
-        linkList.append(f"{recurseCount * " ║ "}<b>" + dir + "</b>")
+        linkList.append(f"{recurseCount * " ║ "}<b>" + dir + "/" + "</b>")
         linkList += getFileLinks(originalPath + dir, originalPath, recurseCount)
     
     return linkList
