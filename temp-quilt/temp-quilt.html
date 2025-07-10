@@ -1,0 +1,36 @@
+<!--temp-quilt.html
+    Nicholas Norman July 2025
+    This is a generator for a temperature quilt-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>temp-quilt</title>
+    <link rel="stylesheet" href="css/temp-quilt.css">
+</head>
+<body>
+    <a href="/">Back to Home</a>
+
+    <h1>Build a Temperature Blanket</h1>
+    <h2>Nicholas Norman July 2025</h2>
+
+    <p>This is a generator for a temperature quilt with a color representing the high for that day.</p>
+
+    <p>Location (City, State, Country, etc.)</p>
+    <input id="location" type="text" value="Indianapolis, IN">
+
+    <button id="generate">Generate Quilt</button>
+
+    <button id="save">Save Quilt</button>
+
+    <button id="pdf">Save PDF</button>
+
+    <p>This is a quilt from <span id="start"></span> to <span id="end"></span>.</p>
+
+    <canvas id="quilt-canvas" class="quilt" width="500" height="600"></canvas>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="js/temp-quilt.js"></script>
+</body>
+</html>
