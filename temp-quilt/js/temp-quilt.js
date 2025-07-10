@@ -3,7 +3,9 @@
 //This is a generator for a temperature quilt
 
 var canvas = document.getElementById("quilt-canvas");
+var colorCanvas = document.getElementById("color-canvas");
 var ctx = canvas.getContext("2d");
+var colorCtx = colorCanvas.getContext("2d");
 
 var loc = document.getElementById("location");
 var submitButton = document.getElementById("generate");
@@ -16,7 +18,7 @@ var startDate = "2025-01-01";
 var endDate = new Date().toISOString().split('T')[0];
 
 startText.innerHTML = new Date(startDate + "T14:30:00Z").toLocaleDateString('en-US');
-endText.innerHTML = new Date(endDate).toLocaleDateString('en-US');
+endText.innerHTML = new Date().toLocaleDateString('en-US');
 
 var layerCount = 0;
 var currentLayer = 0;
@@ -24,6 +26,22 @@ var width = canvas.width;
 var height = canvas.height;
 var temps = [];
 var dates = [];
+
+var interval = 20; //degrees
+var zeroOffset = 4; //from 0
+var temperatureColors = [
+    "black",     // -80 < temp
+    "indigo",    // -80 < temp <= -40
+    "purple",    // -40 < temp <= -20
+    "darkblue",  // -20 < temp <= 0
+    "blue",      // 0 < temp <= 20
+    "lightblue", // 20 < temp <= 40
+    "yellow",    // 40 < temp <= 60
+    "orange",    // 60 < temp <= 80
+    "red",       // 80 < temp <= 100
+    "darkred",   // 100 < temp <= 120
+    "brown"      // temp > 140
+];
 
 async function main() {
     var tempDates = await runApis();
@@ -35,6 +53,38 @@ async function main() {
     for (var i = 0; i < layerCount; i++) {
         var color = getTemperatureColor(temps[i]);
         addLayer(color);
+    }
+
+    addColors();
+}
+
+function addColors() {
+    
+    var currentColorLayer = 0;
+    var colorLayerCount = temperatureColors.length;
+    var colorHeight = colorCanvas.height / colorLayerCount;
+    var colorWidth = 50;
+    colorCtx.font = "18px Arial";
+    
+    for (var i = 0; i < colorLayerCount; i++) {
+        //Add color box & Numbers
+
+        //color
+        colorCtx.beginPath();
+        colorCtx.rect(0, currentColorLayer * colorHeight, colorWidth, colorHeight);
+        colorCtx.strokeStyle = temperatureColors[i];
+        colorCtx.fillStyle = temperatureColors[i];
+        colorCtx.stroke();
+        colorCtx.fill();
+
+        //text
+        colorCtx.beginPath();
+        colorCtx.fillStyle = "black";
+        colorCtx.textAlign = "left";
+        colorCtx.textBaseline = "middle";
+        colorCtx.fillText(((i - zeroOffset) * interval) + "°F to " + (((i+1 - zeroOffset) * interval) - 1) + "°F", colorWidth + 10, currentColorLayer * colorHeight + (0.5 * colorHeight));
+
+        currentColorLayer++;
     }
 }
 
@@ -51,31 +101,10 @@ function addLayer(color) {
 }
 
 function getTemperatureColor(temp) {
-    var color = "white";
     
-    if (temp <= -500) {
-        color = "black";
-    } else if (temp <= -20) {
-        color = "purple";
-    } else if (temp <= 0) {
-        color = "darkblue";
-    } else if (temp <= 20) {
-        color = "blue";
-    } else if (temp <= 40) {
-        color = "lightblue";
-    } else if (temp <= 60) {
-        color = "yellow";
-    }  else if (temp <= 80) {
-        color = "orange";
-    }  else if (temp <= 100) {
-        color = "red";
-    }  else if (temp <= 120) {
-        color = "darkred";
-    }  else if (temp > 140) {
-        color = "brown";
-    }
+    var index = Math.floor(temp / interval) + zeroOffset;
 
-    return color;
+    return temperatureColors[index];
 }
 
 // Api
