@@ -14,8 +14,12 @@ var pdfButton = document.getElementById("pdf");
 var startText = document.getElementById("start");
 var endText = document.getElementById("end");
 
+var startDateEl = document.getElementById("startDate");
+var endDateEl = document.getElementById("endDate");
+
 var startDate = "2025-01-01";
-var endDate = new Date().toISOString().split('T')[0];
+var endDate = getLocalDateForInput();
+endDateEl.value = endDate;
 
 startText.innerHTML = new Date(startDate + "T14:30:00Z").toLocaleDateString('en-US');
 endText.innerHTML = new Date().toLocaleDateString('en-US');
@@ -44,6 +48,9 @@ var temperatureColors = [
 ];
 
 async function main() {
+
+    setDates();
+
     var tempDates = await runApis();
     temps = tempDates[0];
     dates = tempDates[1];
@@ -56,6 +63,19 @@ async function main() {
     }
 
     addColors();
+}
+
+function setDates() {
+    startDate = startDateEl.value;
+    endDate = endDateEl.value;
+
+    startText.innerHTML = parseLocalDate(startDate).toLocaleDateString('en-US');
+    endText.innerHTML = parseLocalDate(endDate).toLocaleDateString('en-US');
+}
+
+function parseLocalDate(date) {
+    const [year, month, day] = date.split('-').map(Number);
+    return new Date(year, month - 1, day); // month is 0-based
 }
 
 function addColors() {
@@ -105,6 +125,14 @@ function getTemperatureColor(temp) {
     var index = Math.floor(temp / interval) + zeroOffset;
 
     return temperatureColors[index];
+}
+
+function getLocalDateForInput() {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    var day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
 }
 
 // Api
@@ -157,8 +185,6 @@ async function getTemperatureListFromDates(startDate, endDate, longitude, latitu
         }
 
         json = await response.json();
-
-        console.log(json);
         
     } catch (error) {
         console.error(error.message);
