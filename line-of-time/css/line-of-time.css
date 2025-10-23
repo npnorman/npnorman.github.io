@@ -1,0 +1,32 @@
+/*line-of-time.css
+  Nicholas Norman October 2025
+  this is a game where you compare lines of different valued things*/
+
+.timeline {
+  background-color: rgb(230, 230, 230);
+}
+
+.card {
+  color:white;
+  font-family: cursive;
+  font-size: 1.25rem;
+  width: 250px;
+  overflow: hidden;
+  text-align: center;
+  margin: 10px;
+}
+
+.card p {
+  height: 50px;
+  overflow: auto;
+}
+
+.card .card-name {
+  height: 70px;
+}
+
+.card img {
+  width: 230px;
+  height: 230px;
+  object-fit: cover;
+}

@@ -1,0 +1,45 @@
+<!--line-of-time.html
+    Nicholas Norman October 2025
+    this is a game where you compare lines of different valued things-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Line of Time</title>
+    <link rel="stylesheet" href="css/line-of-time.css">
+</head>
+<body>
+    <a href="/">Back to Home</a>
+
+    <h1>Line of Time</h1>
+    <h2>Nicholas Norman October 2025</h2>
+
+    <button id="startButton">Start/Reset Game</button>
+
+    <label for="guesser">Current Guesser</label>
+    <input id="guesser" type="text">
+
+    <div id="currentCard">
+        <div class="card">
+            <p>NICK</p>
+            <p class="card-name">When did Grace Hopper Invent COBOL?</p>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Commodore_Grace_M._Hopper%2C_USN_%28covered%29_head_and_shoulders_crop.jpg">
+            <p>1950</p>
+        </div>
+    </div>
+
+    <div id="timeline" class="timeline">
+        <p>Start a new game!</p>
+    </div>
+
+    <label for="questions">Card Info</label>
+    <textarea id="questions"></textarea>
+    <button id="hide">Hide Card Values</button>
+    <button id="unhide">Unhide Card Values</button>
+    <button id="load">Load from file</button>
+    <button id="save">Save to file</button>
+
+    <script src="js/line-of-time.js"></script>
+</body>
+</html>
