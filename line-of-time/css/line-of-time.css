@@ -16,27 +16,72 @@
 .card {
   color:white;
   font-family: cursive;
-  font-size: 1.25rem;
-  width: 250px;
   overflow: hidden;
   text-align: center;
   margin: 5px;
 }
+/* Large */
+.large {
+  font-size: 1.25rem;
+  width: 250px;
+}
 
-.card p {
+.large p {
   height: 50px;
   overflow: auto;
 }
 
-.card .card-name {
+.large .card-name {
   height: 70px;
 }
 
-.card img {
+.large img {
   width: 230px;
   height: 230px;
   object-fit: cover;
 }
+
+/* Medium */
+.medium {
+  font-size: 1rem;
+  width: 200px;
+}
+
+.medium p {
+  height: 30px;
+  overflow: auto;
+}
+
+.medium .card-name {
+  height: 60px;
+}
+
+.medium img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+}
+/* Small */
+.small {
+  font-size: 0.75rem;
+  width: 150px;
+}
+
+.small p {
+  height: 20px;
+  overflow: auto;
+}
+
+.small .card-name {
+  height: 40px;
+}
+
+.small img {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+}
+/* ------ */
 
 .addButton {
   font-size: 2rem;
@@ -50,4 +95,11 @@
 .error {
   color:red;
   font-size: 2rem;
+}
+
+.currentCard {
+  display: flex;
+  margin: 10px;
+  justify-content: center;
+  align-items: center;
 }

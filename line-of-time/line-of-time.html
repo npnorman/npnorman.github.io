@@ -20,7 +20,8 @@
     <label for="guesser">Current Guesser</label>
     <input id="guesser" type="text">
 
-    <div id="currentCard">
+    <div id="currentCard" class="currentCard">
+        <p>Current Card (Hit Start!)</p>
     </div>
 
     <div id="timeline" class="timeline">
@@ -31,12 +32,22 @@
         <label for="questions">Card Info</label>
     </div>
     <textarea id="questions" class="questionBox">Grace hopper invents COBOL,1959
-AVL tree Invented,1962,https://upload.wikimedia.org/wikipedia/commons/f/fd/AVL_Tree_Example.gif</textarea>
+AVL tree Invented,1962,https://upload.wikimedia.org/wikipedia/commons/f/fd/AVL_Tree_Example.gif
+Cool thing 1,1999
+Cool thing 2,2005
+Cool thing 3,4</textarea>
     <div>
         <button id="hide">Hide Card Values</button>
         <button id="unhide">Unhide Card Values</button>
         <button id="load">Load from file</button>
         <button id="save">Save to file</button>
+        <p>Card Sizes: </p>
+        <input id="large" name="size" type="radio">
+        <label for="large">Large</label>
+        <input id="medium" name="size" type="radio" checked>
+        <label for="medium">Medium</label>
+        <input id="small" name="size" type="radio">
+        <label for="small">Small</label>
     </div>
 
     <p id="error" class="error"></p>
