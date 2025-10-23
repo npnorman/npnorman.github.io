@@ -4,6 +4,13 @@
 
 .timeline {
   background-color: rgb(230, 230, 230);
+  margin: 5px;
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .card {
@@ -13,7 +20,7 @@
   width: 250px;
   overflow: hidden;
   text-align: center;
-  margin: 10px;
+  margin: 5px;
 }
 
 .card p {
@@ -29,4 +36,18 @@
   width: 230px;
   height: 230px;
   object-fit: cover;
+}
+
+.addButton {
+  font-size: 2rem;
+}
+
+.questionBox {
+  width: 700px;
+  height: 200px;
+}
+
+.error {
+  color:red;
+  font-size: 2rem;
 }

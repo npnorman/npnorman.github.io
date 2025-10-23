@@ -21,24 +21,25 @@
     <input id="guesser" type="text">
 
     <div id="currentCard">
-        <div class="card">
-            <p>NICK</p>
-            <p class="card-name">When did Grace Hopper Invent COBOL?</p>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Commodore_Grace_M._Hopper%2C_USN_%28covered%29_head_and_shoulders_crop.jpg">
-            <p>1950</p>
-        </div>
     </div>
 
     <div id="timeline" class="timeline">
         <p>Start a new game!</p>
     </div>
 
-    <label for="questions">Card Info</label>
-    <textarea id="questions"></textarea>
-    <button id="hide">Hide Card Values</button>
-    <button id="unhide">Unhide Card Values</button>
-    <button id="load">Load from file</button>
-    <button id="save">Save to file</button>
+    <div>
+        <label for="questions">Card Info</label>
+    </div>
+    <textarea id="questions" class="questionBox">Grace hopper invents COBOL,1959
+AVL tree Invented,1962,https://upload.wikimedia.org/wikipedia/commons/f/fd/AVL_Tree_Example.gif</textarea>
+    <div>
+        <button id="hide">Hide Card Values</button>
+        <button id="unhide">Unhide Card Values</button>
+        <button id="load">Load from file</button>
+        <button id="save">Save to file</button>
+    </div>
+
+    <p id="error" class="error"></p>
 
     <script src="js/line-of-time.js"></script>
 </body>
