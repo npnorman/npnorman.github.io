@@ -179,7 +179,7 @@ function clearCurrentCard() {
 }
 
 function setCurrentCard(card) {
-    currentGuessCardDiv.appendChild(card.createCard(hidden=true))
+    currentGuessCardDiv.appendChild(card.createCard(animate=true, hidden=true))
     currentGuessCard = card;
 }
 
