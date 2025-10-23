@@ -103,3 +103,15 @@
   justify-content: center;
   align-items: center;
 }
+
+/* Animation */
+.grow-in {
+  transform: scale(0);          /* start small */
+  animation: grow 1s ease-out forwards; /* animate to full size */
+}
+
+@keyframes grow {
+  to {
+    transform: scale(1);
+  }
+}

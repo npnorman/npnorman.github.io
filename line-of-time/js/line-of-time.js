@@ -16,7 +16,7 @@ class Card {
         this.guessName = guessName;
     }
 
-    createCard(hidden=false) {
+    createCard(animate=true, hidden=false) {
         //create and return card element
         if ((this.guessName in guesserList) == false) {
             //get new color
@@ -60,6 +60,9 @@ class Card {
         //css
         cardDiv.classList.add("card");
         cardDiv.classList.add("medium");
+        if (animate) {
+            cardDiv.classList.add("grow-in");
+        }
         cardDiv.style.backgroundColor = this.color;
         nameP.classList.add("card-name");
 
@@ -238,7 +241,12 @@ function createTimeline(buttons=true) {
     }
 
     for (var i=0; i < timelineCards.length; i++) {
-        var tempCard = timelineCards[i].createCard();
+        var animate = false;
+        if (timelineCards[i] == currentGuessCard) {
+            animate = true;
+        }
+
+        var tempCard = timelineCards[i].createCard(animate=animate);
         timelineDiv.appendChild(tempCard);
 
         if (buttons) {
