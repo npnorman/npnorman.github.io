@@ -2,6 +2,36 @@
   Nicholas Norman October 2025
   this is a game where you compare lines of different valued things*/
 
+/* Page Elements (not used in js) */
+
+.game-title {
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 0px;
+}
+
+.game-title-caption {
+  text-align: center;
+  margin-top: 0px;
+}
+
+.game-button {
+  font-size: 1.25rem;
+}
+
+.start-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.guesser {
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+/* ------------------------------ */
+
 .timeline {
   background-color: rgb(230, 230, 230);
   margin: 5px;
@@ -15,7 +45,7 @@
 
 .card {
   color:white;
-  font-family: cursive;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   overflow: hidden;
   text-align: center;
   margin: 5px;

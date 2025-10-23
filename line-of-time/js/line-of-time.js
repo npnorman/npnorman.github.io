@@ -16,7 +16,7 @@ class Card {
         this.guessName = guessName;
     }
 
-    createCard(animate=true, hidden=false) {
+    createCard(animate=true, hidden=false, isCurrentCard=false) {
         //create and return card element
         if ((this.guessName in guesserList) == false) {
             //get new color
@@ -35,7 +35,23 @@ class Card {
         var valueText = document.createTextNode("");
         var image = document.createElement("img");
 
-        cardDiv.appendChild(guesserP);
+        // To handle guesser index
+        if (isCurrentCard) {
+            // <input id="guesser" type="text" value="">
+            var guesserDiv = document.createElement("div");
+            var guesserInput = document.createElement("input");
+            guesserInput.type = "text";
+            guesserInput.value = "";
+            guesserInput.id = "guesser";
+            guesserDiv.classList.add("guesser");
+
+            guesserDiv.appendChild(guesserInput);
+            cardDiv.appendChild(guesserDiv);
+        } else {
+            guesserText.textContent = this.guessName;
+            cardDiv.appendChild(guesserP);
+        }
+
         cardDiv.appendChild(nameP);
         cardDiv.appendChild(image);
         cardDiv.appendChild(valueP);
@@ -43,13 +59,14 @@ class Card {
         nameP.appendChild(nameText);
         valueP.appendChild(valueText);
 
-        nameText.textContent = this.name;
+    
         if (hidden) {
             valueText.textContent = "??????";
         } else {
             valueText.textContent = this.cardValue;
         }
-        guesserText.textContent = this.guessName;
+
+        nameText.textContent = this.name;
 
         if (this.imageURL == null) {
             image.src = "https://miro.medium.com/0*ojIU84VO1XMGIn6_.jpg";
@@ -179,13 +196,13 @@ function clearCurrentCard() {
 }
 
 function setCurrentCard(card) {
-    currentGuessCardDiv.appendChild(card.createCard(animate=true, hidden=true))
+    currentGuessCardDiv.appendChild(card.createCard(animate=true, hidden=true,isCurrentCard=true));
     currentGuessCard = card;
 }
 
 function turn(index, buttonElement) {
     //defines a "turn" of the game
-    var guessName = guessBox.value;
+    var guessName = document.getElementById("guesser").value;
 
     var isCorrect = checkSpot(parseInt(index),parseInt(currentGuessCard.cardValue))
 
