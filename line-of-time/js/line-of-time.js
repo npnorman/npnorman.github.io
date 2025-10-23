@@ -8,7 +8,7 @@ class Card {
         this.name = name;
         this.cardValue = cardValue;
         this.imageURL = imageURL;
-        this.guessName = " ";
+        this.guessName = "";
         this.color = "#787878ff";
     }
 
@@ -16,15 +16,16 @@ class Card {
         this.guessName = guessName;
     }
 
-    createCard(hidden=false,guessName=null) {
+    createCard(hidden=false) {
         //create and return card element
-        if (guessName != null) {
-            this.guessName = guessName;
+        if ((this.guessName in guesserList) == false) {
+            //get new color
+            //attach to guesser list
+            guesserList[this.guessName] = getRandomColor();   
         }
 
-        if (guessName in guesserList) {
-            this.color = guesserList[guessName];
-        }
+        console.log(guesserList);
+        this.color = guesserList[this.guessName];
 
         //create elements
         var cardDiv = document.createElement("div");
@@ -73,7 +74,7 @@ var currentGuessCard;
 var timelineCards = [];
 var unusedCards = [];
 var guesserList = {
-    "default" : "#787878ff"
+    "" : "#787878ff"
 };
 
 //elements
@@ -86,12 +87,24 @@ var errorP = document.getElementById("error");
 var smallSizeRadio = document.getElementById("small");
 var mediuemSizeRadio = document.getElementById("medium");
 var largeSizeRadio = document.getElementById("large");
+var hideBtn = document.getElementById("hide");
+var unhideBtn = document.getElementById("unhide");
+var loadBtn = document.getElementById("load");
+var saveBtn = document.getElementById("save");
 
 //helper functions
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getRandomColor() {
+    var red = getRandomIntInclusive(0,150);
+    var green = getRandomIntInclusive(0,150);
+    var blue = getRandomIntInclusive(0,150);
+
+    return "#" + red.toString(16).padStart(2,'0') + green.toString(16).padStart(2,'0') + blue.toString(16).padStart(2,'0') + "FF";
 }
 
 //functions
@@ -119,11 +132,10 @@ function pickRandomUnusedCard() {
 }
 
 function pickNewCurrentCard() {
+    clearCurrentCard();
     if (unusedCards.length > 0) {
         var randomCard = pickRandomUnusedCard();
         setCurrentCard(randomCard);
-    } else {
-        createTimeline(buttons=false);
     }
 }
 
@@ -159,18 +171,20 @@ function parseQuestions() {
     }
 }
 
-function setCurrentCard(card) {
+function clearCurrentCard() {
     while (currentGuessCardDiv.firstChild) {
         currentGuessCardDiv.removeChild(currentGuessCardDiv.lastChild);
     }
+}
 
+function setCurrentCard(card) {
     currentGuessCardDiv.appendChild(card.createCard(hidden=true))
     currentGuessCard = card;
 }
 
 function turn(index, buttonElement) {
     //defines a "turn" of the game
-    var guessName = guessBox.textContent;
+    var guessName = guessBox.value;
 
     var isCorrect = checkSpot(parseInt(index),parseInt(currentGuessCard.cardValue))
 
@@ -178,11 +192,16 @@ function turn(index, buttonElement) {
     if (isCorrect) {
         //correct spot
         //add to timeline
-        currentGuessCard.guessName = guessName;
+        currentGuessCard.setGuesser(guessName);
         timelineCards.splice(index, 0, currentGuessCard);
         //new current guess card
+        if (unusedCards.length > 0) {
+            createTimeline();
+        } else {
+            createTimeline(buttons=false);
+        }
         pickNewCurrentCard();
-        createTimeline();
+
     } else {
         //otherwise, highlight button red
         buttonElement.style.backgroundColor = "red";
@@ -199,9 +218,10 @@ function checkSpot(index, value) {
     } else if (index == timelineCards.length) {
         output = parseInt(timelineCards[index-1].cardValue) <= value;
     } else {
-        output = value <= parseInt(timelineCards[index].cardValue);
-        output = parseInt(timelineCards[index-1].cardValue) <= value;
+        output = value <= parseInt(timelineCards[index].cardValue) && parseInt(timelineCards[index-1].cardValue) <= value;
     }
+
+    console.log()
 
     return output;
 }
@@ -267,3 +287,5 @@ mediuemSizeRadio.addEventListener('click',() => {
 largeSizeRadio.addEventListener('click', () => {
     changeCardSize("large");
 });
+
+// meta loading, saving, hide, unhide
