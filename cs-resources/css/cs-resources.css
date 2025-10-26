@@ -1,3 +1,49 @@
 /*cs-resources.css
   Nicholas Norman October 2025
   Resource for computer science students*/
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.no-bullet {
+  list-style-type: none;
+}
+
+.video-player {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  text-align: center;
+  margin: 0 0 10px 0;
+}
+
+.gallery {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 10px;
+  column-gap: 10px;
+  background-color: gray;
+  padding: 10px;
+}
+
+.gallery img {
+  width: 300px;
+}
+
+.gallery p {
+  margin: 0;
+  color: black;
+  text-align: center;
+  font-weight: bold;
+  width: 300px;
+}
