@@ -1,0 +1,7 @@
+/*javascript-renderer.css
+  Nicholas Norman October 2025
+  render edges or faces of rotating objects to the screen*/
+
+  canvas {
+    border: 3px solid black;
+}
