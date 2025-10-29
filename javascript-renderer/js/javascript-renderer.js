@@ -15,12 +15,63 @@ class point3D {
         this.y = y;
         this.z = z;
     }
+
+    static dotProduct(p1,p2) {
+        return p1.x * p2.x + p1.y * p2.y + p1.z * p2.z;
+    }
+
+    static add(p1,p2) {
+        return new point3D(
+            p1.x + p2.x,
+            p1.y + p2.y,
+            p1.z + p2.z
+        );
+    }
+
+    static scale(p1, scalar) {
+        return new point3D(
+            p1.x * scalar,
+            p1.y * scalar,
+            p1.z * scalar
+        );
+    }
+
+    static crossProduct(p1,p2) {
+        return new point3D (
+            p1.y * p2.z - p1.z * p2.y,
+            p1.z * p2.x - p1.x * p2.z,
+            p1.x * p2.y - p1.y * p1.z
+        )
+    }
 }
 
 class point2D {
     constructor(x,y) {
         this.x = x;
         this.y = y;
+    }
+
+    static dotProduct(p1,p2) {
+        console.log("p1: ",p1, "p2: ", p2);
+        return p1.x * p2.x + p1.y * p2.y;
+    }
+
+    static add(p1,p2) {
+        return new point2D(
+            p1.x + p2.x,
+            p1.y + p2.y
+        );
+    }
+
+    static scale(p1, scalar) {
+        return new point2D(
+            p1.x * scalar,
+            p1.y * scalar
+        );
+    }
+
+    static crossProduct(p1,p2) {
+        return p1.x * p2.y - (p1.y * p2.x);
     }
 }
 
@@ -29,6 +80,13 @@ class edge {
         this.points = [p1,p2];
     }
 }
+
+class face {
+    constructor(p1,p2,p3) {
+        this.points = [p1,p2,p3];
+    }
+}
+
 // var z = 0;
 // var points = [
 //     new point3D(-1,1,z),
@@ -43,6 +101,13 @@ class edge {
 //     new edge(2,3)];
 
 //cube ----------------------------------
+//    4 ----- 5
+//   /|      /|
+//  0-----1  | 
+//  | 6----|-7
+//  |/     |/
+//  2-----3
+
 var points = [
     new point3D(-1,  1,  1), // 0
     new point3D( 1,  1,  1), // 1
@@ -73,6 +138,11 @@ var edges = [
     new edge(1,5),
     new edge(2,6),
     new edge(3,7)
+];
+
+var faces = [
+    new face(0,1,2),
+    new face(1,2,3)
 ];
 // end cube ------------------------
 
@@ -116,11 +186,46 @@ function offset(point, offsetX, offsetY) {
     );
 }
 
+function isFacingForward(face, facePoints) {
+    var v0 = facePoints[face.points[0]];
+    var v1 = facePoints[face.points[1]];
+    var v2 = facePoints[face.points[2]];
+
+    var v2v0 = point3D.add(
+        v2,
+        point3D.scale(v0,-1)
+    );
+
+    var v1v0 = point3D.add(
+        v1,
+        point3D.scale(v0,-1)
+    );
+
+    var n = point3D.crossProduct(v2v0, v1v0);
+
+    result = point3D.dotProduct(v1,n) >= 0;
+
+    console.log("dp: ", point3D.dotProduct(v1,n) >= 0);
+
+    return true;
+}
+
 function drawEdge(point1, point2, width=1,color="black") {
     ctx.beginPath();
     ctx.moveTo(point1.x,point1.y);
     ctx.lineTo(point2.x,point2.y);
     ctx.stroke();
+}
+
+function drawFace(point1, point2, point3, color="red") {
+    ctx.beginPath();
+    ctx.moveTo(point1.x, point1.y);
+    ctx.lineTo(point2.x, point2.y);
+    ctx.lineTo(point3.x, point3.y);
+    ctx.closePath();
+
+    ctx.fillStyle = color;
+    ctx.fill();
 }
 
 function update(fov, dx, dy) {
@@ -134,18 +239,44 @@ function update(fov, dx, dy) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     //for points
-    updatedPoints = []
+    updatedPoints = [];
+    facePoints = [];
     for (var i=0; i < points.length; i++) {
         //update points
         //rotate
         var tempPoint = rotateX(points[i], rotateAmtX);
         tempPoint = rotateY(tempPoint, rotateAmtY);
+
+        facePoints.push(tempPoint);
+
         tempPoint = project(tempPoint, fov);
         tempPoint = scale(tempPoint, 70);
         tempPoint = offset(tempPoint, offsetX, offsetY);
         updatedPoints.push(tempPoint);
     }
 
+
+    //for faces
+    for (var i=0; i < faces.length; i++) {
+
+        if (isFacingForward(faces[i], facePoints) == true) {
+            var index1 = faces[i].points[0];
+            var index2 = faces[i].points[1];
+            var index3 = faces[i].points[2];
+
+            var p1 = updatedPoints[index1];
+            var p2 = updatedPoints[index2];
+            var p3 = updatedPoints[index3];
+
+            //draw face
+            var color = "red";
+            if (i == 1) {
+                color = "blue";
+            }
+            drawFace(p1,p2,p3, color);
+        }
+    }
+    
     //for edges
     for (var i=0; i < edges.length; i++) {
         //get points on edge
@@ -168,7 +299,7 @@ var speedY = 2;
 dxInput.value = speedX;
 dyInput.value = speedY;
 
-//var fov = 10;
+var fov = 10;
 setInterval(() => {
 
     speedX = parseInt(dxInput.value);
