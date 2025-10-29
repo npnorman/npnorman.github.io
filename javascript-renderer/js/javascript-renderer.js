@@ -141,7 +141,7 @@ function update(fov, dx, dy) {
         var tempPoint = rotateX(points[i], rotateAmtX);
         tempPoint = rotateY(tempPoint, rotateAmtY);
         tempPoint = project(tempPoint, fov);
-        tempPoint = scale(tempPoint, 30);
+        tempPoint = scale(tempPoint, 70);
         tempPoint = offset(tempPoint, offsetX, offsetY);
         updatedPoints.push(tempPoint);
     }
@@ -161,7 +161,7 @@ function update(fov, dx, dy) {
     }
 }
 
-var delay = 50;
+var delay = 10;
 var speedX = 2;
 var speedY = 2;
 
@@ -174,8 +174,8 @@ setInterval(() => {
     speedX = parseInt(dxInput.value);
     speedY = parseInt(dyInput.value);
 
-    var dx = 1/delay * speedX;
-    var dy = 1/delay * speedY;  
+    var dx = 1/1000 * speedX;
+    var dy = 1/1000 * speedY;  
 
     update(
         parseInt(fovInput.value),
