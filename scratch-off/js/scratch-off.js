@@ -1,0 +1,3 @@
+//scratch-off.js
+//Nicholas Norman October 2025
+//This is a scratch off simulator with no money!
