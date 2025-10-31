@@ -8,6 +8,9 @@ var ctx = canvas.getContext("2d");
 var ptx = prize.getContext("2d");
 var isClicking = false;
 
+var numbers = [];
+var isWinner = false;
+
 function draw(number) {
     //text
     ptx.font = "74px serif";
@@ -24,6 +27,21 @@ function drawCircle(x,y) {
     ctx.arc(x,y,10,0,2 * Math.PI);
     // ctx.fillStyle = "#00000000";
     ctx.fill();
+}
+
+function getLeftPercent() {
+    var imageData = ctx.getImageData(0,0, canvas.width, canvas.height);
+    var pixels = imageData.data;
+
+    var colorLeftCount = 0;
+    for (var i=0; i < pixels.length; i++) {
+        var alpha = pixels[i + 3];
+        if (alpha > 0) {
+            colorLeftCount++;
+        }
+    }
+
+    return colorLeftCount / pixels.length;
 }
 
 canvas.addEventListener('mousemove', function(e) {
@@ -52,6 +70,26 @@ document.body.addEventListener('mouseup', function() {
     isClicking = false;
 });
 
-var randomInt = Math.floor(Math.random() * 10);
+function checkNumbers() {
+    if (getLeftPercent() > 0.40) {
+        setTimeout(checkNumbers, 100);
+    } else {
+        if (isWinner) {
+            document.getElementById("winner").innerHTML = "CONGRATS!";
+        }
+    }
+}
 
+setTimeout(checkNumbers, 1000);
+
+var randomInt = Math.floor(Math.random() * 10);
+var randomWin = Math.floor(Math.random() * 10);
+
+document.getElementById("winningNumber").innerHTML = randomWin;
+
+if (randomInt ==randomWin) {
+    isWinner = true;
+}
+
+numbers.push(randomInt);
 draw(randomInt);

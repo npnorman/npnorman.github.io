@@ -17,3 +17,12 @@ canvas {
 
 #prize { z-index: 0; }
 #canvas    { z-index: 1; }
+
+p {
+  font-size: 1.5rem;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+span {
+  font-weight: bold;
+}
