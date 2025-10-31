@@ -2,6 +2,10 @@
   Nicholas Norman October 2025
   This is a scratch off simulator with no money!*/
 
+body {
+  touch-action: none;
+}
+
 canvas {
     border: 3px solid black;
 }
