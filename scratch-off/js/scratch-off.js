@@ -36,6 +36,14 @@ canvas.addEventListener('mousemove', function(e) {
     }
 });
 
+canvas.addEventListener('touchmove', function(e){
+    var canvasBounds = canvas.getBoundingClientRect();
+    var mouseX = e.touches[0].clientX - canvasBounds.left;
+    var mouseY = e.touches[0].clientY - canvasBounds.top;
+
+    drawCircle(mouseX,mouseY);
+});
+
 document.body.addEventListener('mousedown', function() {
     isClicking = true;
 });
