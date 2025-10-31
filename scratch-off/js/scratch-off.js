@@ -27,7 +27,6 @@ function drawCircle(x,y) {
 }
 
 canvas.addEventListener('mousemove', function(e) {
-    console.log("Over");
     if(isClicking) {
         var canvasBounds = canvas.getBoundingClientRect();
         var mouseX = e.clientX - canvasBounds.left;
