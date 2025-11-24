@@ -59,3 +59,23 @@ h3 {
 .profile-image {
     width: 300px;
 }
+
+.thumbnail {
+    height: 120px;
+    width: 160px;
+    object-fit: cover;
+    object-position: top;
+    border: 1px solid black;
+    padding: 2px;
+    margin: 5px;
+}
+
+.list-item {
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+}
+
+ul {
+    list-style-type: none;
+}
