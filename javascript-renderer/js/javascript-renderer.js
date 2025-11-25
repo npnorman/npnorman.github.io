@@ -52,7 +52,6 @@ class point2D {
     }
 
     static dotProduct(p1,p2) {
-        console.log("p1: ",p1, "p2: ", p2);
         return p1.x * p2.x + p1.y * p2.y;
     }
 
@@ -205,8 +204,6 @@ function isFacingForward(face, facePoints) {
 
     result = point3D.dotProduct(v1,n) >= 0;
 
-    console.log("dp: ", point3D.dotProduct(v1,n) >= 0);
-
     return true;
 }
 
@@ -305,11 +302,27 @@ setInterval(() => {
     speedX = parseInt(dxInput.value);
     speedY = parseInt(dyInput.value);
 
+    console.log(speedX,speedY)
+
+    if (isNaN(speedX)) {
+        speedX = 0;
+    }
+
+    if (isNaN(speedY)) {
+        speedY = 0;
+    }
+
     var dx = 1/1000 * speedX;
     var dy = 1/1000 * speedY;  
 
+    fovValue = parseInt(fovInput.value);
+
+    if (isNaN(fovValue)) {
+        fovValue = 0;
+    }
+
     update(
-        parseInt(fovInput.value),
+        fovValue,
         dx,
         dy
     );
