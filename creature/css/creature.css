@@ -1,0 +1,20 @@
+/*creature.css
+  Nicholas Norman November 2025
+  Creature for creature scholarship*/
+
+body {
+  background-color: black;
+}
+
+.monospace {
+  font-family: monospace;
+  font-size: 24px;
+  color: white;
+  background-color: rgb(18, 10, 0);
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
