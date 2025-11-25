@@ -1,0 +1,49 @@
+var randomButton = document.getElementById("random-button");
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+var sites = [ //updated from 'backend' python file
+"/3d-print.html",
+"/artisanos.html",
+"/binary.html",
+"/index.html",
+"/realmofrisa2.html",
+"/resources.html",
+"/resume.html",
+"/test-game.html",
+"/tic-tac-die.html",
+"/tic-tac-toe.html",
+"/backend/directory.html",
+"/backend/template.html",
+"/bingo/bingo.html",
+"/bitbybit/game.html",
+"/canvasGame/cnv.html",
+"/cpuScheduler/task.html",
+"/creature/creature.html",
+"/cs-resources/cs-resources.html",
+"/cs-resources/cs-tv.html",
+"/cs-tips/length-in-any-language.html",
+"/duodecimal/clock.html",
+"/elevator-sim/documentation.html",
+"/elevator-sim/sim.html",
+"/intro-cs/mock-up.html",
+"/javascript-renderer/javascript-renderer.html",
+"/js-api-workshop/js-api-workshop.html",
+"/line-of-time/line-of-time.html",
+"/recipeParser/recipeParser.html",
+"/scratch-off/scratch-off.html",
+"/temp-quilt/temp-quilt.html",
+"/thePinGame/game.html",
+"/work-tools/work-hours.html",
+]
+
+randomButton.addEventListener('click', function() {
+    let rand = getRandomInt(sites.length);
+
+    window.open(
+        sites[rand],
+        "_blank"
+    );
+});

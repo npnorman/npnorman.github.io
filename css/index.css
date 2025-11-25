@@ -85,4 +85,9 @@ ul {
   body {
     width: 95%;
   }
+
+  .thumbnail {
+    height: 60px;
+    width: 80px;
+  }
 }
