@@ -81,3 +81,43 @@ h3 {
     display: flex;
     justify-content: center;
 }
+
+.binary-grid {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    column-gap: 0px;
+}
+
+.binary-grid p {
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.binary-grid .times {
+    font-size: 2rem;
+}
+
+.binary-grid .display-box {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px 20px 10px 20px;
+}
+
+.binary-grid .addition {
+    margin-top: 10px;
+}
+
+.binary-grid .equals {
+    margin-top: 10px;
+    padding: 0px 10px 0px 0px;
+}
+
+.white {
+    background-color: white;
+}
+
+.yellow {
+    background-color: yellow;
+}
