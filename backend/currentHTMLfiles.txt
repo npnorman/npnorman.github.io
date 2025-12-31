@@ -21,6 +21,7 @@
 /duodecimal/clock.html
 /elevator-sim/documentation.html
 /elevator-sim/sim.html
+/hex-2-0-converter/hex-2-0-converter.html
 /intro-cs/mock-up.html
 /javascript-renderer/javascript-renderer.html
 /js-api-workshop/js-api-workshop.html
