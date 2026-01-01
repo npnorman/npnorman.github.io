@@ -26,6 +26,8 @@
 /javascript-renderer/javascript-renderer.html
 /js-api-workshop/js-api-workshop.html
 /line-of-time/line-of-time.html
+/nand2tetrisproject6assemblerjs/nand2tetrisproject6assemblerjs.html
+/new-cpu-task-scheduler/new-cpu-task-scheduler.html
 /recipeParser/recipeParser.html
 /scratch-off/scratch-off.html
 /temp-quilt/temp-quilt.html
