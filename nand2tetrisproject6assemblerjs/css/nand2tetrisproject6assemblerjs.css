@@ -1,0 +1,18 @@
+/*nand2tetrisproject6assemblerjs.css
+  Nicholas Norman December 2025
+  The implementation of the assembler neededin the Nand2Tetris Course project 6, part I*/
+
+body {
+  text-align: center;
+}
+
+textarea {
+  width: 300px;
+  height: 500px;
+  resize: none;
+  white-space: nowrap;
+}
+
+.red {
+  color: red;
+}
