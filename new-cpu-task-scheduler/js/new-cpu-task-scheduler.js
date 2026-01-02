@@ -36,6 +36,42 @@ class Task {
     }
 };
 
+class IntermediateData {
+    currentFrame;
+    averageWaitTime;
+    averageTurnaroundTime;
+    averageResponseTime;
+    constructor(currentFrame = 0, averageWaitTime = 0, averageTurnaroundTime = 0, averageResponseTime = 0) {
+        this.currentFrame = currentFrame;
+        this.averageWaitTime = averageWaitTime;
+        this.averageTurnaroundTime = averageTurnaroundTime;
+        this.averageResponseTime = averageResponseTime;
+    }
+
+    isDataEqual(intermediateData) {
+        if (this.averageWaitTime != intermediateData.averageWaitTime) {
+            return false;
+        }
+
+        if (this.averageTurnaroundTime != intermediateData.averageTurnaroundTime) {
+            return false;
+        }
+
+        if (this.averageResponseTime != intermediateData.averageResponseTime) {
+            return false;
+        }
+
+        return true;
+    }
+
+    clone(intermediateData) {
+        this.currentFrame = structuredClone(intermediateData.currentFrame);
+        this.averageWaitTime = structuredClone(intermediateData.averageWaitTime);
+        this.averageTurnaroundTime = structuredClone(intermediateData.averageTurnaroundTime);
+        this.averageResponseTime = structuredClone(intermediateData.averageResponseTime);
+    }
+}
+
 const Cycle = {
     X : 0,
     XPLUS : 1,
@@ -119,8 +155,11 @@ const SchedulingAlgorithm = {
 class SimulationData {
     constructor() {};
     currentMatrix;
+    intermediateDataLog = [new IntermediateData()];
     algorithm;
     clock;
+    barChart;
+    lineChart;
 };
 
 var taskMatrix = [
@@ -220,11 +259,79 @@ function readyQueueIncrement(currentMatrix) {
     }
 }
 
-function tabulate(currentMatrix) {
+function tabulate(currentMatrix, clock, intermediateDataLog) {
 
+    let waitTimeSum = 0;
+    let waitTimeCount = 0;
+    let turnaroundTimeSum = 0;
+    let finishedCount = 0;
+    let responseTimeSum = 0;
+    let responseTimeCount = 0;
+
+    // for each task
+    for (let i = 0; i < currentMatrix.length; i++) {
+        // if finished
+        // calculate avg wait time
+        if (currentMatrix[i].location != Locations.NOTSTARTED) {
+            waitTimeSum += currentMatrix[i].waitTime;
+            waitTimeCount ++;
+        }
+
+        if (currentMatrix[i].location == Locations.FINISHED) {
+
+            // calculate avg turnaround time
+            // end - start
+            turnaroundTimeSum += currentMatrix[i].end - currentMatrix[i].start;
+
+            finishedCount++;
+        }
+        
+        // if response time is not -1
+        if (currentMatrix[i].responseTime != -1) {
+            // calculate avg response time
+            responseTimeSum += currentMatrix[i].responseTime;
+            responseTimeCount++;
+        }
+    }
+
+    // stop NaN from div by zero
+    finishedCount = (finishedCount == 0) ? 1 : finishedCount;
+    waitTimeCount = (waitTimeCount == 0) ? 1 : waitTimeCount;
+    responseTimeCount = (responseTimeCount == 0) ? 1 : responseTimeCount;
+
+    let averageWaitTime = waitTimeSum / waitTimeCount;
+    let averageTurnaroundTime = turnaroundTimeSum / finishedCount;
+    let averageResponseTime = responseTimeSum / responseTimeCount;
+    
+    // create data log
+    let newDataLog = new IntermediateData(clock.currentFrame, averageWaitTime, averageTurnaroundTime, averageResponseTime);
+
+    // if data is same as previous (only need to check last in data log)
+
+    let lastDataLog = intermediateDataLog[intermediateDataLog.length - 1]
+
+    if (lastDataLog.isDataEqual(newDataLog)) {
+        // throw out
+
+    // otherwise
+    } else {
+        // if last frame (current frame - 1) is not represented
+        if (lastDataLog.currentFrame != clock.currentFrame - 1) {
+            // duplicate last data log
+            let cloneDataLog = new IntermediateData();
+            cloneDataLog.clone(lastDataLog);
+
+            cloneDataLog.currentFrame = clock.currentFrame - 1;
+
+            intermediateDataLog.push(cloneDataLog);
+        }
+        
+        // save in log
+        intermediateDataLog.push(newDataLog);
+    }
 }
 
-function display(currentMatrix, clock) {
+function display(currentMatrix, clock, intermediateDataLog, barChart, lineChart) {
     
     tempOutput.innerHTML = "Frame: " + clock.currentFrame;
     
@@ -242,10 +349,42 @@ function display(currentMatrix, clock) {
     }
 
     tempOutput.innerHTML += "<br>";
+
+    // data log
+    let lastDataLog = intermediateDataLog[intermediateDataLog.length - 1];
+    console.log(lastDataLog);
+
+    barChart.data.datasets[0].data = [lastDataLog.averageWaitTime, lastDataLog.averageTurnaroundTime, lastDataLog.averageResponseTime];
+    barChart.update();
+
+    // make line chart labels
+    let labels = [];
+    let waitData = [];
+    let turnaroundData = [];
+    let responseData = [];
+    for (let i = 0; i < intermediateDataLog.length; i++) {
+        labels.push(intermediateDataLog[i].currentFrame);
+        waitData.push(intermediateDataLog[i].averageWaitTime);
+        turnaroundData.push(intermediateDataLog[i].averageTurnaroundTime);
+        responseData.push(intermediateDataLog[i].averageResponseTime);
+    }
+
+    lineChart.data.labels = labels;
+    lineChart.data.datasets[0].data = waitData;
+    lineChart.data.datasets[1].data = turnaroundData;
+    lineChart.data.datasets[2].data = responseData;
+    lineChart.update();
 }
 
 // simulation components
-function simLoop(currentMatrix, algorithm, clock) {
+function simLoop(simData) {
+
+    let clock = simData.clock;
+    let currentMatrix = simData.currentMatrix;
+    let algorithm = simData.algorithm;
+    let intermediateDataLog = simData.intermediateDataLog;
+    let barChart = simData.barChart;
+    let lineChart = simData.lineChart;
 
     if (clock.cycle == Cycle.X) {
         cpuEndTask(currentMatrix, clock);
@@ -257,17 +396,17 @@ function simLoop(currentMatrix, algorithm, clock) {
 
     } else if (clock.cycle == Cycle.XPLUSPLUS) {
         cpuDecrementAndSetRepsonse(currentMatrix, clock);
+        tabulate(currentMatrix, clock, intermediateDataLog); // not meaningful to tabulate in intermediate steps of cycle
     }
 
-    // always tabulate and display
-    tabulate(currentMatrix);
-    display(currentMatrix, clock);
+    // always display
+    display(currentMatrix, clock, intermediateDataLog, barChart, lineChart);
 
     clock.tick();
     
     //condition to end
     if (!isPaused) {
-        setTimeout(function () { simLoop(currentMatrix, algorithm, clock) }, intervalMs);
+        setTimeout(function () { simLoop(simData) }, intervalMs);
     }
 
 }
@@ -287,8 +426,62 @@ function startSim() {
     // create clock
     simData.clock = new Clock();
 
+    // BAR CHART CHART.JS
+    const ctx = document.getElementById('barChart');
+    simData.barChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+        labels: ['Avg Wait', 'Avg Turnaround', 'Avg Response'],
+        datasets: [{
+            label: 'frames',
+            data: [5,4,5],
+            borderWidth: 1
+        }]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                beginAtZero: true
+                }
+            }
+        }
+    });
+
+    const ctx2 = document.getElementById('lineChart');
+    simData.lineChart = new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: [], // x-axis labels
+            datasets: [{
+                label: 'Avg Wait',
+                data: [], // y-axis values
+                borderWidth: 1
+            }, {
+                label: 'Avg Turnaround',
+                data: [], // y-axis values
+                borderWidth: 1
+            }, {
+                label: 'Avg Response',
+                data: [], // y-axis values
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+
     // run loop
-    simLoop(simData.currentMatrix, simData.algorithm, simData.clock);
+    simLoop(simData);
 
     //save data
     simluationInstances.push(simData);
@@ -312,8 +505,7 @@ function stepSim() {
         isPaused = true;
         startSim();
     } else {
-        console.log(simluationInstances[0]);
-        simLoop(simluationInstances[0].currentMatrix, simluationInstances[0].algorithm, simluationInstances[0].clock);
+        simLoop(simluationInstances[0]);
     }
 }
 
