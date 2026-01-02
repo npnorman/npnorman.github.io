@@ -26,6 +26,16 @@ function lerpColor(color1, color2, t) {
 
 const lightyellow = {r: 255, g: 255, b: 193};
 const red = {r: 255, g: 0, b: 0};
+
+const N = 30; // +1 age per N units of time
+
+function getAgeFactor(priority, waitTime) {
+    let age = 0;
+    age = Math.floor(waitTime / N);
+    age = Math.min(age, 7-priority);
+
+    return age;
+}
 // end helper
 
 // elements
@@ -197,7 +207,7 @@ const SchedulingAlgorithm = {
                     //sets starting index
                     chosenIndex = i;
                 } else {
-                    // compare start times
+                    // compare burst times
                     if (currentMatrix[i]._burst < currentMatrix[chosenIndex]._burst) {
                         chosenIndex = i;
                     }
@@ -213,11 +223,73 @@ const SchedulingAlgorithm = {
     }],
 
     SRJF : [Preemptive.PREEMPTIVE, function(currentMatrix) {
-        //HANDLES PUTTING CPU ITEM BACK IN RQ
+        // choose shortest remaining time in RQ
+        let chosenIndex = -1;
+        let isInCPU = false;
+        let cpuIndex = -1;
+
+        for (let i = 0; i < currentMatrix.length; i++) {
+            // if in readyqueue,
+            if (currentMatrix[i].location == Locations.READYQUEUE) {
+                // choose task with lowest remaining time (if tie, choose arbitrarily)
+                if (chosenIndex == -1) {
+                    //sets starting index
+                    chosenIndex = i;
+                } else {
+                    // compare remaining times
+                    if (currentMatrix[i].remainingTime < currentMatrix[chosenIndex].remainingTime) {
+                        chosenIndex = i;
+                    }
+                }
+            }
+
+            if (currentMatrix[i].location == Locations.CPU) {
+                isInCPU = true;
+                cpuIndex = i;
+            }
+        }
+
+        // set task to CPU
+        if (chosenIndex != -1) {
+            //there is a task in the RQ
+            if (isInCPU) {
+                // task in cpu
+                if (currentMatrix[chosenIndex].remainingTime < currentMatrix[cpuIndex].remainingTime) {
+                    currentMatrix[chosenIndex].location = Locations.CPU;
+                    currentMatrix[cpuIndex].location = Locations.READYQUEUE;
+                }
+
+            } else {
+                currentMatrix[chosenIndex].location = Locations.CPU;
+            }
+        }
     }],
 
     PRIORITY : [Preemptive.NONPREEMPTIVE, function(currentMatrix) {
+        // choose highest priority in RQ
+        let chosenIndex = -1;
 
+        for (let i = 0; i < currentMatrix.length; i++) {
+            // if in readyqueue,
+            if (currentMatrix[i].location == Locations.READYQUEUE) {
+                // choose task with highest priority (if tie, choose arbitrarily)
+                if (chosenIndex == -1) {
+                    //sets starting index
+                    chosenIndex = i;
+                } else {
+                    // compare priority
+                    if (currentMatrix[i].priority > currentMatrix[chosenIndex].priority) {
+                        chosenIndex = i;
+                    }
+                }
+            }
+        }
+
+        // set task to CPU
+        if (chosenIndex != -1) {
+            //there is a task in the RQ
+            currentMatrix[chosenIndex].location = Locations.CPU;
+        }
     }],
 
     PRIORITY_PREEMPTIVE : [Preemptive.PREEMPTIVE, function(currentMatrix) {
@@ -225,7 +297,36 @@ const SchedulingAlgorithm = {
     }],
 
     PRIORITY_AGING : [Preemptive.NONPREEMPTIVE, function(currentMatrix) {
+        // based on wait time of priority, age (increase priority)
+        // +1 priority (max of 7) per N units waiting
 
+        // choose highest priority in RQ
+        let chosenIndex = -1;
+
+        for (let i = 0; i < currentMatrix.length; i++) {
+            // if in readyqueue,
+            if (currentMatrix[i].location == Locations.READYQUEUE) {
+                // choose task with highest priority (if tie, choose arbitrarily)
+                if (chosenIndex == -1) {
+                    //sets starting index
+                    chosenIndex = i;
+                } else {
+                    // compare priority
+                    let currentTaskPriority = currentMatrix[i].priority +  getAgeFactor(currentMatrix[i].priority, currentMatrix[i].waitTime);
+                    let chosenTaskPriority = currentMatrix[chosenIndex].priority + getAgeFactor(currentMatrix[chosenIndex].priority, currentMatrix[chosenIndex].waitTime);
+
+                    if (currentTaskPriority > chosenTaskPriority) {
+                        chosenIndex = i;
+                    }
+                }
+            }
+        }
+
+        // set task to CPU
+        if (chosenIndex != -1) {
+            //there is a task in the RQ
+            currentMatrix[chosenIndex].location = Locations.CPU;
+        }
     }],
 
     ROUND_ROBIN : [Preemptive.PREEMPTIVE, function(currentMatrix) {
@@ -391,7 +492,7 @@ function tabulate(currentMatrix, clock, intermediateDataLog) {
     }
 }
 
-function display(currentMatrix, clock, intermediateDataLog, barChart, lineChart) {
+function display(currentMatrix, clock, intermediateDataLog, barChart, lineChart, algorithm) {
 
     // display clock
     clockOutput.textContent = clock.toString();
@@ -417,7 +518,6 @@ function display(currentMatrix, clock, intermediateDataLog, barChart, lineChart)
         let tempLocation = document.createElement('td');
 
         tempId.textContent = currentMatrix[i].id;
-        tempPriority.textContent = currentMatrix[i].priority;
         tempStart.textContent = currentMatrix[i].start;
         tempEnd.textContent = "?";
         tempBurst.textContent = currentMatrix[i]._burst;
@@ -426,6 +526,13 @@ function display(currentMatrix, clock, intermediateDataLog, barChart, lineChart)
         tempResponseTime.textContent = "?";
         tempTurnaroundTime.textContent = "?";
         tempLocation.textContent = "Not Started";
+
+        if (algorithm == SchedulingAlgorithm.PRIORITY_AGING) {
+            tempPriority.textContent = `${currentMatrix[i].priority + getAgeFactor(currentMatrix[i].priority, currentMatrix[i].waitTime)} (${currentMatrix[i].priority})`;
+        
+        } else {
+            tempPriority.textContent = currentMatrix[i].priority;
+        }
 
         if (currentMatrix[i].location == Locations.READYQUEUE) {
             tempLocation.textContent = "Ready Queue";
@@ -537,7 +644,7 @@ function simLoop(simData) {
     }
 
     // always display
-    display(currentMatrix, clock, intermediateDataLog, barChart, lineChart);
+    display(currentMatrix, clock, intermediateDataLog, barChart, lineChart, algorithm);
 
     clock.tick();
     
