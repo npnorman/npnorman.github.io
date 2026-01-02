@@ -43,7 +43,7 @@ const Cycle = {
 }
 
 class Clock {
-    currentFrame = -1;
+    currentFrame = 0;
     cycle = Cycle.X;
 
     tick() {
@@ -116,6 +116,13 @@ const SchedulingAlgorithm = {
     }],
 };
 
+class SimulationData {
+    constructor() {};
+    currentMatrix;
+    algorithm;
+    clock;
+};
+
 var taskMatrix = [
 // id, priority, start, burst, remainingTime, waitTime, responseTime, end, location(enum)
     new Task(),
@@ -128,10 +135,13 @@ var taskMatrix = [
 // elements
 var startBtn = document.getElementById("startsim");
 var pauseBtn = document.getElementById("pausesim");
+var stepBtn = document.getElementById("stepsim");
+
 var frameIntervalMsInpt = document.getElementById("intervalms");
 var tempOutput = document.getElementById("tempoutput");
 
 var isPaused = false;
+var simluationInstances = [];
 var intervalMs = 500;
 
 // core components
@@ -192,8 +202,7 @@ function readyQueueLoad(currentMatrix, clock) {
     // for all tasks
     for (let i = 0; i < currentMatrix.length; i++) {
         // if task is starting at the current frame
-        // we load in -1, to allow loading into the ready queue, then the CPU (2 steps)
-        if (currentMatrix[i].start - 1 == clock.currentFrame && currentMatrix[i].location == Locations.NOTSTARTED) {
+        if (currentMatrix[i].start == clock.currentFrame && currentMatrix[i].location == Locations.NOTSTARTED) {
             // add to ready queue
             currentMatrix[i].location = Locations.READYQUEUE;
         }
@@ -238,8 +247,21 @@ function display(currentMatrix, clock) {
 // simulation components
 function simLoop(currentMatrix, algorithm, clock) {
 
+    // if (clock.cycle == Cycle.X) {
+    //     cpuEndTask(currentMatrix, clock);
+
+    // } else if (clock.cycle == Cycle.XPLUS) {
+    //     taskScheduler(currentMatrix, algorithm);
+    //     readyQueueIncrement(currentMatrix);
+
+    // } else if (clock.cycle == Cycle.XPLUSPLUS) {
+    //     cpuDecrementAndSetRepsonse(currentMatrix, clock);
+    //     readyQueueLoad(currentMatrix, clock);
+    // }
+
     if (clock.cycle == Cycle.X) {
         cpuEndTask(currentMatrix, clock);
+        readyQueueLoad(currentMatrix, clock);
 
     } else if (clock.cycle == Cycle.XPLUS) {
         taskScheduler(currentMatrix, algorithm);
@@ -247,7 +269,6 @@ function simLoop(currentMatrix, algorithm, clock) {
 
     } else if (clock.cycle == Cycle.XPLUSPLUS) {
         cpuDecrementAndSetRepsonse(currentMatrix, clock);
-        readyQueueLoad(currentMatrix, clock);
     }
 
     // always tabulate and display
@@ -260,28 +281,34 @@ function simLoop(currentMatrix, algorithm, clock) {
     if (!isPaused) {
         setTimeout(function () { simLoop(currentMatrix, algorithm, clock) }, intervalMs);
     }
+
 }
 
 function startSim() {
     // reset components
     setIntervalMs();
-    isPaused = false;
+
+    let simData = new SimulationData();
 
     // create clone of tasks to work with
-    let currentMatrix = structuredClone(taskMatrix);
+    simData.currentMatrix = structuredClone(taskMatrix);
 
     // select algorithm to run
-    let algorithm = SchedulingAlgorithm.FCFS;
+    simData.algorithm = SchedulingAlgorithm.FCFS;
 
     // create clock
-    let clock = new Clock();
+    simData.clock = new Clock();
 
     // run loop
-    simLoop(currentMatrix, algorithm, clock);
+    simLoop(simData.currentMatrix, simData.algorithm, simData.clock);
+
+    //save data
+    simluationInstances.push(simData);
 }
 
 function pauseSim() {
-    isPaused = true;
+    // does nothing, should restart the program similar to startSim and turn ispaused on
+    // is paused should be a part of the simData
 }
 
 function setIntervalMs() {
@@ -292,8 +319,19 @@ function setIntervalMs() {
     }
 }
 
+function stepSim() {
+    if (simluationInstances.length == 0) {
+        isPaused = true;
+        startSim();
+    } else {
+        console.log(simluationInstances[0]);
+        simLoop(simluationInstances[0].currentMatrix, simluationInstances[0].algorithm, simluationInstances[0].clock);
+    }
+}
+
 startBtn.addEventListener('click', startSim);
 pauseBtn.addEventListener('click', pauseSim);
+stepBtn.addEventListener('click', stepSim);
 
 //test
 taskMatrix[0].start = 0;
