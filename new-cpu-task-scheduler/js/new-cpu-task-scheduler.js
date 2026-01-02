@@ -36,15 +36,21 @@ class Task {
     }
 };
 
+const Cycle = {
+    X : 0,
+    XPLUS : 1,
+    XPLUSPLUS : 2,
+}
+
 class Clock {
-    currentFrame = 0;
-    cycle = 0;
+    currentFrame = -1;
+    cycle = Cycle.X;
 
     tick() {
         this.cycle++;
 
         if (this.cycle == 3) {
-            this.cycle = 0;
+            this.cycle = Cycle.X;
             this.currentFrame++;
         }
     }
@@ -130,17 +136,12 @@ var intervalMs = 500;
 
 // core components
 
-function cpu(currentMatrix, clock) {
+function cpuEndTask(currentMatrix, clock) {
     // if task in CPU is finished (remainingTime == 0)
         // remove from CPU, set finished
 
     for (let i = 0; i < currentMatrix.length; i++) {
         if (currentMatrix[i].location == Locations.CPU) {
-
-            // set response time (if not set already)
-            if (currentMatrix[i].responseTime == -1) {
-                currentMatrix[i].responseTime = clock.currentFrame - currentMatrix[i].start;
-            }
 
             if (currentMatrix[i].remainingTime <= 0) {
                 // set to finished
@@ -148,10 +149,21 @@ function cpu(currentMatrix, clock) {
                 // set end frame
                 currentMatrix[i].end = clock.currentFrame;
 
-            } else {
-                // decrement remaining time
-                currentMatrix[i].remainingTime--;
             }
+        }
+    }
+}
+
+function cpuDecrementAndSetRepsonse(currentMatrix, clock) {
+    for (let i = 0; i < currentMatrix.length; i++) {
+        if (currentMatrix[i].location == Locations.CPU) {
+            // set response time (if not set already)
+            if (currentMatrix[i].responseTime == -1) {
+                currentMatrix[i].responseTime = clock.currentFrame - currentMatrix[i].start;
+            }
+
+            // decrement remaining time
+            currentMatrix[i].remainingTime--;
         }
     }
 }
@@ -176,19 +188,25 @@ function taskScheduler(currentMatrix, algorithm) {
     }
 }
 
-function readyQueue(currentMatrix, clock) {
+function readyQueueLoad(currentMatrix, clock) {
+    // for all tasks
+    for (let i = 0; i < currentMatrix.length; i++) {
+        // if task is starting at the current frame
+        // we load in -1, to allow loading into the ready queue, then the CPU (2 steps)
+        if (currentMatrix[i].start - 1 == clock.currentFrame && currentMatrix[i].location == Locations.NOTSTARTED) {
+            // add to ready queue
+            currentMatrix[i].location = Locations.READYQUEUE;
+        }
+    }
+}
+
+function readyQueueIncrement(currentMatrix) {
     // for all tasks
     for (let i = 0; i < currentMatrix.length; i++) {
         // if in the ready queue
         if (currentMatrix[i].location == Locations.READYQUEUE) {
             // wait time ++
             currentMatrix[i].waitTime++;
-        }
-
-        // if task is starting at the current frame
-        if (currentMatrix[i].start == clock.currentFrame && currentMatrix[i].location == Locations.NOTSTARTED) {
-            // add to ready queue
-            currentMatrix[i].location = Locations.READYQUEUE;
         }
     }
 }
@@ -199,7 +217,16 @@ function tabulate(currentMatrix) {
 
 function display(currentMatrix, clock) {
     
-    tempOutput.innerHTML += "Frame: " + clock.currentFrame + "<br>";
+    tempOutput.innerHTML = "Frame: " + clock.currentFrame;
+    
+    if (clock.cycle == Cycle.XPLUS) {
+        tempOutput.innerHTML += "+"
+
+    } else if (clock.cycle == Cycle.XPLUSPLUS) {
+        tempOutput.innerHTML += "++"
+    }
+
+    tempOutput.innerHTML += "<br>";
 
     for (let i = 0; i < currentMatrix.length; i++) {
         tempOutput.innerHTML += "id: " + currentMatrix[i].id + " remainingTime: " + currentMatrix[i].remainingTime + " waitTime: " + currentMatrix[i].waitTime + " responseTime: " + currentMatrix[i].responseTime + " end: " + currentMatrix[i].end + " location: " + currentMatrix[i].location + "<br>";
@@ -211,9 +238,19 @@ function display(currentMatrix, clock) {
 // simulation components
 function simLoop(currentMatrix, algorithm, clock) {
 
-    cpu(currentMatrix, clock);
-    taskScheduler(currentMatrix, algorithm);
-    readyQueue(currentMatrix, clock);
+    if (clock.cycle == Cycle.X) {
+        cpuEndTask(currentMatrix, clock);
+
+    } else if (clock.cycle == Cycle.XPLUS) {
+        taskScheduler(currentMatrix, algorithm);
+        readyQueueIncrement(currentMatrix);
+
+    } else if (clock.cycle == Cycle.XPLUSPLUS) {
+        cpuDecrementAndSetRepsonse(currentMatrix, clock);
+        readyQueueLoad(currentMatrix, clock);
+    }
+
+    // always tabulate and display
     tabulate(currentMatrix);
     display(currentMatrix, clock);
 
