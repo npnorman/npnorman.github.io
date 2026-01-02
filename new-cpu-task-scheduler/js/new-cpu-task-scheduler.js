@@ -293,7 +293,46 @@ const SchedulingAlgorithm = {
     }],
 
     PRIORITY_PREEMPTIVE : [Preemptive.PREEMPTIVE, function(currentMatrix) {
+        // choose highest priority in RQ
+        let chosenIndex = -1;
+        let isInCPU = false;
+        let cpuIndex = -1;
 
+        for (let i = 0; i < currentMatrix.length; i++) {
+            // if in readyqueue,
+            if (currentMatrix[i].location == Locations.READYQUEUE) {
+                // choose task with highest priority (if tie, choose arbitrarily)
+                if (chosenIndex == -1) {
+                    //sets starting index
+                    chosenIndex = i;
+                } else {
+                    // compare priority
+                    if (currentMatrix[i].priority > currentMatrix[chosenIndex].priority) {
+                        chosenIndex = i;
+                    }
+                }
+            }
+
+            if (currentMatrix[i].location == Locations.CPU) {
+                isInCPU = true;
+                cpuIndex = i;
+            }
+        }
+
+        // set task to CPU
+        if (chosenIndex != -1) {
+            //there is a task in the RQ
+            if (isInCPU) {
+                // task in cpu
+                if (currentMatrix[chosenIndex].priority > currentMatrix[cpuIndex].priority) {
+                    currentMatrix[chosenIndex].location = Locations.CPU;
+                    currentMatrix[cpuIndex].location = Locations.READYQUEUE;
+                }
+
+            } else {
+                currentMatrix[chosenIndex].location = Locations.CPU;
+            }
+        }
     }],
 
     PRIORITY_AGING : [Preemptive.NONPREEMPTIVE, function(currentMatrix) {
@@ -822,9 +861,9 @@ taskSelectionDdl.addEventListener('change', showRelevantControlsFromDropdown);
 
 for (let i = 0; i < 30; i++) {
     let tempTask = new Task();
-    tempTask.start = getRandomInt(0,30);
-    tempTask.burst = getRandomInt(1,20);
-    tempTask.priority = getRandomInt(0,7);
+    tempTask.start = getRandomInt(i,40);
+    tempTask.burst = getRandomInt(1,30);
+    tempTask.priority = getRandomInt(0,Math.min(Math.floor(i/5),7));
 
     taskMatrix.push(tempTask);
 }
