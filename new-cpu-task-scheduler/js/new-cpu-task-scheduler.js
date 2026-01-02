@@ -44,7 +44,7 @@ var averageTable = document.getElementById("averageTable");
 
 var isPaused = false;
 var simluationInstances = [];
-var intervalMs = 500;
+var intervalMs = 200;
 // end elements
 
 const Locations = {
@@ -186,7 +186,30 @@ const SchedulingAlgorithm = {
     }],
 
     SJF : [Preemptive.NONPREEMPTIVE, function(currentMatrix) {
+        // choose shortest burst time in RQ
+        let chosenIndex = -1;
 
+        for (let i = 0; i < currentMatrix.length; i++) {
+            // if in readyqueue,
+            if (currentMatrix[i].location == Locations.READYQUEUE) {
+                // choose task with lowest burst time (if tie, choose arbitrarily)
+                if (chosenIndex == -1) {
+                    //sets starting index
+                    chosenIndex = i;
+                } else {
+                    // compare start times
+                    if (currentMatrix[i]._burst < currentMatrix[chosenIndex]._burst) {
+                        chosenIndex = i;
+                    }
+                }
+            }
+        }
+
+        // set task to CPU
+        if (chosenIndex != -1) {
+            //there is a task in the RQ
+            currentMatrix[chosenIndex].location = Locations.CPU;
+        }
     }],
 
     SRJF : [Preemptive.PREEMPTIVE, function(currentMatrix) {
@@ -450,7 +473,6 @@ function display(currentMatrix, clock, intermediateDataLog, barChart, lineChart)
 
     // data log
     let lastDataLog = intermediateDataLog[intermediateDataLog.length - 1];
-    console.log(lastDataLog);
 
     // show data log in table
     averageTable.innerHTML = '';
@@ -549,6 +571,29 @@ function startSim() {
 
     // select algorithm to run
     simData.algorithm = SchedulingAlgorithm.FCFS;
+
+    if (algorithmDdl.value == "fcfs") {
+        simData.algorithm = SchedulingAlgorithm.FCFS;
+
+    } else if (algorithmDdl.value == "sjf") {
+        simData.algorithm = SchedulingAlgorithm.SJF;
+
+    } else if (algorithmDdl.value == "srjf") {
+        simData.algorithm = SchedulingAlgorithm.SRJF;
+
+    } else if (algorithmDdl.value == "p") {
+        simData.algorithm = SchedulingAlgorithm.PRIORITY;
+
+    } else if (algorithmDdl.value == "pa") {
+        simData.algorithm = SchedulingAlgorithm.PRIORITY_AGING;
+
+    } else if (algorithmDdl.value == "pp") {
+        simData.algorithm = SchedulingAlgorithm.PRIORITY_PREEMPTIVE;
+
+    } else if (algorithmDdl.value == "rr") {
+        simData.algorithm = SchedulingAlgorithm.ROUND_ROBIN;
+
+    }
 
     // create clock
     simData.clock = new Clock();
@@ -668,10 +713,11 @@ taskSelectionDdl.addEventListener('change', showRelevantControlsFromDropdown);
 // taskMatrix[3].burst = 3;
 // taskMatrix[4].burst = 5;
 
-for (let i = 0; i < 40; i++) {
+for (let i = 0; i < 30; i++) {
     let tempTask = new Task();
     tempTask.start = getRandomInt(0,30);
-    tempTask.burst = getRandomInt(10,40);
+    tempTask.burst = getRandomInt(1,20);
+    tempTask.priority = getRandomInt(0,7);
 
     taskMatrix.push(tempTask);
 }
