@@ -10,6 +10,23 @@ function getRandomInt(min, max) {
 }
 // end helper
 
+// elements
+var startBtn = document.getElementById("startsim");
+var pauseBtn = document.getElementById("pausesim");
+var stepBtn = document.getElementById("stepsim");
+var algorithmDdl = document.getElementById("algorithmDropdown");
+var taskSelectionDdl = document.getElementById("taskDropdown");
+var randomControlsDiv = document.getElementById("random-controls");
+var customControlsDiv = document.getElementById("custom-controls");
+
+var frameIntervalMsInpt = document.getElementById("intervalms");
+var tempOutput = document.getElementById("tempoutput");
+
+var isPaused = false;
+var simluationInstances = [];
+var intervalMs = 500;
+// end elements
+
 const Locations = {
     NOTSTARTED : 0,
     READYQUEUE : 1,
@@ -178,18 +195,6 @@ var taskMatrix = [
     // new Task(),
     // new Task(),
 ];
-
-// elements
-var startBtn = document.getElementById("startsim");
-var pauseBtn = document.getElementById("pausesim");
-var stepBtn = document.getElementById("stepsim");
-
-var frameIntervalMsInpt = document.getElementById("intervalms");
-var tempOutput = document.getElementById("tempoutput");
-
-var isPaused = false;
-var simluationInstances = [];
-var intervalMs = 500;
 
 // core components
 
@@ -418,11 +423,23 @@ function simLoop(simData) {
     clock.tick();
     
     //condition to end
-    if (!isPaused) {
+    // if all tasks are done, then stop
+    let isFinished = true;
+    for (let i = 0; i < currentMatrix.length; i++) {
+        if (currentMatrix[i].location != Locations.FINISHED) {
+            isFinished = false;
+            break;
+        }
+    }
+
+
+    if (!(isPaused || isFinished)) {
         setTimeout(function () { simLoop(simData) }, intervalMs);
     }
 
 }
+
+// SIMULATION CONTROLS ----------------
 
 function startSim() {
     // reset components
@@ -522,9 +539,24 @@ function stepSim() {
     }
 }
 
+function showRelevantControlsFromDropdown() {
+    let value = taskSelectionDdl.value;
+
+    customControlsDiv.classList.add('hidden');
+    randomControlsDiv.classList.add('hidden');
+
+    if (value == "random") {
+        randomControlsDiv.classList.remove('hidden');
+
+    } else if (value == "custom") {
+        customControlsDiv.classList.remove('hidden');
+    }
+}
+
 startBtn.addEventListener('click', startSim);
 pauseBtn.addEventListener('click', pauseSim);
 stepBtn.addEventListener('click', stepSim);
+taskSelectionDdl.addEventListener('change', showRelevantControlsFromDropdown);
 
 //test
 // taskMatrix[0].start = 0;
@@ -542,7 +574,7 @@ stepBtn.addEventListener('click', stepSim);
 for (let i = 0; i < 20; i++) {
     let tempTask = new Task();
     tempTask.start = getRandomInt(0,30);
-    tempTask.burst = getRandomInt(0,5);
+    tempTask.burst = getRandomInt(1,5);
 
     taskMatrix.push(tempTask);
 }
@@ -550,7 +582,7 @@ for (let i = 0; i < 20; i++) {
 for (let i = 0; i < 20; i++) {
     let tempTask = new Task();
     tempTask.start = getRandomInt(30,60);
-    tempTask.burst = getRandomInt(0,20);
+    tempTask.burst = getRandomInt(1,20);
 
     taskMatrix.push(tempTask);
 }

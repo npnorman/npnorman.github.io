@@ -1,3 +1,27 @@
 /*new-cpu-task-scheduler.css
   Nicholas Norman January 2026
   A New version of the task scheduler I made*/
+
+.hidden {
+  display: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sub-control {
+  padding: 10px;
+  margin: 10px;
+  background-color: lightgray;
+  width: 550px;
+}
+
+.sub-control textarea {
+  width: 400px;
+  height: 300px;
+  resize: none;
+  white-space: nowrap;
+}
+
+.sim-controls div{
+  margin: 10px 0px 10px 0px;
+}

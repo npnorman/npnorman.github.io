@@ -18,11 +18,84 @@
     <p>A New version of the task scheduler I made</p>
 
     <hr>
-    <label for="intervalms">Frame Interval:</label>
-    <input type="number" id="intervalms", name="intervalms" value="500"><span> ms</span>
-    <button id="startsim">Start Simulation</button>
-    <button id="pausesim">Pause Simulation</button>
-    <button id="stepsim">Step</button>
+    <div class="sim-controls">
+        <p>Simulation Controls</p>
+        
+        <div>
+            <button id="startsim">(Re)Start Simulation</button>
+            <button id="pausesim">Pause Simulation</button>
+            <button>Resume Simulation</button>
+            <button id="stepsim">Step</button>
+        </div>
+    
+        <div>
+            <label for="algorithm">Scheduling Algorithm</label>
+            <select name="algorithm" id="algorithmDropdown">
+                <option value="fcfs">First Come First Serve (FCFS)</option>
+                <option value="sjf">Shortest Job First (SJF)</option>
+                <option value="srjf">Shortest Remaining Job First (SRJF)</option>
+                <option value="p">Priority</option>
+                <option value="pa">Priority (w/ Aging)</option>
+                <option value="pp">Priority (Preemptive)</option>
+                <option value="rr">Round Robin (RR)</option>
+            </select>
+        </div>
+    
+        <div>
+            <label for="taskSel">Task Generation</label>
+            <select name="taskSel" id="taskDropdown">
+                <option value="random">Random</option>
+                <option value="custom">Custom</option>
+                <option value="0">Lots of High</option>
+                <option value="1">Lots of Low</option>
+                <option value="2">Low to High</option>
+            </select>
+        </div>
+    
+        <div id="random-controls" class="sub-control">
+            <label>Number of tasks</label>
+            <input type="number" min="1" value="10">
+    
+            <br><br>
+    
+            <label>Start Time</label>
+            <label for="minstart">Min</label>
+            <input type="number" min="0" value="0">
+            <label for="maxstart">Max</label>
+            <input type="number" min="0" value="10">
+    
+            <br><br>
+        
+            <label>Burst Time</label>
+            <label for="minburst">Min</label>
+            <input type="number" min="1" value="1">
+            <label for="maxburst">Max</label>
+            <input type="number" min="1" value="20">
+
+            <br><br>
+            <button>Generate Random Tasks</button>
+        </div>
+    
+        <div id="custom-controls" class="hidden sub-control">
+            <input type="file">
+            <br>
+            <textarea></textarea>
+            <br>
+            <button>Load Inputted Tasks</button>
+            <button>Hide / Unhide Text Input</button>
+        </div>
+    
+        <div>
+            <label for="intervalms">Frame Interval:</label>
+            <input type="number" id="intervalms", name="intervalms" value="500"><span> ms</span>
+            <button>Update Interval</button>
+        </div>
+    
+        <div>
+            <button>Run All Sims (Disables controls temporarily)</button>
+            <button>Reset All Sims</button>
+        </div>
+    </div>
     <hr>
 
     <p>TEMP OUTPUT</p>
