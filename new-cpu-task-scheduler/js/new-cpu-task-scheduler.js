@@ -2,6 +2,14 @@
 //Nicholas Norman January 2026
 //A New version of the task scheduler I made
 
+// helper function
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+// end helper
+
 const Locations = {
     NOTSTARTED : 0,
     READYQUEUE : 1,
@@ -164,11 +172,11 @@ class SimulationData {
 
 var taskMatrix = [
 // id, priority, start, burst, remainingTime, waitTime, responseTime, end, location(enum)
-    new Task(),
-    new Task(),
-    new Task(),
-    new Task(),
-    new Task(),
+    // new Task(),
+    // new Task(),
+    // new Task(),
+    // new Task(),
+    // new Task(),
 ];
 
 // elements
@@ -272,26 +280,31 @@ function tabulate(currentMatrix, clock, intermediateDataLog) {
     for (let i = 0; i < currentMatrix.length; i++) {
         // if finished
         // calculate avg wait time
-        if (currentMatrix[i].location != Locations.NOTSTARTED) {
-            waitTimeSum += currentMatrix[i].waitTime;
-            waitTimeCount ++;
-        }
+        // if (currentMatrix[i].location != Locations.NOTSTARTED) {
+        //     waitTimeSum += currentMatrix[i].waitTime;
+        //     waitTimeCount ++;
+        // }
 
         if (currentMatrix[i].location == Locations.FINISHED) {
 
             // calculate avg turnaround time
             // end - start
             turnaroundTimeSum += currentMatrix[i].end - currentMatrix[i].start;
-
             finishedCount++;
-        }
-        
-        // if response time is not -1
-        if (currentMatrix[i].responseTime != -1) {
-            // calculate avg response time
+
+            waitTimeSum += currentMatrix[i].waitTime;
+            waitTimeCount ++;
+
             responseTimeSum += currentMatrix[i].responseTime;
             responseTimeCount++;
         }
+        
+        // if response time is not -1
+        // if (currentMatrix[i].responseTime != -1) {
+        //     // calculate avg response time
+        //     responseTimeSum += currentMatrix[i].responseTime;
+        //     responseTimeCount++;
+        // }
     }
 
     // stop NaN from div by zero
@@ -345,7 +358,7 @@ function display(currentMatrix, clock, intermediateDataLog, barChart, lineChart)
     tempOutput.innerHTML += "<br>";
 
     for (let i = 0; i < currentMatrix.length; i++) {
-        tempOutput.innerHTML += "id: " + currentMatrix[i].id + " remainingTime: " + currentMatrix[i].remainingTime + " waitTime: " + currentMatrix[i].waitTime + " responseTime: " + currentMatrix[i].responseTime + " end: " + currentMatrix[i].end + " location: " + currentMatrix[i].location + "<br>";
+        tempOutput.innerHTML += "id: " + currentMatrix[i].id + " start: " + currentMatrix[i].start + " remainingTime: " + currentMatrix[i].remainingTime + " waitTime: " + currentMatrix[i].waitTime + " responseTime: " + currentMatrix[i].responseTime + " end: " + currentMatrix[i].end + " location: " + currentMatrix[i].location + "<br>";
     }
 
     tempOutput.innerHTML += "<br>";
@@ -514,14 +527,32 @@ pauseBtn.addEventListener('click', pauseSim);
 stepBtn.addEventListener('click', stepSim);
 
 //test
-taskMatrix[0].start = 0;
-taskMatrix[1].start = 0;
-taskMatrix[2].start = 3;
-taskMatrix[3].start = 3;
-taskMatrix[4].start = 5;
+// taskMatrix[0].start = 0;
+// taskMatrix[1].start = 0;
+// taskMatrix[2].start = 3;
+// taskMatrix[3].start = 3;
+// taskMatrix[4].start = 5;
 
-taskMatrix[0].burst = 10;
-taskMatrix[1].burst = 2;
-taskMatrix[2].burst = 6;
-taskMatrix[3].burst = 3;
-taskMatrix[4].burst = 5;
+// taskMatrix[0].burst = 10;
+// taskMatrix[1].burst = 2;
+// taskMatrix[2].burst = 6;
+// taskMatrix[3].burst = 3;
+// taskMatrix[4].burst = 5;
+
+for (let i = 0; i < 20; i++) {
+    let tempTask = new Task();
+    tempTask.start = getRandomInt(0,30);
+    tempTask.burst = getRandomInt(0,5);
+
+    taskMatrix.push(tempTask);
+}
+
+for (let i = 0; i < 20; i++) {
+    let tempTask = new Task();
+    tempTask.start = getRandomInt(30,60);
+    tempTask.burst = getRandomInt(0,20);
+
+    taskMatrix.push(tempTask);
+}
+
+taskMatrix.sort((a,b) => a.start - b.start);
