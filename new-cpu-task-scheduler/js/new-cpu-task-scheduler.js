@@ -247,18 +247,6 @@ function display(currentMatrix, clock) {
 // simulation components
 function simLoop(currentMatrix, algorithm, clock) {
 
-    // if (clock.cycle == Cycle.X) {
-    //     cpuEndTask(currentMatrix, clock);
-
-    // } else if (clock.cycle == Cycle.XPLUS) {
-    //     taskScheduler(currentMatrix, algorithm);
-    //     readyQueueIncrement(currentMatrix);
-
-    // } else if (clock.cycle == Cycle.XPLUSPLUS) {
-    //     cpuDecrementAndSetRepsonse(currentMatrix, clock);
-    //     readyQueueLoad(currentMatrix, clock);
-    // }
-
     if (clock.cycle == Cycle.X) {
         cpuEndTask(currentMatrix, clock);
         readyQueueLoad(currentMatrix, clock);
