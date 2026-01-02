@@ -98,8 +98,83 @@
     </div>
     <hr>
 
-    <p>TEMP OUTPUT</p>
-    <p id="tempoutput"></p>
+    <p class="clock">Clock (current frame): <span id="clock"></span></p>
+
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Average Wait Time</th>
+                    <th>Average Turnaround Time</th>
+                    <th>Average Repsonse Time</th>
+                </tr>
+            </thead>
+            <tbody id="averageTable">
+                <tr>
+                    <td>50</td>
+                    <td>20</td>
+                    <td>30</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br>
+
+        <table class="taskTable">
+            <colgroup>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col> <!--class="col-highlight"> -->
+                <col>
+                <col>
+                <col>
+                <col>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Priority</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Burst</th>
+                    <th>Remaining Time</th>
+                    <th>Wait Time</th>
+                    <th>Response Time</th>
+                    <th>Turnaround Time</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody id="taskTable">
+                <tr>
+                    <td>T_3</td>
+                    <td>7</td>
+                    <td>0</td>
+                    <td>8</td>
+                    <td>8</td>
+                    <td>0</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>8</td>
+                    <td>CPU</td>
+                </tr>
+                <tr>
+                    <td>T_4</td>
+                    <td>2</td>
+                    <td>5</td>
+                    <td>?</td>
+                    <td>4</td>
+                    <td>4</td>
+                    <td>?</td>
+                    <td>?</td>
+                    <td>?</td>
+                    <td>Not Started</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <div>
         <canvas id="barChart" width="300" height="300"></canvas>

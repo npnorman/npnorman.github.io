@@ -8,6 +8,24 @@ function getRandomInt(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+function lerpColor(color1, color2, t) {
+    // t is between 0 and 1
+    // color1 = {r, g, b} or {r, g, b, a}
+    // color2 = {r, g, b} or {r, g, b, a}
+    
+    const r = Math.round(color1.r + (color2.r - color1.r) * t);
+    const g = Math.round(color1.g + (color2.g - color1.g) * t);
+    const b = Math.round(color1.b + (color2.b - color1.b) * t);
+    const a = color1.a !== undefined 
+        ? color1.a + (color2.a - color1.a) * t 
+        : 1;
+    
+    return `rgba(${r}, ${g}, ${b}, ${a})`;
+}
+
+const lightyellow = {r: 255, g: 255, b: 193};
+const red = {r: 255, g: 0, b: 0};
 // end helper
 
 // elements
@@ -20,7 +38,9 @@ var randomControlsDiv = document.getElementById("random-controls");
 var customControlsDiv = document.getElementById("custom-controls");
 
 var frameIntervalMsInpt = document.getElementById("intervalms");
-var tempOutput = document.getElementById("tempoutput");
+var clockOutput = document.getElementById("clock");
+var taskTable = document.getElementById("taskTable");
+var averageTable = document.getElementById("averageTable");
 
 var isPaused = false;
 var simluationInstances = [];
@@ -113,6 +133,19 @@ class Clock {
         if (this.cycle == 3) {
             this.cycle = Cycle.X;
             this.currentFrame++;
+        }
+    }
+
+    toString() {
+        if (this.cycle == Cycle.X) {
+            return `${this.currentFrame}`;
+
+        } else if (this.cycle == Cycle.XPLUS) {
+            return `${this.currentFrame}+`;
+
+        } else {
+            return `${this.currentFrame}++`;
+
         }
     }
 };
@@ -283,13 +316,6 @@ function tabulate(currentMatrix, clock, intermediateDataLog) {
 
     // for each task
     for (let i = 0; i < currentMatrix.length; i++) {
-        // if finished
-        // calculate avg wait time
-        // if (currentMatrix[i].location != Locations.NOTSTARTED) {
-        //     waitTimeSum += currentMatrix[i].waitTime;
-        //     waitTimeCount ++;
-        // }
-
         if (currentMatrix[i].location == Locations.FINISHED) {
 
             // calculate avg turnaround time
@@ -303,13 +329,6 @@ function tabulate(currentMatrix, clock, intermediateDataLog) {
             responseTimeSum += currentMatrix[i].responseTime;
             responseTimeCount++;
         }
-        
-        // if response time is not -1
-        // if (currentMatrix[i].responseTime != -1) {
-        //     // calculate avg response time
-        //     responseTimeSum += currentMatrix[i].responseTime;
-        //     responseTimeCount++;
-        // }
     }
 
     // stop NaN from div by zero
@@ -350,27 +369,105 @@ function tabulate(currentMatrix, clock, intermediateDataLog) {
 }
 
 function display(currentMatrix, clock, intermediateDataLog, barChart, lineChart) {
-    
-    tempOutput.innerHTML = "Frame: " + clock.currentFrame;
-    
-    if (clock.cycle == Cycle.XPLUS) {
-        tempOutput.innerHTML += "+"
 
-    } else if (clock.cycle == Cycle.XPLUSPLUS) {
-        tempOutput.innerHTML += "++"
-    }
+    // display clock
+    clockOutput.textContent = clock.toString();
 
-    tempOutput.innerHTML += "<br>";
+    // task table
+    //clear table body
+    taskTable.innerHTML = '';
 
+    // for each task
     for (let i = 0; i < currentMatrix.length; i++) {
-        tempOutput.innerHTML += "id: " + currentMatrix[i].id + " start: " + currentMatrix[i].start + " remainingTime: " + currentMatrix[i].remainingTime + " waitTime: " + currentMatrix[i].waitTime + " responseTime: " + currentMatrix[i].responseTime + " end: " + currentMatrix[i].end + " location: " + currentMatrix[i].location + "<br>";
-    }
+        // create a row (tr)
+        let tempRow = document.createElement('tr');
 
-    tempOutput.innerHTML += "<br>";
+        let tempId = document.createElement('td');
+        let tempPriority = document.createElement('td');
+        let tempStart = document.createElement('td');
+        let tempEnd = document.createElement('td');
+        let tempBurst = document.createElement('td');
+        let tempRemainingTime = document.createElement('td');
+        let tempWaitTime = document.createElement('td');
+        let tempResponseTime = document.createElement('td');
+        let tempTurnaroundTime = document.createElement('td');
+        let tempLocation = document.createElement('td');
+
+        tempId.textContent = currentMatrix[i].id;
+        tempPriority.textContent = currentMatrix[i].priority;
+        tempStart.textContent = currentMatrix[i].start;
+        tempEnd.textContent = "?";
+        tempBurst.textContent = currentMatrix[i]._burst;
+        tempRemainingTime.textContent = currentMatrix[i].remainingTime;
+        tempWaitTime.textContent = "?";
+        tempResponseTime.textContent = "?";
+        tempTurnaroundTime.textContent = "?";
+        tempLocation.textContent = "Not Started";
+
+        if (currentMatrix[i].location == Locations.READYQUEUE) {
+            tempLocation.textContent = "Ready Queue";
+            tempRow.classList.add("ready-queue-row");
+
+            //calculate wait time opacity
+            let waitTimeOpcaity = Math.min(currentMatrix[i].waitTime, 255) / 255;
+
+            tempWaitTime.style.backgroundColor = lerpColor(lightyellow, red, waitTimeOpcaity);
+            "rgba(182, 174, 127, 1)"
+
+        } else if (currentMatrix[i].location == Locations.CPU) {
+            tempLocation.textContent = "CPU";
+            tempRow.classList.add("cpu-row");
+            tempRemainingTime.classList.add("col-highlight");
+
+        } else if (currentMatrix[i].location == Locations.FINISHED) {
+            tempLocation.textContent = "Completed";
+            tempRow.classList.add("finished-row");
+        }
+
+        if (currentMatrix[i].location != Locations.NOTSTARTED) {
+            tempWaitTime.textContent = currentMatrix[i].waitTime;
+        }
+
+        if (currentMatrix[i].location == Locations.FINISHED) {
+            tempEnd.textContent = currentMatrix[i].end;
+            tempResponseTime.textContent = currentMatrix[i].responseTime;
+            tempTurnaroundTime.textContent = currentMatrix[i].end - currentMatrix[i].start;
+        }
+
+        tempRow.appendChild(tempId);
+        tempRow.appendChild(tempPriority);
+        tempRow.appendChild(tempStart);
+        tempRow.appendChild(tempEnd);
+        tempRow.appendChild(tempBurst);
+        tempRow.appendChild(tempRemainingTime);
+        tempRow.appendChild(tempWaitTime);
+        tempRow.appendChild(tempResponseTime);
+        tempRow.appendChild(tempTurnaroundTime);
+        tempRow.appendChild(tempLocation);
+
+        taskTable.appendChild(tempRow);
+    }
 
     // data log
     let lastDataLog = intermediateDataLog[intermediateDataLog.length - 1];
     console.log(lastDataLog);
+
+    // show data log in table
+    averageTable.innerHTML = '';
+
+    let tempDataLogRow = document.createElement('tr');
+    let avgWaitCell = document.createElement('td');
+    let avgTurnaroundCell = document.createElement('td');
+    let avgResponseCell = document.createElement('td');
+
+    avgWaitCell.textContent = lastDataLog.averageWaitTime.toFixed(3);
+    avgTurnaroundCell.textContent = lastDataLog.averageTurnaroundTime.toFixed(3);
+    avgResponseCell.textContent = lastDataLog.averageResponseTime.toFixed(3);
+
+    tempDataLogRow.appendChild(avgWaitCell);
+    tempDataLogRow.appendChild(avgTurnaroundCell);
+    tempDataLogRow.appendChild(avgResponseCell);
+    averageTable.appendChild(tempDataLogRow);
 
     barChart.data.datasets[0].data = [lastDataLog.averageWaitTime, lastDataLog.averageTurnaroundTime, lastDataLog.averageResponseTime];
     barChart.update();
@@ -571,18 +668,10 @@ taskSelectionDdl.addEventListener('change', showRelevantControlsFromDropdown);
 // taskMatrix[3].burst = 3;
 // taskMatrix[4].burst = 5;
 
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 40; i++) {
     let tempTask = new Task();
     tempTask.start = getRandomInt(0,30);
-    tempTask.burst = getRandomInt(1,5);
-
-    taskMatrix.push(tempTask);
-}
-
-for (let i = 0; i < 20; i++) {
-    let tempTask = new Task();
-    tempTask.start = getRandomInt(30,60);
-    tempTask.burst = getRandomInt(1,20);
+    tempTask.burst = getRandomInt(10,40);
 
     taskMatrix.push(tempTask);
 }
