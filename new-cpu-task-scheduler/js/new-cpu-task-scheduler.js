@@ -39,6 +39,60 @@ function getAgeFactor(priority, waitTime) {
 }
 // end helper
 
+// BAR CHART CHART.JS
+const ctx = document.getElementById('barChart');
+var barChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+    labels: ['Avg Wait', 'Avg Turnaround', 'Avg Response'],
+    datasets: [{
+        label: 'frames',
+        data: [5,4,5],
+        borderWidth: 1
+    }]
+    },
+    options: {
+        responsive: false,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+            beginAtZero: true
+            }
+        }
+    }
+});
+
+const ctx2 = document.getElementById('lineChart');
+var lineChart = new Chart(ctx2, {
+    type: 'line',
+    data: {
+        labels: [], // x-axis labels
+        datasets: [{
+            label: 'Avg Wait',
+            data: [], // y-axis values
+            borderWidth: 1
+        }, {
+            label: 'Avg Turnaround',
+            data: [], // y-axis values
+            borderWidth: 1
+        }, {
+            label: 'Avg Response',
+            data: [], // y-axis values
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: false,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+// END CHART.JS
+
 // elements
 var startBtn = document.getElementById("startsim");
 var pauseBtn = document.getElementById("pausesim");
@@ -56,6 +110,7 @@ var minstartInpt = document.getElementById("minstart");
 var maxstartInpt = document.getElementById("maxstart");
 var minburstInpt = document.getElementById("minburst");
 var maxburstInpt = document.getElementById("maxburst");
+var numberOfTasksInpt = document.getElementById("number-of-tasks");
 
 var timeQuantumSpan = document.getElementById("time-quantum-span");
 var clockOutput = document.getElementById("clock");
@@ -449,8 +504,6 @@ class SimulationData {
     intermediateDataLog = [new IntermediateData()];
     algorithm;
     clock;
-    barChart;
-    lineChart;
     timeQuantum = TimeQuantumMax;
     currentIndex = -1;
 };
@@ -686,7 +739,7 @@ function displayTable(currentMatrix) {
     }
 }
 
-function display(currentMatrix, clock, intermediateDataLog, barChart, lineChart, algorithm, timeQuantum) {
+function display(currentMatrix, clock, intermediateDataLog, algorithm, timeQuantum) {
 
     // display clock
     clockOutput.textContent = clock.toString();
@@ -826,8 +879,6 @@ function simLoop(simData) {
     let currentMatrix = simData.currentMatrix;
     let algorithm = simData.algorithm;
     let intermediateDataLog = simData.intermediateDataLog;
-    let barChart = simData.barChart;
-    let lineChart = simData.lineChart;
     let timeQuantum = simData.timeQuantum;
 
     if (clock.cycle == Cycle.X) {
@@ -844,7 +895,7 @@ function simLoop(simData) {
     }
 
     // always display
-    display(currentMatrix, clock, intermediateDataLog, barChart, lineChart, algorithm, timeQuantum);
+    display(currentMatrix, clock, intermediateDataLog, algorithm, timeQuantum);
 
     clock.tick();
     
@@ -906,60 +957,6 @@ function startSim() {
     // create clock
     simData.clock = new Clock();
 
-    // BAR CHART CHART.JS
-    const ctx = document.getElementById('barChart');
-    simData.barChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-        labels: ['Avg Wait', 'Avg Turnaround', 'Avg Response'],
-        datasets: [{
-            label: 'frames',
-            data: [5,4,5],
-            borderWidth: 1
-        }]
-        },
-        options: {
-            responsive: false,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                beginAtZero: true
-                }
-            }
-        }
-    });
-
-    const ctx2 = document.getElementById('lineChart');
-    simData.lineChart = new Chart(ctx2, {
-        type: 'line',
-        data: {
-            labels: [], // x-axis labels
-            datasets: [{
-                label: 'Avg Wait',
-                data: [], // y-axis values
-                borderWidth: 1
-            }, {
-                label: 'Avg Turnaround',
-                data: [], // y-axis values
-                borderWidth: 1
-            }, {
-                label: 'Avg Response',
-                data: [], // y-axis values
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: false,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-
-
     // run loop
     simLoop(simData);
 
@@ -992,18 +989,19 @@ function stepSim() {
 function showRelevantControlsFromDropdown() {
     let value = taskSelectionDdl.value;
 
+    resetTaskMatrix();
+
     customControlsDiv.classList.add('hidden');
     randomControlsDiv.classList.add('hidden');
 
     if (value == "random") {
         randomControlsDiv.classList.remove('hidden');
+        generateRandomData();
 
     } else if (value == "custom") {
         customControlsDiv.classList.remove('hidden');
 
     }
-    
-    taskMatrix = [];
 
     if (value == "0") {
         taskMatrix.push(new Task());
@@ -1026,14 +1024,15 @@ function showRelevantControlsFromDropdown() {
 }
 
 function generateRandomData() {
-    taskMatrix = [];
+    resetTaskMatrix();
 
     let minburst = minburstInpt.value;
     let maxburst = maxburstInpt.value;
     let minstart = minstartInpt.value;
     let maxstart = maxstartInpt.value;
+    let numberOfTasks = numberOfTasksInpt.value;
 
-    for (let i = 1; i < 30; i++) {
+    for (let i = 1; i < numberOfTasks; i++) {
         let tempTask = new Task();
         tempTask.start = getRandomInt(minstart,maxstart);
         tempTask.burst = getRandomInt(minburst,maxburst);
@@ -1054,6 +1053,11 @@ function showTimeQuantum() {
     }
 }
 
+function resetTaskMatrix() {
+    taskMatrix = [];
+    Task.taskCount = 0;
+}
+
 startBtn.addEventListener('click', startSim);
 pauseBtn.addEventListener('click', pauseSim);
 stepBtn.addEventListener('click', stepSim);
@@ -1061,20 +1065,3 @@ generateRandomTasksBtn.addEventListener('click', generateRandomData);
 
 taskSelectionDdl.addEventListener('change', showRelevantControlsFromDropdown);
 algorithmDdl.addEventListener('change', showTimeQuantum);
-
-//test
-
-// taskMatrix.push(new Task());
-// taskMatrix[0].burst = 100;
-// taskMatrix[0].start = 0;
-
-// for (let i = 1; i < 30; i++) {
-//     let tempTask = new Task();
-//     tempTask.start = i * 2;
-//     tempTask.burst = getRandomInt(1,10);
-//     tempTask.priority = getRandomInt(0,7);
-
-//     taskMatrix.push(tempTask);
-// }
-
-// taskMatrix.sort((a,b) => a.start - b.start);
