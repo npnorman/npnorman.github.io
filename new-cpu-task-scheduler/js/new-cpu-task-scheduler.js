@@ -942,10 +942,14 @@ algorithmDdl.addEventListener('change', showTimeQuantum);
 // taskMatrix[3].burst = 3;
 // taskMatrix[4].burst = 5;
 
-for (let i = 0; i < 30; i++) {
+taskMatrix.push(new Task());
+taskMatrix[0].burst = 100;
+taskMatrix[0].start = 0;
+
+for (let i = 1; i < 30; i++) {
     let tempTask = new Task();
-    tempTask.start = getRandomInt(0,40);
-    tempTask.burst = getRandomInt(1,30);
+    tempTask.start = i * 2;
+    tempTask.burst = getRandomInt(1,10);
     tempTask.priority = getRandomInt(0,7);
 
     taskMatrix.push(tempTask);
