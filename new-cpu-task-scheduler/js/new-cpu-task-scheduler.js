@@ -28,6 +28,7 @@ const lightyellow = {r: 255, g: 255, b: 193};
 const red = {r: 255, g: 0, b: 0};
 
 const N = 30; // +1 age per N units of time
+const TimeQuantumMax = 10; // for roundRobin;
 
 function getAgeFactor(priority, waitTime) {
     let age = 0;
@@ -368,8 +369,68 @@ const SchedulingAlgorithm = {
         }
     }],
 
-    ROUND_ROBIN : [Preemptive.PREEMPTIVE, function(currentMatrix) {
+    ROUND_ROBIN : [Preemptive.PREEMPTIVE, function(currentMatrix, simData) {
+        // chose the next in order to go to the cpu
 
+        let isInCPU = false;
+        let cpuIndex = -1;
+        let chosenIndex = -1;
+
+        // make a ready queue index sublist
+        let rqindexList = [];
+
+        for (let i = 0; i < currentMatrix.length; i++) {
+            // if in readyqueue,
+            if (currentMatrix[i].location == Locations.READYQUEUE) {
+                rqindexList.push(i);
+            }
+
+            if (currentMatrix[i].location == Locations.CPU) {
+                isInCPU = true;
+                cpuIndex = i;
+            }
+        }
+
+        if (rqindexList.length > 0) {
+            if (simData.currentIndex != -1) {
+                // push current index
+                rqindexList.push(simData.currentIndex);
+                rqindexList = rqindexList.sort((a,b) => a - b);
+
+                // get index of it
+                let subindex = rqindexList.indexOf(simData.currentIndex);
+                let nextsubindex = (subindex + 1) % rqindexList.length;
+
+                // if subindex is not the same
+                if (nextsubindex != subindex) {
+                    // set cpu to this new task
+                    simData.currentIndex = rqindexList[nextsubindex];
+                    chosenIndex = rqindexList[nextsubindex];
+                }
+
+            } else {
+                simData.currentIndex = rqindexList[0];
+                chosenIndex = rqindexList[0];
+            }
+        }
+
+        if (chosenIndex != -1) {
+
+            if (isInCPU) {
+                // need a new process
+                if (simData.timeQuantum <= 0) {
+                    simData.timeQuantum = TimeQuantumMax;
+                    currentMatrix[cpuIndex].location = Locations.READYQUEUE;
+                    currentMatrix[chosenIndex].location = Locations.CPU;
+                }
+            } else {
+                // reset quantum
+                simData.timeQuantum = TimeQuantumMax;
+
+                //set to cpu
+                currentMatrix[chosenIndex].location = Locations.CPU;
+            }
+        }
     }],
 };
 
@@ -381,6 +442,8 @@ class SimulationData {
     clock;
     barChart;
     lineChart;
+    timeQuantum = TimeQuantumMax;
+    currentIndex = -1;
 };
 
 var taskMatrix = [
@@ -412,7 +475,7 @@ function cpuEndTask(currentMatrix, clock) {
     }
 }
 
-function cpuDecrementAndSetRepsonse(currentMatrix, clock) {
+function cpuDecrementAndSetRepsonse(currentMatrix, clock, simData) {
     for (let i = 0; i < currentMatrix.length; i++) {
         if (currentMatrix[i].location == Locations.CPU) {
             // set response time (if not set already)
@@ -422,11 +485,13 @@ function cpuDecrementAndSetRepsonse(currentMatrix, clock) {
 
             // decrement remaining time
             currentMatrix[i].remainingTime--;
+
+            simData.timeQuantum--;
         }
     }
 }
 
-function taskScheduler(currentMatrix, algorithm) {
+function taskScheduler(currentMatrix, algorithm, simData) {
     // if no task in cpu OR scheduling algorithm is preemptive
     let isCPUOpen = true;
     let isPreemptive = algorithm[0] == Preemptive.PREEMPTIVE;
@@ -442,7 +507,7 @@ function taskScheduler(currentMatrix, algorithm) {
     
     if (isPreemptive || isCPUOpen) {
         // call algorithm
-        algorithm[1](currentMatrix);
+        algorithm[1](currentMatrix, simData);
     }
 }
 
@@ -531,10 +596,15 @@ function tabulate(currentMatrix, clock, intermediateDataLog) {
     }
 }
 
-function display(currentMatrix, clock, intermediateDataLog, barChart, lineChart, algorithm) {
+function display(currentMatrix, clock, intermediateDataLog, barChart, lineChart, algorithm, timeQuantum) {
 
     // display clock
     clockOutput.textContent = clock.toString();
+
+    //display time quantum with clock
+    if (algorithm == SchedulingAlgorithm.ROUND_ROBIN) {
+        clockOutput.innerHTML += "<br>Time Quantum: " + timeQuantum;
+    }
 
     // task table
     //clear table body
@@ -668,22 +738,23 @@ function simLoop(simData) {
     let intermediateDataLog = simData.intermediateDataLog;
     let barChart = simData.barChart;
     let lineChart = simData.lineChart;
+    let timeQuantum = simData.timeQuantum;
 
     if (clock.cycle == Cycle.X) {
         cpuEndTask(currentMatrix, clock);
         readyQueueLoad(currentMatrix, clock);
 
     } else if (clock.cycle == Cycle.XPLUS) {
-        taskScheduler(currentMatrix, algorithm);
+        taskScheduler(currentMatrix, algorithm, simData);
         readyQueueIncrement(currentMatrix);
 
     } else if (clock.cycle == Cycle.XPLUSPLUS) {
-        cpuDecrementAndSetRepsonse(currentMatrix, clock);
+        cpuDecrementAndSetRepsonse(currentMatrix, clock, simData);
         tabulate(currentMatrix, clock, intermediateDataLog); // not meaningful to tabulate in intermediate steps of cycle
     }
 
     // always display
-    display(currentMatrix, clock, intermediateDataLog, barChart, lineChart, algorithm);
+    display(currentMatrix, clock, intermediateDataLog, barChart, lineChart, algorithm, timeQuantum);
 
     clock.tick();
     
@@ -861,9 +932,9 @@ taskSelectionDdl.addEventListener('change', showRelevantControlsFromDropdown);
 
 for (let i = 0; i < 30; i++) {
     let tempTask = new Task();
-    tempTask.start = getRandomInt(i,40);
+    tempTask.start = getRandomInt(0,40);
     tempTask.burst = getRandomInt(1,30);
-    tempTask.priority = getRandomInt(0,Math.min(Math.floor(i/5),7));
+    tempTask.priority = getRandomInt(0,7);
 
     taskMatrix.push(tempTask);
 }
