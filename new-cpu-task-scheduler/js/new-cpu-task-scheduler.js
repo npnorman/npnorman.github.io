@@ -28,7 +28,7 @@ const lightyellow = {r: 255, g: 255, b: 193};
 const red = {r: 255, g: 0, b: 0};
 
 const N = 30; // +1 age per N units of time
-const TimeQuantumMax = 10; // for roundRobin;
+var TimeQuantumMax = 10; // for roundRobin;
 
 function getAgeFactor(priority, waitTime) {
     let age = 0;
@@ -49,6 +49,8 @@ var randomControlsDiv = document.getElementById("random-controls");
 var customControlsDiv = document.getElementById("custom-controls");
 
 var frameIntervalMsInpt = document.getElementById("intervalms");
+var timeQuantumInpt = document.getElementById("time-quantum");
+var timeQuantumSpan = document.getElementById("time-quantum-span");
 var clockOutput = document.getElementById("clock");
 var taskTable = document.getElementById("taskTable");
 var averageTable = document.getElementById("averageTable");
@@ -780,6 +782,7 @@ function simLoop(simData) {
 function startSim() {
     // reset components
     setIntervalMs();
+    TimeQuantumMax = timeQuantumInpt.value;
 
     let simData = new SimulationData();
 
@@ -912,10 +915,19 @@ function showRelevantControlsFromDropdown() {
     }
 }
 
+function showTimeQuantum() {
+    if (algorithmDdl.value == "rr") {
+        timeQuantumSpan.classList.remove("hidden");
+    } else {
+        timeQuantumSpan.classList.add("hidden");
+    }
+}
+
 startBtn.addEventListener('click', startSim);
 pauseBtn.addEventListener('click', pauseSim);
 stepBtn.addEventListener('click', stepSim);
 taskSelectionDdl.addEventListener('change', showRelevantControlsFromDropdown);
+algorithmDdl.addEventListener('change', showTimeQuantum);
 
 //test
 // taskMatrix[0].start = 0;
