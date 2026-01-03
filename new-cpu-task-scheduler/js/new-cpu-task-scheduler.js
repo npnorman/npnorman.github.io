@@ -489,6 +489,10 @@ function cpuDecrementAndSetRepsonse(currentMatrix, clock, simData) {
             currentMatrix[i].remainingTime--;
 
             simData.timeQuantum--;
+
+            if (simData.timeQuantum < 0) {
+                simData.timeQuantum = 0;
+            }
         }
     }
 }
