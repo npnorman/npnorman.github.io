@@ -60,20 +60,20 @@
     
             <label>Start Time</label>
             <label for="minstart">Min</label>
-            <input type="number" min="0" value="0">
+            <input id="minstart" type="number" min="0" value="0">
             <label for="maxstart">Max</label>
-            <input type="number" min="0" value="10">
+            <input id="maxstart" type="number" min="0" value="10">
     
             <br><br>
         
             <label>Burst Time</label>
             <label for="minburst">Min</label>
-            <input type="number" min="1" value="1">
+            <input id="minburst" type="number" min="1" value="1">
             <label for="maxburst">Max</label>
-            <input type="number" min="1" value="20">
+            <input id="maxburst" type="number" min="1" value="20">
 
             <br><br>
-            <button>Generate Random Tasks</button>
+            <button id="generate-tasks">Generate Random Tasks</button>
         </div>
     
         <div id="custom-controls" class="hidden sub-control">
@@ -87,7 +87,7 @@
     
         <div>
             <label for="intervalms">Frame Interval:</label>
-            <input type="number" id="intervalms", name="intervalms" value="200"><span> ms</span>
+            <input type="number" id="intervalms", name="intervalms" value="100"><span> ms</span>
             <button>Update Interval</button>
         </div>
     

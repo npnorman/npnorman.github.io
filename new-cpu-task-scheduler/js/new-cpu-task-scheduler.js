@@ -43,6 +43,8 @@ function getAgeFactor(priority, waitTime) {
 var startBtn = document.getElementById("startsim");
 var pauseBtn = document.getElementById("pausesim");
 var stepBtn = document.getElementById("stepsim");
+var generateRandomTasksBtn = document.getElementById("generate-tasks");
+
 var algorithmDdl = document.getElementById("algorithmDropdown");
 var taskSelectionDdl = document.getElementById("taskDropdown");
 var randomControlsDiv = document.getElementById("random-controls");
@@ -50,6 +52,11 @@ var customControlsDiv = document.getElementById("custom-controls");
 
 var frameIntervalMsInpt = document.getElementById("intervalms");
 var timeQuantumInpt = document.getElementById("time-quantum");
+var minstartInpt = document.getElementById("minstart");
+var maxstartInpt = document.getElementById("maxstart");
+var minburstInpt = document.getElementById("minburst");
+var maxburstInpt = document.getElementById("maxburst");
+
 var timeQuantumSpan = document.getElementById("time-quantum-span");
 var clockOutput = document.getElementById("clock");
 var taskTable = document.getElementById("taskTable");
@@ -994,36 +1001,37 @@ function showRelevantControlsFromDropdown() {
     } else if (value == "custom") {
         customControlsDiv.classList.remove('hidden');
 
-    } else {
-        if (value == "0") {
-            taskMatrix = [];
-            taskMatrix.push(new Task());
-            taskMatrix[0].burst = 100;
-            taskMatrix[0].start = 0;
-    
-            for (let i = 1; i < 30; i++) {
-                let tempTask = new Task();
-                tempTask.start = i * 2;
-                tempTask.burst = Math.max(1,(i % 7) + (i % 3));
-                tempTask.priority = 0;
-    
-                taskMatrix.push(tempTask);
-            }
-        }
-
-        taskMatrix.sort((a,b) => a.start - b.start);
-        displayTable(taskMatrix);
     }
+    
+    taskMatrix = [];
+
+    if (value == "0") {
+        taskMatrix.push(new Task());
+        taskMatrix[0].burst = 100;
+        taskMatrix[0].start = 0;
+
+        for (let i = 1; i < 30; i++) {
+            let tempTask = new Task();
+            tempTask.start = i * 2;
+            tempTask.burst = Math.max(1,(i % 7) + (i % 3));
+            tempTask.priority = 0;
+
+            taskMatrix.push(tempTask);
+        }
+    }
+    
+    taskMatrix.sort((a,b) => a.start - b.start);
+    displayTable(taskMatrix);
 
 }
 
 function generateRandomData() {
     taskMatrix = [];
 
-    let minburst = 0;
-    let maxburst = 0;
-    let minstart = 0;
-    let maxstart = 0;
+    let minburst = minburstInpt.value;
+    let maxburst = maxburstInpt.value;
+    let minstart = minstartInpt.value;
+    let maxstart = maxstartInpt.value;
 
     for (let i = 1; i < 30; i++) {
         let tempTask = new Task();
@@ -1049,6 +1057,8 @@ function showTimeQuantum() {
 startBtn.addEventListener('click', startSim);
 pauseBtn.addEventListener('click', pauseSim);
 stepBtn.addEventListener('click', stepSim);
+generateRandomTasksBtn.addEventListener('click', generateRandomData);
+
 taskSelectionDdl.addEventListener('change', showRelevantControlsFromDropdown);
 algorithmDdl.addEventListener('change', showTimeQuantum);
 
