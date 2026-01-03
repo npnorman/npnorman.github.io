@@ -602,6 +602,83 @@ function tabulate(currentMatrix, clock, intermediateDataLog) {
     }
 }
 
+function displayTable(currentMatrix) {
+    // task table
+    //clear table body
+    taskTable.innerHTML = '';
+
+    // for each task
+    for (let i = 0; i < currentMatrix.length; i++) {
+        // create a row (tr)
+        let tempRow = document.createElement('tr');
+
+        let tempId = document.createElement('td');
+        let tempPriority = document.createElement('td');
+        let tempStart = document.createElement('td');
+        let tempEnd = document.createElement('td');
+        let tempBurst = document.createElement('td');
+        let tempRemainingTime = document.createElement('td');
+        let tempWaitTime = document.createElement('td');
+        let tempResponseTime = document.createElement('td');
+        let tempTurnaroundTime = document.createElement('td');
+        let tempLocation = document.createElement('td');
+
+        tempId.textContent = currentMatrix[i].id;
+        tempStart.textContent = currentMatrix[i].start;
+        tempEnd.textContent = "?";
+        tempBurst.textContent = currentMatrix[i]._burst;
+        tempRemainingTime.textContent = currentMatrix[i].remainingTime;
+        tempWaitTime.textContent = "?";
+        tempResponseTime.textContent = "?";
+        tempTurnaroundTime.textContent = "?";
+        tempLocation.textContent = "Not Started";
+        tempPriority.textContent = currentMatrix[i].priority;
+
+        if (currentMatrix[i].location == Locations.READYQUEUE) {
+            tempLocation.textContent = "Ready Queue";
+            tempRow.classList.add("ready-queue-row");
+
+            //calculate wait time opacity
+            let waitTimeOpcaity = Math.min(currentMatrix[i].waitTime, 255) / 255;
+
+            tempWaitTime.style.backgroundColor = lerpColor(lightyellow, red, waitTimeOpcaity);
+            "rgba(182, 174, 127, 1)"
+
+        } else if (currentMatrix[i].location == Locations.CPU) {
+            tempLocation.textContent = "CPU";
+            tempRow.classList.add("cpu-row");
+            tempRemainingTime.classList.add("col-highlight");
+
+        } else if (currentMatrix[i].location == Locations.FINISHED) {
+            tempLocation.textContent = "Completed";
+            tempRow.classList.add("finished-row");
+        }
+
+        if (currentMatrix[i].location != Locations.NOTSTARTED) {
+            tempWaitTime.textContent = currentMatrix[i].waitTime;
+        }
+
+        if (currentMatrix[i].location == Locations.FINISHED) {
+            tempEnd.textContent = currentMatrix[i].end;
+            tempResponseTime.textContent = currentMatrix[i].responseTime;
+            tempTurnaroundTime.textContent = currentMatrix[i].end - currentMatrix[i].start;
+        }
+
+        tempRow.appendChild(tempId);
+        tempRow.appendChild(tempPriority);
+        tempRow.appendChild(tempStart);
+        tempRow.appendChild(tempEnd);
+        tempRow.appendChild(tempBurst);
+        tempRow.appendChild(tempRemainingTime);
+        tempRow.appendChild(tempWaitTime);
+        tempRow.appendChild(tempResponseTime);
+        tempRow.appendChild(tempTurnaroundTime);
+        tempRow.appendChild(tempLocation);
+
+        taskTable.appendChild(tempRow);
+    }
+}
+
 function display(currentMatrix, clock, intermediateDataLog, barChart, lineChart, algorithm, timeQuantum) {
 
     // display clock
@@ -916,7 +993,49 @@ function showRelevantControlsFromDropdown() {
 
     } else if (value == "custom") {
         customControlsDiv.classList.remove('hidden');
+
+    } else {
+        if (value == "0") {
+            taskMatrix = [];
+            taskMatrix.push(new Task());
+            taskMatrix[0].burst = 100;
+            taskMatrix[0].start = 0;
+    
+            for (let i = 1; i < 30; i++) {
+                let tempTask = new Task();
+                tempTask.start = i * 2;
+                tempTask.burst = Math.max(1,(i % 7) + (i % 3));
+                tempTask.priority = 0;
+    
+                taskMatrix.push(tempTask);
+            }
+        }
+
+        taskMatrix.sort((a,b) => a.start - b.start);
+        displayTable(taskMatrix);
     }
+
+}
+
+function generateRandomData() {
+    taskMatrix = [];
+
+    let minburst = 0;
+    let maxburst = 0;
+    let minstart = 0;
+    let maxstart = 0;
+
+    for (let i = 1; i < 30; i++) {
+        let tempTask = new Task();
+        tempTask.start = getRandomInt(minstart,maxstart);
+        tempTask.burst = getRandomInt(minburst,maxburst);
+        tempTask.priority = 0;
+
+        taskMatrix.push(tempTask);
+    }
+
+    taskMatrix.sort((a,b) => a.start - b.start);
+    displayTable(taskMatrix);
 }
 
 function showTimeQuantum() {
@@ -934,29 +1053,18 @@ taskSelectionDdl.addEventListener('change', showRelevantControlsFromDropdown);
 algorithmDdl.addEventListener('change', showTimeQuantum);
 
 //test
+
+// taskMatrix.push(new Task());
+// taskMatrix[0].burst = 100;
 // taskMatrix[0].start = 0;
-// taskMatrix[1].start = 0;
-// taskMatrix[2].start = 3;
-// taskMatrix[3].start = 3;
-// taskMatrix[4].start = 5;
 
-// taskMatrix[0].burst = 10;
-// taskMatrix[1].burst = 2;
-// taskMatrix[2].burst = 6;
-// taskMatrix[3].burst = 3;
-// taskMatrix[4].burst = 5;
+// for (let i = 1; i < 30; i++) {
+//     let tempTask = new Task();
+//     tempTask.start = i * 2;
+//     tempTask.burst = getRandomInt(1,10);
+//     tempTask.priority = getRandomInt(0,7);
 
-taskMatrix.push(new Task());
-taskMatrix[0].burst = 100;
-taskMatrix[0].start = 0;
+//     taskMatrix.push(tempTask);
+// }
 
-for (let i = 1; i < 30; i++) {
-    let tempTask = new Task();
-    tempTask.start = i * 2;
-    tempTask.burst = getRandomInt(1,10);
-    tempTask.priority = getRandomInt(0,7);
-
-    taskMatrix.push(tempTask);
-}
-
-taskMatrix.sort((a,b) => a.start - b.start);
+// taskMatrix.sort((a,b) => a.start - b.start);
