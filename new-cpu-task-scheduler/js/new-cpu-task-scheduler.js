@@ -1036,7 +1036,7 @@ function generateRandomData() {
         let tempTask = new Task();
         tempTask.start = getRandomInt(minstart,maxstart);
         tempTask.burst = getRandomInt(minburst,maxburst);
-        tempTask.priority = 0;
+        tempTask.priority = getRandomInt(0,7);
 
         taskMatrix.push(tempTask);
     }
