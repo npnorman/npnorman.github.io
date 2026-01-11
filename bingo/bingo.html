@@ -7,22 +7,31 @@
     <title>BINGO</title>
 </head>
 <body>
-    <h1>BINGO Drawer</h1>
-    <br>
-    <h2>Last Called</h2>
+    <h1 class="bingo-header">
+        <span class="red">L</span>
+        <span class="orange">O</span>
+        <span class="yellow">G</span>
+        <span class="green">I</span>
+        <span class="blue">C</span>
+    </h1>
+
     <span id="current-num" class="current-number"></span>
-    <br>
-    <br>
+
     <div>
-        <button id="call">Call Number</button>
-        <br>
-        <input id="start" type="number" value="0"> to <input id="end" type="number" value="29">
-        <button id="set">Set Values</button>
+        <button id="call" class="call-button">Call Number</button>
     </div>
-    <br>
+
     <div class="called">
-        <p>Called</p>
         <p id="called-nums"></p>
+    </div>
+
+    <p id="notice" class="notice">ALL NUMBERS CALLED! RESET TO PLAY AGAIN.</p>
+
+    <div class="footer-panel">
+        <p>Setup Panel</p>
+        <input id="start" class="num-input" type="number" value="0"> to <input id="end" class="num-input" type="number" value="29">
+        <br><br>
+        <button id="set">Set Values / Reset</button>
     </div>
 
     <script src="./bingo.js"></script>

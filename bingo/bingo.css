@@ -2,16 +2,95 @@ body {
     text-align: center;
 }
 
+.bingo-header {
+    font-size: 4rem;
+    margin-bottom: 0;
+    text-shadow: 2px 2px 3px #000000;
+}
+
 .called {
     margin: auto;
     width: 50%;
-    border: 3px solid black;
     padding: 10px;
     font-size: 2rem;
 }
 
+.last-called-header {
+    color: red;
+    font-size: 2rem;
+}
+
 .current-number {
+    display: inline-block;
     text-align: center;
     font-size: 3rem;
     border: 3px solid red;
+    border-radius: 100px;
+    width: 100px;
+    height: 75px;
+    padding-top: 25px;
+    color: red;
+    margin: 30px;
+}
+
+.call-button {
+    font-size: larger;
+    margin: 20px 0px 20px 0px;
+}
+
+.footer-panel {
+    position: fixed; 
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 150px;
+    background-color: rgb(220, 220, 220);
+    font-size: larger;
+    border-top: 2px solid black;
+}
+
+.footer-panel button {
+    font-size: inherit;
+}
+
+.num-input {
+    width: 70px;
+    font-size: inherit;
+}
+
+.mini-ball {
+    display: inline-block;
+    border: 1px solid black;
+    border-radius: 100px;
+    padding: 5px;
+    min-width: 35px;
+    margin: 5px 0px 5px 0px;
+    background-color: rgb(240, 240, 240);
+}
+
+.notice {
+    display: none;
+    font-size: 2rem;
+    color: red;
+}
+
+/* COLORS */
+.red {
+    color: red; 
+}
+
+.orange {
+    color: orange;
+}
+
+.yellow {
+    color: yellow;
+}
+
+.green {
+    color: green;
+}
+
+.blue {
+    color: blue;
 }
