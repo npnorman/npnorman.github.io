@@ -1004,6 +1004,8 @@ function showRelevantControlsFromDropdown() {
     }
 
     if (value == "0") {
+        // high burst at start
+
         taskMatrix.push(new Task());
         taskMatrix[0].burst = 100;
         taskMatrix[0].start = 0;
@@ -1011,6 +1013,158 @@ function showRelevantControlsFromDropdown() {
         for (let i = 1; i < 30; i++) {
             let tempTask = new Task();
             tempTask.start = i * 2;
+            tempTask.burst = Math.max(1,(i % 7) + (i % 3));
+            tempTask.priority = 0;
+
+            taskMatrix.push(tempTask);
+        }
+
+    } else if (value == "1") {
+        // high burst at end
+
+        taskMatrix.push(new Task());
+        taskMatrix[0].burst = 100;
+        taskMatrix[0].start = 60;
+
+        for (let i = 1; i < 30; i++) {
+            let tempTask = new Task();
+            tempTask.start = i * 2;
+            tempTask.burst = Math.max(1,(i % 7) + (i % 3));
+            tempTask.priority = 0;
+
+            taskMatrix.push(tempTask);
+        }
+
+    } else if (value == "2") {
+        // high burst at middle
+
+        taskMatrix.push(new Task());
+        taskMatrix[0].burst = 100;
+        taskMatrix[0].start = 31;
+
+        for (let i = 1; i < 30; i++) {
+            let tempTask = new Task();
+            tempTask.start = i * 2;
+            tempTask.burst = Math.max(1,(i % 7) + (i % 3));
+            tempTask.priority = 0;
+
+            taskMatrix.push(tempTask);
+        }
+
+    } else if (value == "3") {
+        // Exp Increasing burst
+
+        for (let i = 1; i < 30; i++) {
+            let tempTask = new Task();
+            tempTask.start = i * 2;
+            tempTask.burst = i ** 2;
+            tempTask.priority = 0;
+
+            taskMatrix.push(tempTask);
+        }
+
+    } else if (value == "4") {
+        // Exp Decreasing burst
+
+        for (let i = 1; i < 30; i++) {
+            let tempTask = new Task();
+            tempTask.start = i * 2;
+            tempTask.burst = (30 - i) ** 2;
+            tempTask.priority = 0;
+
+            taskMatrix.push(tempTask);
+        }
+
+    } else if (value == "5") {
+        // Linear Increasing burst
+
+        for (let i = 1; i < 30; i++) {
+            let tempTask = new Task();
+            tempTask.start = i * 2;
+            tempTask.burst = i * 3;
+            tempTask.priority = 0;
+
+            taskMatrix.push(tempTask);
+        }
+
+    } else if (value == "6") {
+        // Linear Decreasing burst
+
+        for (let i = 1; i < 30; i++) {
+            let tempTask = new Task();
+            tempTask.start = i * 2;
+            tempTask.burst = (30 - i) * 3;
+            tempTask.priority = 0;
+
+            taskMatrix.push(tempTask);
+        }
+
+    } else if (value == "7") {
+        // high traffic at start // traffic = same burst but a lot in the same period of time
+
+        for (let i = 1; i < 10; i++) {
+            let tempTask = new Task();
+            tempTask.start = i;
+            tempTask.burst = Math.max(1,(i % 7) + (i % 3));
+            tempTask.priority = 0;
+
+            taskMatrix.push(tempTask);
+        }
+
+        for (let i = 1; i < 20; i++) {
+            let tempTask = new Task();
+            tempTask.start = (i + 2) * 4;
+            tempTask.burst = Math.max(1,(i % 7) + (i % 3));
+            tempTask.priority = 0;
+
+            taskMatrix.push(tempTask);
+        }
+
+    } else if (value == "8") {
+        // high traffic at end
+
+        for (let i = 1; i < 10; i++) {
+            let tempTask = new Task();
+            tempTask.start = (i + 77);
+            tempTask.burst = Math.max(1,(i % 7) + (i % 3));
+            tempTask.priority = 0;
+
+            taskMatrix.push(tempTask);
+        }
+
+        for (let i = 1; i < 20; i++) {
+            let tempTask = new Task();
+            tempTask.start = i * 4;
+            tempTask.burst = Math.max(1,(i % 7) + (i % 3));
+            tempTask.priority = 0;
+
+            taskMatrix.push(tempTask);
+        }
+
+    } else if (value == "9") {
+        // high traffic at middle
+
+        for (let i = 1; i < 10; i++) {
+            let tempTask = new Task();
+            tempTask.start = i * 4;
+            tempTask.burst = Math.max(1,(i % 7) + (i % 3));
+            tempTask.priority = 0;
+
+            taskMatrix.push(tempTask);
+        }
+
+        for (let i = 1; i < 10; i++) {
+            let tempTask = new Task();
+            tempTask.start = (i + 36);
+            tempTask.burst = Math.max(1,(i % 7) + (i % 3));
+            tempTask.priority = 0;
+
+            taskMatrix.push(tempTask);
+        }
+
+        for (let i = 1; i < 10; i++) {
+            let tempTask = new Task();
+            tempTask.start = (i + 11) * 4;
             tempTask.burst = Math.max(1,(i % 7) + (i % 3));
             tempTask.priority = 0;
 
