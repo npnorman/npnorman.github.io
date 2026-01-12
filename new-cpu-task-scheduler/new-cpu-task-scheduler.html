@@ -23,8 +23,8 @@
         
         <div>
             <button id="startsim">(Re)Start Simulation</button>
-            <button id="pausesim">Pause Simulation</button>
-            <button>Resume Simulation</button>
+            <button id="pausesim" disabled>Pause Simulation</button>
+            <button disabled>Resume Simulation</button>
             <button id="stepsim">Step</button>
         </div>
     
@@ -87,21 +87,23 @@
         <div id="custom-controls" class="hidden sub-control">
             <input type="file">
             <br>
-            <textarea></textarea>
+            <p>priority,start,burst</p>
+            <textarea placeholder="0,0,0"></textarea>
             <br>
             <button>Load Inputted Tasks</button>
+            <button>Save Input to TXT File</button>
             <button>Hide / Unhide Text Input</button>
         </div>
     
         <div>
             <label for="intervalms">Frame Interval:</label>
             <input type="number" id="intervalms", name="intervalms" value="100"><span> ms</span>
-            <button>Update Interval</button>
+            <button disabled>Update Interval</button>
         </div>
     
         <div>
-            <button>Run All Sims (Disables controls temporarily)</button>
-            <button>Reset All Sims</button>
+            <button disabled>Run All Sims (Disables controls temporarily)</button>
+            <button disabled>Reset All Sims</button>
         </div>
     </div>
     <hr>

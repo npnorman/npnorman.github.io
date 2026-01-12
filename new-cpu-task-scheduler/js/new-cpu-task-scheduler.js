@@ -986,7 +986,38 @@ function stepSim() {
     }
 }
 
-function showRelevantControlsFromDropdown() {
+function getCustomInput() {
+    // this is called from LOAD INPUTTED TASKS button
+    // the textarea can be edited by hand or with a file
+    // the file load will also call this after it has loaded the text area
+
+    // get value from text area
+
+    // separate on each newline
+
+    // for each line
+        // if start time is less than 0
+            // throw it out
+        
+        // if burst time is 0 or less
+            // throw it out
+        
+        // split on comma
+
+        // if length is != 3
+            // throw it out
+        
+        // for each in list
+            // if cannot convert to int
+                // throw line out
+            
+            // convert to int
+            
+        // after all converted to ints
+        // build task with this specification
+}
+
+function showRelevantControlsAndPresets() {
     let value = taskSelectionDdl.value;
 
     resetTaskMatrix();
@@ -1000,7 +1031,6 @@ function showRelevantControlsFromDropdown() {
 
     } else if (value == "custom") {
         customControlsDiv.classList.remove('hidden');
-
     }
 
     if (value == "0") {
@@ -1217,5 +1247,5 @@ pauseBtn.addEventListener('click', pauseSim);
 stepBtn.addEventListener('click', stepSim);
 generateRandomTasksBtn.addEventListener('click', generateRandomData);
 
-taskSelectionDdl.addEventListener('change', showRelevantControlsFromDropdown);
+taskSelectionDdl.addEventListener('change', showRelevantControlsAndPresets);
 algorithmDdl.addEventListener('change', showTimeQuantum);
