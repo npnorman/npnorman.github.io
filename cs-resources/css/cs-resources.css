@@ -5,6 +5,8 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   line-height: 2;
+
+  margin: 50px;
 }
 
 .bold {
@@ -13,6 +15,15 @@ body {
 
 .no-bullet {
   list-style-type: none;
+}
+
+.questions span {
+  font-size: large;
+  text-decoration: underline;
+}
+
+.questions p {
+  margin-left: 2em;
 }
 
 .video-player {
