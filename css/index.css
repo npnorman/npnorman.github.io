@@ -86,7 +86,7 @@ ul {
 
 .col1 {
     flex: 55%;
-    padding: 10px 50px 10px 10px;
+    padding: 0px 50px 10px 10px;
 }
 
 .col2 {
@@ -127,23 +127,66 @@ ul {
     font-size: inherit;
 }
 
+.mobile {
+    display: none;
+}
+
+.contact-footer {
+    width: 50%;
+}
+
 @media (max-width: 700px) {
   /* Styles applied when screen width is 768px or less */
   body {
-    width: 95%;
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+    box-sizing: border-box;
   }
 
   .thumbnail {
-    height: 60px;
-    width: 80px;
+    height: 72px;
+    width: 96px;
   }
 
   .columns {
     display: block;
   }
 
+  .col1 {
+    padding: 0px;
+}
+
   .col2 {
-    padding-left: 10px;
+    padding-left: 0px;
     border-left: 0px solid black;
+    }
+
+    a {
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.jump {
+    display: inline;
+    font-size: 0.9rem;
+}
+
+hr.mobile {
+    display: block;
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+
+a.mobile {
+    display: inline;
+}
+
+.contact-footer {
+    width: 100%;
+}
+
+ul {
+    padding: 0px;
 }
 }
