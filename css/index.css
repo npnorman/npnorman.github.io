@@ -110,6 +110,14 @@ ul {
     box-shadow: 0px 0px 10px 0px rgb(184, 184, 184);
 }
 
+.updates .medium-img {
+    width: 50%;
+}
+
+.updates .small-img {
+    width: 25%;
+}
+
 .updates math {
     font-size: x-large;
 }
@@ -125,6 +133,11 @@ ul {
 
 .updates .image-source a {
     font-size: inherit;
+}
+
+.quote {
+    padding-left: 20px;
+    border-left: 3px solid rgb(158, 158, 158);
 }
 
 .mobile {
