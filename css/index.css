@@ -92,6 +92,7 @@ ul {
 .col2 {
     flex: 45%;
     padding-left: 10px;
+    padding-right: 30px;
 
     border-left: 2px solid rgba(135, 135, 135, 0.27);
 }
@@ -172,6 +173,7 @@ ul {
 
   .col2 {
     padding-left: 0px;
+    padding-right: 0px;
     border-left: 0px solid black;
     }
 
