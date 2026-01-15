@@ -1,6 +1,6 @@
 body {
     font-family: monospace;
-    width: 700px;
+    /* width: 700px; */
 }
 
 .pfp {
@@ -80,6 +80,53 @@ ul {
     list-style-type: none;
 }
 
+.columns {
+    display: flex;
+}
+
+.col1 {
+    flex: 55%;
+    padding: 10px 50px 10px 10px;
+}
+
+.col2 {
+    flex: 45%;
+    padding-left: 10px;
+
+    border-left: 2px solid rgba(135, 135, 135, 0.27);
+}
+
+.updates p {
+    font-size: larger;
+}
+
+.updates a {
+    font-size: larger;
+}
+
+.updates img {
+    width: 75%;
+    margin: 30px;
+    box-shadow: 0px 0px 10px 0px rgb(184, 184, 184);
+}
+
+.updates math {
+    font-size: x-large;
+}
+
+.updates .image-source {
+    text-indent: 10%;
+    font-size: 0.7rem;
+    position: relative;
+    top: -30px;
+
+    margin-bottom: -10px;
+}
+
+.updates .image-source a {
+    font-size: inherit;
+}
+
 @media (max-width: 700px) {
   /* Styles applied when screen width is 768px or less */
   body {
@@ -90,4 +137,13 @@ ul {
     height: 60px;
     width: 80px;
   }
+
+  .columns {
+    display: block;
+  }
+
+  .col2 {
+    padding-left: 10px;
+    border-left: 0px solid black;
+}
 }
