@@ -149,7 +149,7 @@ ul {
     width: 50%;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 1073px) {
   /* Styles applied when screen width is 768px or less */
   body {
     width: 100%;
