@@ -101,6 +101,10 @@ ul {
     font-size: larger;
 }
 
+.updates p a {
+    font-size: inherit;
+}
+
 .updates a {
     font-size: larger;
 }
