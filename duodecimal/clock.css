@@ -1,5 +1,10 @@
 .clock {
-    font-size: 4rem;
+    font-size: 6rem;
     text-align: center;
     font-family: monospace;
+}
+
+.question {
+    font-size: 6rem;
+    text-align: center;
 }
