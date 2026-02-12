@@ -76,6 +76,10 @@ h3 {
     align-items: center;
 }
 
+.centered {
+    margin: auto;
+}
+
 ul {
     list-style-type: none;
 }
@@ -127,6 +131,10 @@ ul {
     font-size: x-large;
 }
 
+.updates li {
+    font-size: 12pt;
+}
+
 .updates .image-source {
     text-indent: 10%;
     font-size: 0.7rem;
@@ -151,6 +159,11 @@ ul {
 
 .contact-footer {
     width: 50%;
+}
+
+.expanded-list li {
+    margin-top: 7px;
+    margin-bottom: 7px;
 }
 
 @media (max-width: 1073px) {
