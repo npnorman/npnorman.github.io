@@ -11,9 +11,9 @@ var c1 = document.getElementById("c1")
 var c2 = document.getElementById("c2")
 
 c1.addEventListener('click', function () {
-    out1.innerHTML = Math.pow(6, k1.value) % 13;
+    out1.innerHTML = Math.pow(5, k1.value) % 23;
 });
 
 c2.addEventListener('click', function () {
-    out2.innerHTML = Math.pow(P.value, k2.value) % 13;
+    out2.innerHTML = Math.pow(P.value, k2.value) % 23;
 });
