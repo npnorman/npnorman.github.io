@@ -1,4 +1,5 @@
 /3d-print.html
+/access.html
 /artisanos.html
 /binary.html
 /index.html
@@ -18,6 +19,7 @@
 /cs-resources/cs-resources.html
 /cs-resources/cs-tv.html
 /cs-tips/length-in-any-language.html
+/diffie-hellman-game/diffie-hellman-game.html
 /duodecimal/clean-clock.html
 /duodecimal/clock.html
 /elevator-sim/documentation.html

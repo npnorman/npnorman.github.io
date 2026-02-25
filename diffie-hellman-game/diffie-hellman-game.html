@@ -8,27 +8,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diffie-Hellman-Game</title>
     <link rel="stylesheet" href="css/diffie-hellman-game.css">
+    <style>
+        body { text-align: center; font-size: large; }
+        li {
+  margin: 10px 0;
+}
+    </style>
 </head>
 <body>
     <a href="/">Back to Home</a>
 
-    <p>1 <= k <= 21</p>
-
     <h1>Diffie-Hellman-Game</h1>
-    <h2>Nicholas Norman February 2026</h2>
 
-    <p>5^k (mod 23)</p>
-    <p>k=<input id="s-key" type="number"></p>
-    <button id="c1">Calculate</button>
-    <p id="out1"></p>
+    <hr>
+    <h2>Instructions</h2>
+    <ol>
+        <li>Pick a PRIVATE key <i>k</i> that is 1 ≤ k ≤ 21</li>
+        <li>Calculate P<sub>self</sub>. This is your PUBLIC key. Anyone can see this.</li>
+        <li>Calculate <i>s</i>, which is the shared key between you and your partner.</li>
+        <li>Check to make sure you and your partner now have the same <i>s</i>!</li>
+        <li>You have successfully shared a key. Now you can encrpyt messages without a 3rd part knowing.</li>
+    </ol>
 
     <hr>
 
-    <p>P^k (mod 23)</p>
-    <p>P=<input id="P"></p>
-    <p>k=<input id="s-key2" type="number"></p>
+    <p>P<sub>self</sub> = <span class="scared">5<sup>k</sup> (mod 23)</span> = <span id="out1">?</span></p>
+    <p>k = <input id="s-key" type="number" min="1" max="21" value="1"></p>
+    <button id="c1">Calculate</button>
+
+    <hr>
+
+    <p>s = <span class="scared">P<sup>k</sup> (mod 23)</span> = <span id="out2">?</span></p>
+    <p>(partner's) P = <input id="P" type="number" min="1" max="21" value="1"></p>
     <button id="c2">Calculate</button>
-    <p id="out2"></p>
+
+    <hr>
+
+    <input id="cb" type="checkbox"><label for="cb">I'm scared of math</label>
+
+    <hr>
+
+    <p>Now you can use this key to encrypt with a simple shift cipher!</p>
+
+    <a target="_blank" href="https://cryptii.com/pipes/caesar-cipher">Use this to send eachother a message!</a>
+
+    <p>You may want to pick a short message if you are writing this down.</p>
 
     <script src="js/diffie-hellman-game.js"></script>
 </body>
