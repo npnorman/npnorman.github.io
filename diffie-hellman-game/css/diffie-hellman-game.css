@@ -5,3 +5,14 @@
 .scared-on {
   background-color: black;
 }
+
+body {
+  text-align: center;
+  font-size: large;
+  width: 50%;
+  margin: auto;
+}
+
+li {
+  margin: 10px 0;
+}

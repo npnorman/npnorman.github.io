@@ -8,12 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diffie-Hellman-Game</title>
     <link rel="stylesheet" href="css/diffie-hellman-game.css">
-    <style>
-        body { text-align: center; font-size: large; }
-        li {
-  margin: 10px 0;
-}
-    </style>
 </head>
 <body>
     <a href="/">Back to Home</a>
@@ -22,13 +16,15 @@
 
     <hr>
     <h2>Instructions</h2>
-    <ol>
+    <div class="instr">
+        <ol>
         <li>Pick a PRIVATE key <i>k</i> that is 1 ≤ k ≤ 21</li>
         <li>Calculate P<sub>self</sub>. This is your PUBLIC key. Anyone can see this.</li>
         <li>Calculate <i>s</i>, which is the shared key between you and your partner.</li>
         <li>Check to make sure you and your partner now have the same <i>s</i>!</li>
         <li>You have successfully shared a key. Now you can encrpyt messages without a 3rd part knowing.</li>
     </ol>
+    </div>
 
     <hr>
 
