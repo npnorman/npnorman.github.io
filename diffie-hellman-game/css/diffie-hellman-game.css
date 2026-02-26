@@ -13,6 +13,14 @@ body {
   margin: auto;
 }
 
+.instructions {
+  text-align: left;
+}
+
+ol {
+  text-align: left;
+}
+
 li {
   margin: 10px 0;
 }

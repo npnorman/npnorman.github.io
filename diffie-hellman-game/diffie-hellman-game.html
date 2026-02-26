@@ -14,19 +14,17 @@
 
     <h1>Diffie-Hellman Key Exchange Game</h1>
 
-    <hr>
-    <h2>Instructions</h2>
-    <div class="instr">
+    <details class="step-box" open>
+        <summary>
+            <h2>Instructions</h2>
+        </summary>
         <ol>
             <li>Pick a PRIVATE key <i>k</i> that is 1 ≤ k ≤ 21</li>
-            <li>Calculate P<sub>self</sub>. This is your PUBLIC key. Anyone can see this.</li>
+            <li>Calculate P. This is your PUBLIC key. Anyone can see this.</li>
             <li>Calculate <i>s</i>, which is the shared key between you and your partner.</li>
-            <li>Check to make sure you and your partner now have the same <i>s</i>!</li>
-            <li>You have successfully shared a key. Now you can encrpyt messages without a 3rd part knowing.</li>
+            <li>You have successfully shared a key. Now you can encrpyt messages without a 3rd party knowing and without actually sharing s.</li>
         </ol>
-    </div>
-
-    <hr>
+    </details>
 
     <div>
         <h2>Variables</h2>
@@ -46,7 +44,7 @@
     <div class="step-box">
         <h2>Generate a public key P</h2>
 
-        <p>P<sub>self</sub> <span class="scared">= 5<sup>k</sup> (mod 23)</span> = <span id="out1">?</span></p>
+        <p>P <span class="scared">= 5<sup>k</sup> (mod 23)</span> = <span id="out1">?</span></p>
         <p>k = <input id="s-key" type="number" min="1" max="21" value="1"></p>
         <button id="c1">Calculate</button>
     </div>
