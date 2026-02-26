@@ -16,3 +16,31 @@ body {
 li {
   margin: 10px 0;
 }
+
+.step-box {
+  background-color: rgb(230, 230, 230);
+  border-radius: 10px;
+  border: 2px solid rgb(116, 116, 116);
+  padding: 10px;
+  margin: 30px;
+}
+
+.dashboard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-item {
+  padding: 0px 20px 0px 20px;
+  margin: 0px 10px 10px 10px;
+  background-color: rgb(238, 238, 238);
+  border-radius: 10px;
+  border: 1px solid gray;
+}
+
+.variable {
+  font-size: 1.5rem;
+  margin-top: 0px;
+  padding-top: 0px;
+}

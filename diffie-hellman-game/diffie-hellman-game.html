@@ -18,29 +18,46 @@
     <h2>Instructions</h2>
     <div class="instr">
         <ol>
-        <li>Pick a PRIVATE key <i>k</i> that is 1 ≤ k ≤ 21</li>
-        <li>Calculate P<sub>self</sub>. This is your PUBLIC key. Anyone can see this.</li>
-        <li>Calculate <i>s</i>, which is the shared key between you and your partner.</li>
-        <li>Check to make sure you and your partner now have the same <i>s</i>!</li>
-        <li>You have successfully shared a key. Now you can encrpyt messages without a 3rd part knowing.</li>
-    </ol>
+            <li>Pick a PRIVATE key <i>k</i> that is 1 ≤ k ≤ 21</li>
+            <li>Calculate P<sub>self</sub>. This is your PUBLIC key. Anyone can see this.</li>
+            <li>Calculate <i>s</i>, which is the shared key between you and your partner.</li>
+            <li>Check to make sure you and your partner now have the same <i>s</i>!</li>
+            <li>You have successfully shared a key. Now you can encrpyt messages without a 3rd part knowing.</li>
+        </ol>
     </div>
 
     <hr>
 
-    <h2>Generate a public key P</h2>
+    <div class="step-box">
+        <h2>Variables</h2>
+        <div class="dashboard">
+            <div class="dashboard-item">
+            <p>(Private Key)</p><p class="variable">k = <span id="k-out">?</span></p>
+            </div>
+            <div class="dashboard-item">
+                <p>(Public Key)</p><p class="variable">P = <span id="p-out">?</span></p>
+            </div>
+            <div class="dashboard-item">
+                <p>(Shared Secret Key)</p><p class="variable">s = <span id="s-out">?</span></p>
+            </div>
+        </div>
+    </div>
 
-    <p>P<sub>self</sub> = <span class="scared">5<sup>k</sup> (mod 23)</span> = <span id="out1">?</span></p>
-    <p>k = <input id="s-key" type="number" min="1" max="21" value="1"></p>
-    <button id="c1">Calculate</button>
+    <div class="step-box">
+        <h2>Generate a public key P</h2>
 
-    <hr>
+        <p>P<sub>self</sub> = <span class="scared">5<sup>k</sup> (mod 23)</span> = <span id="out1">?</span></p>
+        <p>k = <input id="s-key" type="number" min="1" max="21" value="1"></p>
+        <button id="c1">Calculate</button>
+    </div>
 
-    <h2>Generate a public key <i>s</i></h2>
+    <div class="step-box">
+        <h2>Generate a public key <i>s</i></h2>
 
-    <p>s = <span class="scared">P<sup>k</sup> (mod 23)</span> = <span id="out2">?</span></p>
-    <p>(partner's) P = <input id="P" type="number" min="1" max="21" value="1"></p>
-    <button id="c2">Calculate</button>
+        <p>s = <span class="scared">P<sup>k</sup> (mod 23)</span> = <span id="out2">?</span></p>
+        <p>(partner's) P = <input id="P" type="number" min="1" max="21" value="1"></p>
+        <button id="c2">Calculate</button>
+    </div>
 
     <hr>
 
