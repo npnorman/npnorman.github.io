@@ -19,7 +19,7 @@
             <h2>Instructions</h2>
         </summary>
         <ol>
-            <li>Pick a PRIVATE key <i>k</i> that is 1 ≤ k ≤ 21</li>
+            <li>Pick a PRIVATE key <i>k</i> that is 1 ≤ k ≤ 11</li>
             <li>Calculate P. This is your PUBLIC key. Anyone can see this.</li>
             <li>Calculate <i>s</i>, which is the shared key between you and your partner.</li>
             <li>You have successfully shared a key. Now you can encrpyt messages without a 3rd party knowing and without actually sharing s.</li>
@@ -44,15 +44,15 @@
     <div class="step-box">
         <h2>1-2. Generate a public key</h2>
 
-        <p>P <span class="scared">= 5<sup>k</sup> (mod 23)</span> = <span id="out1">?</span></p>
-        <p>k = <input id="s-key" type="number" min="1" max="21" value="1"></p>
+        <p>P <span class="scared">= 6<sup>k</sup> (mod 13)</span> = <span id="out1">?</span></p>
+        <p>k = <input id="s-key" type="number" min="1" max="11" value="1"></p>
         <button id="c1">Calculate</button>
     </div>
 
     <div class="step-box">
         <h2>3. Generate a shared secret key</h2>
 
-        <p>s <span class="scared">= P<sup>k</sup> (mod 23)</span> = <span id="out2">?</span></p>
+        <p>s <span class="scared">= P<sup>k</sup> (mod 13)</span> = <span id="out2">?</span></p>
         <p>(partner's) P = <input id="P" type="number" min="1" max="21" value="1"></p>
         <button id="c2">Calculate</button>
     </div>
@@ -69,7 +69,7 @@
                     <p>Ciphertext</p>
                 </div>
                 <div>
-                    <textarea rows="5" cols="30" id="plaintext" class="cipher-textbox"></textarea>
+                    <textarea placeholder="Plaintext to encrpyt..." rows="5" cols="30" id="plaintext" class="cipher-textbox"></textarea>
                 </div>
                 <div class="button-col">
                     <button id="encrypt">= Encrypt =></button>
@@ -77,7 +77,7 @@
                     <button id="decrypt"><= Decrypt =</button>
                 </div>
                 <div>
-                    <textarea rows="5" cols="30" id="ciphertext" class="cipher-textbox"></textarea>
+                    <textarea placeholder="Ciphertext to decrpyt..." rows="5" cols="30" id="ciphertext" class="cipher-textbox"></textarea>
                 </div>
             </div>
         </div>

@@ -27,7 +27,7 @@ var ciphertextBox = document.getElementById("ciphertext");
 var s = 0;
 
 c1.addEventListener('click', function () {
-    let pVal = Math.pow(5, k1.value) % 23;
+    let pVal = Math.pow(6, k1.value) % 13;
     out1.innerHTML = pVal;
     out1.innerHTML = "<b>" + out1.innerHTML + "</b>";
 
@@ -36,7 +36,7 @@ c1.addEventListener('click', function () {
 });
 
 c2.addEventListener('click', function () {
-    let sVal = Math.pow(P.value, k1.value) % 23;
+    let sVal = Math.pow(P.value, k1.value) % 13;
     out2.innerHTML = sVal;
     out2.innerHTML = "<b>" + out2.innerHTML + "</b>";
 
