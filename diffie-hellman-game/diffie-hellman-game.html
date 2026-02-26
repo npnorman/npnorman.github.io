@@ -28,7 +28,7 @@
 
     <hr>
 
-    <div class="step-box">
+    <div>
         <h2>Variables</h2>
         <div class="dashboard">
             <div class="dashboard-item">
@@ -46,7 +46,7 @@
     <div class="step-box">
         <h2>Generate a public key P</h2>
 
-        <p>P<sub>self</sub> = <span class="scared">5<sup>k</sup> (mod 23)</span> = <span id="out1">?</span></p>
+        <p>P<sub>self</sub> <span class="scared">= 5<sup>k</sup> (mod 23)</span> = <span id="out1">?</span></p>
         <p>k = <input id="s-key" type="number" min="1" max="21" value="1"></p>
         <button id="c1">Calculate</button>
     </div>
@@ -54,35 +54,177 @@
     <div class="step-box">
         <h2>Generate a public key <i>s</i></h2>
 
-        <p>s = <span class="scared">P<sup>k</sup> (mod 23)</span> = <span id="out2">?</span></p>
+        <p>s <span class="scared">= P<sup>k</sup> (mod 23)</span> = <span id="out2">?</span></p>
         <p>(partner's) P = <input id="P" type="number" min="1" max="21" value="1"></p>
         <button id="c2">Calculate</button>
     </div>
 
-    <hr>
-
     <input id="cb" type="checkbox"><label for="cb">I'm scared of math</label>
+        <div class="step-box">
+            
+            <div class="cipher-box">
+                <div>
+                    <p>Plaintext</p>
+                </div>
+                <h2>Shift Cipher</h2>
+                <div>
+                    <p>Ciphertext</p>
+                </div>
+                <div>
+                    <textarea rows="5" cols="30" id="plaintext" class="cipher-textbox"></textarea>
+                </div>
+                <div class="button-col">
+                    <button id="encrypt">= Encrypt =></button>
+                    <p>s = <span id="s-out2">0</span></p>
+                    <button id="decrypt"><= Decrypt =</button>
+                </div>
+                <div>
+                    <textarea rows="5" cols="30" id="ciphertext" class="cipher-textbox"></textarea>
+                </div>
+            </div>
+        </div>
 
-    <hr>
+    <div class="step-box math-box">
+        <details>
+            <summary>
+                <h2>Some Mathmetical Principles</h2>
+            </summary>
+            <h3>Discrete Logarithm Problem</h3>
+            <p>
+                The key principle behind the DHKE is DLP. It is a function that is easy to go one way, but very hard to go the other. You could think of it like trying to determine how much coffee and milk you have in a cup. Before mixing, you can easily measure the ingredients, but after mixing, it is hard to measure the ingredients.
+            </p>
+            <p>
+                Given,
+                <br>
+                <i>g</i> - generator
+                <br>
+                <i>p</i> - prime
+                <br><br>
+                Given x, it is easy to compute <i>g</i><sup>x</sup> mod <i>p</i>
+                <br>
+                but difficult to find x given <i>g</i> and <i>p</i>
+            </p>
+            <p>
+                The reason behind using a generator and a prime, is that for any given input of x, from 1 to <i>p</i> - 1, a generator will produce all values from 1 to <i>p - 1</i>.
+            </p>
+            <p>
+                An example is the prime 5 and generator 2.
+                <br>
+                <i>p</i> = 5, <i>g</i> = 2
+            </p>
+            <table>
+                <tr>
+                    <th><i>g</i><sup>x</sup> mod <i>p</i></th>
+                </tr>
+                <tr>
+                    <td>2<sup>1</sup> mod 5</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>2<sup>2</sup> mod 5</td>
+                    <td>4</td>
+                </tr>
+                <tr>
+                    <td>2<sup>3</sup> mod 5</td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>2<sup>4</sup> mod 5</td>
+                    <td>1</td>
+                </tr>
+            </table>
+            <p>
+                As we have seen, it generates 2, 4, 3, 1, which are all the values from 1 to <i>p</i> - 1.
+            </p>
+            <p>
+                This means that the possible x's are equally distributed and to brute force would be <i>O</i>(<i>p</i>). Though this may seem linear, note that the complexity grows with the input size of n bits. So <i>p</i> = 2<sup>n</sup>, leading to an exponential complexity, <i>O</i>(2<sup>n</sup>).
+            </p>
 
-    <p>Now you can use this key to encrypt with a simple shift cipher!</p>
+            <h3>Diffie-Hellman Key Exchange</h3>
 
-    <a target="_blank" href="https://cryptii.com/pipes/caesar-cipher">Use this to send eachother a message!</a>
+            <p>
+                <h4>Secret</h4>
+                <i>k</i> - Private key
+                <br>
+                <i>s</i> - Secret Shared Key
+                <h4>Public</h4>
+                P - Public key
+                <br>
+                <i>g</i> - generator
+                <br>
+                <i>p</i> - prime
+            </p>
 
-    <p>You may want to pick a short message if you are writing this down.</p>
+            <p>
+                Each key is denoted as belonging to Alice or Bob in this example. Such as <i>k</i><sub>A</sub> or <i>k</i><sub>B</sub>
+            </p>
 
-    <hr>
+            <h4>Protocol</h4>
 
-    <h2>Some math principles</h2>
+            <ol>
+                <li>
+                    Alice and Bob must decide on a prime <i>p</i> and a generator <i>g</i>.
+                </li>
+                <li>
+                    Alice must pick some private key 1 ≤ <i>k</i><sub>A</sub> ≤ p - 2.
+                </li>
+                <li>
+                    Next, Bob must pick some private key 1 ≤ <i>k</i><sub>B</sub> ≤ p - 2.
+                </li>
+                <li>
+                    Alice then computes her public key. P<sub>A</sub> = <i>g</i><sup><i>k</i><sub>A</sub></sup> mod <i>p</i>.
+                </li>
+                <li>
+                    Alice then computes her public key. P<sub>B</sub> = <i>g</i><sup><i>k</i><sub>B</sub></sup> mod <i>p</i>.
+                </li>
+                <li>
+                    Now Alice and Bob publicize their keys.
+                </li>
+                <li>
+                    Alice takes Bob's public key and computes the secret shared key. <i>s</i> = (P<sub>B</sub>)<sup><i>k</i><sub>A</sub></sup> mod <i>p</i>.
+                </li>
+                <li>
+                    Bob takes Alice's public key and computes the secret shared key. <i>s</i> = (P<sub>A</sub>)<sup><i>k</i><sub>B</sub></sup> mod <i>p</i>.
+                </li>
+                <li>
+                    Now it may seem that Alice and Bob have different keys, but they are the same <i>s</i>. By substituting P<sub>A</sub> and P<sub>B</sub>, we see the following formulas.
+                </li>
+                <li>
+                    Alice computed (<i>g</i><sup><i>k</i><sub>B</sub></sup>)<sup>k<sub>A</sub></sup> mod <i>p</i>.
+                </li>
+                <li>
+                    Bob computed (<i>g</i><sup><i>k</i><sub>A</sub></sup>)<sup>k<sub>B</sub></sup> mod <i>p</i>.
+                </li>
+                <li>
+                    We see, (<i>g</i><sup><i>k<sub>B</sub></i></sup>)<sup><i>k</i><sub>A</sub></sup> = (<i>g</i><sup><i>k</i><sub>A</sub></sup>)<sup><i>k</i><sub>B</sub></sup> = <i>g</i><sup><i>k</i><sub>A</sub></sup><sup><i>k</i><sub>B</sub></sup>
+                </li>
+                <li>
+                    And if a hacker were to try and use the public keys, they may do P<sub>A</sub> × P<sub>B</sub> = <i>g</i><sup><i>k</i><sub>A</sub></sup> × <i>g</i><sup><i>k</i><sub>B</sub></sup> = <i>g</i><sup><i>k</i><sub>A</sub>+<i>k</i><sub>B</sub></sup>
+                </li>
 
-    <p>Given a private key <i>k</i><sub>i</sub> and a public key P<sub>i</sub> for each person (1 & 2)</p>
-    <p>The generator <i>g</i> and the prime <i>p</i>, which are g=5, p=23 in the above example.</p>
-    <p>Person 1 calculates the shared key <i>s</i> by doing (<i>g</i><sup><i>k</i><sub>2</sub></sup>)<sup>k<sub>1</sub></sup></p>
-    <p>Note this uses the public key for person 2, P<sub>2</sub> = <i>g</i><sup><i>k</i><sub>2</sub></sup>, which assumed hard to find <i>k</i><sub>2</sub>.</p>
-    <p>Person 2 calculates the shared key <i>s</i> by doing (<i>g</i><sup><i>k</i><sub>1</sub></sup>)<sup>k<sub>2</sub></sup></p>
-    <p>By multiplying powers, both person 1 and 2 get <i>g</i><sup><i>k</i><sub>1</sub>k<sub>2</sub></p>
-    <p>But if a hacker got P<sub>1</sub> and P<sub>2</sub>, which are public,</p>
-    <p><i>g</i><sup><i>k</i><sub>1</sub></sup> × <i>g</i><sup>k<sub>2</sub></sup> = <i>g</i><sup><i>k</i><sub>1</sub> + k<sub>2</sub></sup> ≠ <i>g</i><sup><i>k</i><sub>1</sub>k<sub>2</sub></p>
+            </ol>
+            <h4>An Example</h4>
+            <ol>
+                <li>Alice and Bob agree on g = 2 and p = 5</li>
+                <li>
+                    Alice picks k = 2, and computes P = 2<sup>2</sup> mod 5 = 4.
+                </li>
+                <li>
+                    Bob picks k = 3, and computes P = 2<sup>3</sup> mod 5 = 3.
+                </li>
+                <li>
+                    Alice computes s = 3<sup>2</sup> mod 5 = 9 mod 5 = 4.
+                </li>
+                <li>
+                    Bob computes s = 4<sup>3</sup> mod 5 = 54 mod 5 = 4.
+                </li>
+                <li>
+                    s = 4
+                </li>
+            </ol>
+        
+        </details>
+    </div>
 
     <script src="js/diffie-hellman-game.js"></script>
 </body>

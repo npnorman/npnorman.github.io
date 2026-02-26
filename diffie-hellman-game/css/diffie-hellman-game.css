@@ -3,7 +3,7 @@
   */
 
 .scared-on {
-  background-color: black;
+  display: none;
 }
 
 body {
@@ -37,10 +37,62 @@ li {
   background-color: rgb(238, 238, 238);
   border-radius: 10px;
   border: 1px solid gray;
+
+  min-width: 150px;
 }
 
 .variable {
   font-size: 1.5rem;
   margin-top: 0px;
   padding-top: 0px;
+}
+
+.cipher-box {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 50px 0px 50px;
+
+  grid-template-rows: 1fr 2fr;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.button-col {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.button-col button {
+  margin: 5px;
+}
+
+.button-col p {
+  margin: 0;
+}
+
+.cipher-textbox {
+  padding: 3px;
+}
+
+.math-box {
+  text-align: left;
+}
+
+table, th, td {
+  border: 1px solid;
+  border-collapse: collapse;
+}
+
+td, th {
+  text-align: center;
+  padding: 10px;
+}
+
+summary h2 {
+  display: inline;
+}
+
+summary {
+  text-align: center;
 }
