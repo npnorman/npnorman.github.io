@@ -42,7 +42,7 @@
     </div>
 
     <div class="step-box">
-        <h2>Generate a public key P</h2>
+        <h2>1-2. Generate a public key</h2>
 
         <p>P <span class="scared">= 5<sup>k</sup> (mod 23)</span> = <span id="out1">?</span></p>
         <p>k = <input id="s-key" type="number" min="1" max="21" value="1"></p>
@@ -50,7 +50,7 @@
     </div>
 
     <div class="step-box">
-        <h2>Generate a public key <i>s</i></h2>
+        <h2>3. Generate a shared secret key</h2>
 
         <p>s <span class="scared">= P<sup>k</sup> (mod 23)</span> = <span id="out2">?</span></p>
         <p>(partner's) P = <input id="P" type="number" min="1" max="21" value="1"></p>
@@ -64,7 +64,7 @@
                 <div>
                     <p>Plaintext</p>
                 </div>
-                <h2>Shift Cipher</h2>
+                <h2>4. Shift Cipher</h2>
                 <div>
                     <p>Ciphertext</p>
                 </div>
