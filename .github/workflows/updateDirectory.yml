@@ -18,8 +18,11 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Run Script
+      - name: Run Directory Script
         run: python ./backend/html-directory-generator.py
+
+      - name: Run Random Link Script
+        run: python ./backend/getRandomLinkList.py
 
       - name: Commit and push changes
         run: |
