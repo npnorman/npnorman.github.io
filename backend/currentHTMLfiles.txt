@@ -18,6 +18,7 @@
 /duodecimal/clean-clock.html
 /duodecimal/clock.html
 /creature/creature.html
+/bouncing-boxes-simulation/bouncing-boxes-simulation.html
 /nand2tetrisproject6assemblerjs/nand2tetrisproject6assemblerjs.html
 /nand2tetrisproject6assemblerjs/nand2tetrisTestFiles.html
 /cs-tips/length-in-any-language.html
