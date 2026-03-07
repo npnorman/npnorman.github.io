@@ -1,0 +1,13 @@
+/*simple-fakemon.css
+  Nicholas Norman March 2026
+  Fakemon game*/
+
+img {
+  width: 100px;
+  height: 100px;
+  padding: 20px;
+}
+
+button { 
+  min-width: 100px;
+}
