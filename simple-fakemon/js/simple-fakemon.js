@@ -37,6 +37,12 @@ var fakemon = [
         [-30, "Tail Smash", "A"],
         [0, "Spotty Camo", "H"]
     ],
+    ["smoalder.webp", "Smoadler", ,
+        [-10, "Singe", "H"],
+        [-35, "Flamethrower", 'A'],
+        [+15, "Burn Up", "A"],
+        [0, "Smokescreen", "H"]
+    ],
 ]
 
 var p1hp = fakemon[player1][2];
