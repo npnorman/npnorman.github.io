@@ -2,8 +2,11 @@
 //Nicholas Norman March 2026
 //Fakemon game
 
+var player1 = prompt("player 1: ");
+var player2 = prompt("player 2: ")
+
 var img1 = document.getElementById("img1");
-var img2 = document.getElementById("img1");
+var img2 = document.getElementById("img2");
 var move1 = document.getElementById("move1");
 var move2 = document.getElementById("move2");
 var move3 = document.getElementById("move3");
@@ -30,12 +33,13 @@ var fakemon = [
     ],
 ]
 
-var player1 = 0;
-var player2 = 1;
 var p1hp = fakemon[player1][2];
 var p2hp = fakemon[player2][2];
 name1.innerHTML = fakemon[player1][1];
 name2.innerHTML = fakemon[player2][1];
+
+img1.src = "fakemon/" + fakemon[player1][0];
+img2.src = "fakemon/" + fakemon[player2][0];
 
 var block = 0;
 
