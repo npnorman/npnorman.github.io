@@ -31,13 +31,13 @@ var fakemon = [
         [0, "Block", "A"],
         [-5, "Electric Blast", "H"]
     ],
-    ["drackle.webp", "Drackle", ,
+    ["drackle.webp", "Drackle", 110,
         [+30, "Tail Shed", "H"],
         [-15, "Scratch", 'A'],
         [-30, "Tail Smash", "A"],
         [0, "Spotty Camo", "H"]
     ],
-    ["smoalder.webp", "Smoadler", ,
+    ["smoalder.webp", "Smoadler", 85,
         [-10, "Singe", "H"],
         [-35, "Flamethrower", 'A'],
         [+15, "Burn Up", "A"],
