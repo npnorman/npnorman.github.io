@@ -31,6 +31,12 @@ var fakemon = [
         [0, "Block", "A"],
         [-5, "Electric Blast", "H"]
     ],
+    ["drackle.webp", "Drackle", ,
+        [+30, "Tail Shed", "H"],
+        [-15, "Scratch", 'A'],
+        [-30, "Tail Smash", "A"],
+        [0, "Spotty Camo", "H"]
+    ],
 ]
 
 var p1hp = fakemon[player1][2];
