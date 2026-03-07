@@ -19,29 +19,65 @@ var name2 = document.getElementById("name2");
 
 
 var fakemon = [
-    ["images.jpg", "Pika", 10,
-        [-5, "Electric Blast", "H"],
-        [-2, "Electric Blast", 'A'],
-        [0, "Block", "A"],
-        [4, "Electric Blast", "H"]
-        ],
-    ["m_2Fx1000_2Fa7340898-92bf-453f-a3a1-c00f5cd15711.jpg", "Detective Pika", 20,
-        [-5, "Electric Blast", "H"],
-        [-5, "Electric Blast", 'A'],
-        [0, "Block", "A"],
-        [-5, "Electric Blast", "H"]
-    ],
-    ["drackle.webp", "Drackle", 110,
+    // ["images.jpg", "Pika", 10,
+    //     [-5, "Electric Blast", "H"],
+    //     [-2, "Electric Blast", 'A'],
+    //     [0, "Block", "A"],
+    //     [4, "Electric Blast", "H"]
+    //     ],
+    // ["m_2Fx1000_2Fa7340898-92bf-453f-a3a1-c00f5cd15711.jpg", "Detective Pika", 20,
+    //     [-5, "Electric Blast", "H"],
+    //     [-5, "Electric Blast", 'A'],
+    //     [0, "Block", "A"],
+    //     [-5, "Electric Blast", "H"]
+    // ],
+    ["drackle.webp", "Drackle", 130,
         [+30, "Tail Shed", "H"],
         [-15, "Scratch", 'A'],
         [-30, "Tail Smash", "A"],
         [0, "Spotty Camo", "H"]
     ],
-    ["smoalder.webp", "Smoadler", 85,
-        [-10, "Singe", "H"],
-        [-35, "Flamethrower", 'A'],
-        [+15, "Burn Up", "A"],
-        [0, "Smokescreen", "H"]
+    ["smoalder.webp", "Smoalder", 95,
+        [-10, "Singe"],
+        [-35, "Flamethrower"],
+        [+15, "Burn Up"],
+        [0, "Smokescreen"]
+    ],
+    ["Sealactite.webp", "Sealactite", 140,
+        [0, "Rock Climb"],
+        [-25, "Poison Spike"],
+        [-30, "Rock Fall"],
+        [-30, "Venoshock"]
+    ],
+    ["butterspider.webp", "Butterspider", 200,
+        [+45, "Butterfly Fairy Lure"],
+        [-30, "Spider Attack"],
+        [-10, "Spider Net"],
+        [0, "Fairy Camouflage"]
+    ],
+    ["bronxeon.webp", "Bronxeon", 160,
+        [+35, "Happy birthday"],
+        [-30, "Hammer Arm"],
+        [-10, "Close Combat"],
+        [0, "Guard"]
+    ],
+    ["luchilla.webp", "Luchilla", 60,
+        [+30, "Swift Rest"],
+        [-15, "Scratch"],
+        [-30, "Double Kick"],
+        [0, "Parry"]
+    ],
+    ["lunilla.webp", "Lunilla", 80,
+        [+30, "Swift Rest"],
+        [-20, "Psybean"],
+        [-30, "Double Kick"],
+        [0, "Parry"]
+    ],
+    ["lunaboom.webp", "Lunaboom", 120,
+        [+30, "Swift Rest"],
+        [-20, "Psybean"],
+        [-30, "Moon Crash"],
+        [0, "Hide Behind the Moon!"]
     ],
 ]
 
