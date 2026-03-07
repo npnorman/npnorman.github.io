@@ -23,6 +23,7 @@
 /nand2tetrisproject6assemblerjs/nand2tetrisTestFiles.html
 /cs-tips/length-in-any-language.html
 /diffie-hellman-game/diffie-hellman-game.html
+/simple-fakemon/simple-fakemon.html
 /javascript-renderer/javascript-renderer.html
 /line-of-time/line-of-time.html
 /recipeParser/recipeParser.html
