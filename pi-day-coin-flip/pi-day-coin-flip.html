@@ -1,0 +1,35 @@
+<!--pi-day-coin-flip.html
+    Nicholas Norman March 2026
+    Pi Coin Flip Approx.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pi Day Coin Flip</title>
+    <link rel="stylesheet" href="css/pi-day-coin-flip.css">
+</head>
+<body>
+    <a href="/">Back to Home</a>
+
+    <h1>π Day Coin Flip</h1>
+    <h2>Nicholas Norman March 2026</h2>
+
+    <p>π Coin Flip Approx.</p>
+
+    <p>See Matt Parker's π Day Video Here: <a href="https://www.youtube.com/watch?v=kahGSss6SsU&t=1460s">Calculating pi from coin flips (without randomness)</a></p>
+
+    <p>This simulation does use randomness. But the idea is this:</p>
+    <p>Given a sequence of heads and tails, calculate the ratio that there are more heads than tails.</p>
+    <p>So for something like this: T H T H H, there are more heads than tails, so we stop and calculate: 3/5.</p>
+    <p>Then we reset the count and keep testing sequences. When the heads outgrow the tails, we reset.</p>
+    <p>We take all of the ratios / the number of times we reset, (and multiply by 4, see Matt Parker's video on how to prove this gets to π) and we get an approximation of π.</p>
+
+    <input id="flipCount" type="number" min="2" value="1000000">
+    <button id="run">Calculate Pi</button>
+
+    <p id="output"></p>
+
+    <script src="js/pi-day-coin-flip.js"></script>
+</body>
+</html>
