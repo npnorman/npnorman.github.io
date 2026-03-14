@@ -15,6 +15,7 @@
 /elevator-sim/documentation.html
 /js-api-workshop/js-api-workshop.html
 /cpuScheduler/task.html
+/pi-day-coin-flip/pi-day-coin-flip.html
 /duodecimal/clean-clock.html
 /duodecimal/clock.html
 /creature/creature.html
