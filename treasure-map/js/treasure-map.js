@@ -17,13 +17,23 @@ const ctx = map_canvas.getContext("2d");
 var points = [
     [1, 1],
     [2, 1],
-    [3, 2]
+    [3, 2],
+    [5, 1],
+    [6, 4],
+    [8, 1.25],
+    [8.25, 2],
+    [7.75, 3],
 ];
 
 var point_urls = [
     "https://npnorman.github.io/",
     "https://technews.acm.org/",
-    "https://www.youtube.com/"
+    "https://math.hws.edu/eck/js/",
+    "https://math.hws.edu/eck/index.html",
+    "https://davidjeck.github.io/",
+    "https://spectrum.ieee.org/from-punch-cards-to-python",
+    "https://www.youtube.com/watch?v=B6rKUf9DWRI",
+    "https://www.youtube.com/watch?v=zOD1umMX2s8",
 ]
 
 var modified_points = [];
