@@ -39,5 +39,6 @@
 /new-cpu-task-scheduler/new-cpu-task-scheduler.html
 /elevator-sim/sim.html
 /elevator-sim/documentation.html
+/treasure-map/treasure-map.html
 /line-of-time/line-of-time.html
 /cs-tips/length-in-any-language.html
