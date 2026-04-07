@@ -1,0 +1,9 @@
+/*treasure-map.css
+  Nicholas Norman April 2026
+  This is a map of some cool places I have found on the internet to explore.*/
+
+.map {
+  background-color: rgb(239, 222, 114);
+  border: 1px solid black;
+  margin: 20px;
+}
