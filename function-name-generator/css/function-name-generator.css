@@ -1,0 +1,17 @@
+/*function-name-generator.css
+  Nicholas Norman May 2026
+  clean a string to work as a snake_case python function name*/
+
+body {
+  text-align: center;
+}
+
+#input {
+  width: 700px;
+  font-size: 20px;
+  padding: 10px;
+}
+
+#output {
+  font-size:  20px;
+}
