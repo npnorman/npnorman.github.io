@@ -1,0 +1,203 @@
+<!--html-indentations.html
+    Nicholas Norman July 2026
+    Examples of good vs bad indentation-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>html indentations</title>
+    <link rel="stylesheet" href="css/html-indentations.css">
+</head>
+<body>
+    <h1>
+        HTML Best Practices - Indentations
+    </h1>
+
+    <h2>
+        How to use indentations to keep HTML readable and organized
+    </h2>
+
+    <h3>
+        Example file
+    </h3>
+    <p>See the below examples of how the tags should be formatted</p>
+    <div class="example info-box">
+        <h1>
+            My Website
+        </h1>
+            
+        <h2>
+            About Me:
+        </h2>
+        <p>
+            My name is Nick and I like building websites. I made this website! Take a look around!
+        </p>
+
+        <h2>
+            My Hobbies:
+        </h2>
+        <ul>
+            <li>
+                Watching Movies
+            </li>
+            <li>
+                Playing Video Games
+            </li>
+            <li>
+                Cooking Food
+            </li>
+        </ul>
+    </div>
+
+    <h3>
+        Bad Example
+    </h3>
+    <p>
+        This does not use any indentations
+    </p>
+    <div class="bad info-box">
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;
+My Website
+&lt;/h1&gt;
+&nbsp; &nbsp; &nbsp; &nbsp;
+&lt;h2&gt;
+About Me:
+&lt;/h2&gt;
+&lt;p&gt;
+My name is Nick and I like building websites.
+I made this website! Take a look around!
+&lt;/p&gt;
+
+&lt;h2&gt;
+My Hobbies:
+&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+Watching Movies
+&lt;/li&gt;
+&lt;li&gt;
+Playing Video Games
+&lt;/li&gt;
+&lt;li&gt;
+Cooking Food
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+    </div>
+
+    <h3>
+        Good Example
+    </h3>
+    <p>
+        This indents each nested tag
+    </p>
+    <div class="good info-box">
+<pre>
+&lt;html&gt;
+&nbsp; &nbsp; &lt;head&gt;
+&nbsp; &nbsp; &lt;/head&gt;
+&nbsp; &nbsp; &lt;body&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;h1&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; My Website
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;/h1&gt;
+&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;h2&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; About Me:
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;/h2&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;p&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; My name is Nick and I like building websites.
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; I made this website! Take a look around!
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;/p&gt;
+
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;h2&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; My Hobbies:
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;/h2&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;ul&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Watching Movies
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/li&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Playing Video Games
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/li&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Cooking Food
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/li&gt;
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;/ul&gt;
+&nbsp; &nbsp; &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+    </div>
+
+    <h3>
+        Bad Example
+    </h3>
+    <p>
+        This section uses indentations, but it does not indent for each nested item. Everytime a tag is added into another tag, it should be indented. The li elements should be indented.
+    </p>
+    <div class="bad info-box">
+<pre>
+&lt;body&gt;
+
+    &lt;h2&gt;
+    My Hobbies:
+    &lt;/h2&gt;
+
+    &lt;ul&gt;
+    &lt;li&gt;
+    Watching Movies
+    &lt;/li&gt;
+    &lt;li&gt;
+    Playing Video Games
+    &lt;/li&gt;
+    &lt;li&gt;
+    Cooking Food
+    &lt;/li&gt;
+    &lt;/ul&gt;
+
+
+&lt;/body&gt;
+</pre>
+    </div>
+
+    <h3>
+        Good Example
+    </h3>
+    <p>
+        This indents each nested tag
+    </p>
+    <div class="good info-box">
+<pre>
+&lt;body&gt;
+
+    &lt;h2&gt;
+        My Hobbies:
+    &lt;/h2&gt;
+
+    &lt;ul&gt;
+        &lt;li&gt;
+            Watching Movies
+        &lt;/li&gt;
+        &lt;li&gt;
+            Playing Video Games
+        &lt;/li&gt;
+        &lt;li&gt;
+            Cooking Food
+        &lt;/li&gt;
+    &lt;/ul&gt;
+
+
+&lt;/body&gt;
+</pre>
+    </div>
+
+    <script src="js/html-indentations.js"></script>
+</body>
+</html>

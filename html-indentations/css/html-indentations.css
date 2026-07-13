@@ -1,0 +1,37 @@
+/*html-indentations.css
+  Nicholas Norman July 2026
+  Examples of good vs bad indentation*/
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 700px;
+  margin: auto;
+}
+
+.info-box {
+  font-size: 12pt;
+  padding: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgb(173, 173, 173);
+  width: 700px;
+}
+
+.bad {
+  border-left: 4px solid red;
+  background-color: rgb(255, 214, 214);
+}
+
+.good {
+  border-left: 4px solid green;
+  background-color: rgb(224, 255, 219);
+}
+
+.example {
+  border-left: 4px solid rgb(156, 156, 156);
+  background-color: rgb(238, 238, 238);
+}
