@@ -1,0 +1,15 @@
+/*color-classifier.css
+  Nicholas Norman November 2026
+  A game to classify colors*/
+
+.color-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.color-box {
+  width: 20px;
+  height: 50px;
+  margin: 0;
+}
